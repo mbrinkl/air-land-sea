@@ -9,7 +9,7 @@ export const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
   return (
     <BoardContext.Provider value={boardProps}>
       <div>
-        <h1>todo: board</h1>
+        <h1>todo: board player {boardProps.playerID}</h1>
       </div>
     </BoardContext.Provider>
   );
