@@ -8,7 +8,10 @@ import { AirLandSea } from '../src/game';
 
 const server = Server({
   games: [AirLandSea],
-  origins: [Origins.LOCALHOST_IN_DEVELOPMENT],
+  origins: [
+    'https://air-land-and-sea.herokuapp.com',
+    Origins.LOCALHOST_IN_DEVELOPMENT,
+  ],
 });
 
 server.app.use(
