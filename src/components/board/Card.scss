@@ -1,0 +1,24 @@
+@import '~styles/shared';
+
+.card {
+  color: white;
+  height: 100px;
+  width: 50px;
+  border: 2px solid black;
+
+  &--air {
+    background-color: $c-air;
+  }
+
+  &--land {
+    background-color: $c-land;
+  }
+
+  &--sea {
+    background-color: $c-sea;
+  }
+
+  &--face-down {
+    background-color: black;
+  }
+}

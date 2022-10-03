@@ -1,0 +1,23 @@
+@import '~styles/shared';
+
+.theater-column {
+  color: white;
+  width: 25%;
+  text-align: center;
+
+  &__center {
+    border: 2px solid black;
+  }
+
+  &__center--Air {
+    background-color: $c-air;
+  }
+
+  &__center--Land {
+    background-color: $c-land;
+  }
+
+  &__center--Sea {
+    background-color: $c-sea;
+  }
+}
