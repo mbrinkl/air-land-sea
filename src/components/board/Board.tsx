@@ -5,6 +5,7 @@ import { Hand } from './Hand';
 import { TheaterRow } from './TheaterRow';
 import { GameInfo } from './GameInfo';
 import './Board.scss';
+import { HelpText } from './HelpText';
 
 export const BoardContext = createContext({} as BoardProps<GameState>);
 export const useBoardContext = () => useContext(BoardContext);
@@ -17,6 +18,7 @@ export const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
           <GameInfo />
         </div>
         <div className="board__game">
+          <HelpText />
           <TheaterRow />
           <Hand type="self" />
         </div>

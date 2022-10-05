@@ -2,8 +2,18 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid green;
-  border-radius: 10%;
+  justify-content: space-between;
+
+  &__opponent {
+    &-cards {
+      display: flex;
+      justify-content: center;
+      gap: 0.5em;
+    }
+  }
+
+  &__self {
+    border: 2px solid green;
+    border-radius: 10%;
+  }
 }
