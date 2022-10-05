@@ -17,9 +17,9 @@ export const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
           <GameInfo />
         </div>
         <div className="board__game">
-          <Hand handOfPlayer={String((Number(boardProps.playerID) + 1) % 2)} />
+          <Hand type="opponent" />
           <TheaterRow />
-          <Hand handOfPlayer={boardProps.playerID} />
+          <Hand type="self" />
         </div>
       </div>
     </BoardContext.Provider>

@@ -1,19 +1,27 @@
-import { battleCards } from 'game/cards';
+import { CardInfo } from '../../game/cards';
+import { useBoardContext } from './Board';
 import { Card } from './Card';
 import './Hand.scss';
 
 interface Props {
-  handOfPlayer: string | null;
+  type: 'self' | 'opponent';
 }
 
-export const Hand = ({ handOfPlayer }: Props) => {
-  // GameState hand
-  const hand = battleCards.slice(0, 6);
+export const Hand = ({ type }: Props) => {
+  const { G, playerID } = useBoardContext();
+
+  let hand: CardInfo[] = [];
+
+  if (type === 'self') {
+    hand = G.players.find((p) => p.ID === playerID)!.cards;
+  } else {
+    hand = G.players.find((p) => p.ID !== playerID)!.cards;
+  }
 
   return (
     <div className="hand">
       {hand.map((card) => (
-        <Card info={card} facedown={false} />
+        <Card info={card} facedown={type === 'opponent'} />
       ))}
     </div>
   );
