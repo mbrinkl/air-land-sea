@@ -2,6 +2,7 @@ import type { Game, Move } from 'boardgame.io';
 import { GAME_ID } from '../config';
 import { battleCards, TheaterType } from './cards';
 import { CardInfo } from './cards';
+import { getPointsScored } from './gameUtil';
 
 export interface GameState {
   // aka 'G', your game's state
@@ -24,7 +25,13 @@ export interface SecretInfo {
 const selectCard: Move<GameState> = (G, ctx) => {};
 const placeCardFaceDown: Move<GameState> = (G, ctx) => {};
 const placeCardFaceUp: Move<GameState> = (G, ctx) => {};
-const resign: Move<GameState> = (G, ctx) => {};
+const withdraw: Move<GameState> = (G, ctx) => {
+  let lostPlayer = Number(ctx.currentPlayer);
+  G.players[lostPlayer ^ 1].score += getPointsScored(
+    G.players[lostPlayer].firstPlayer,
+    G.players[lostPlayer].cards.length,
+  );
+};
 
 export const AirLandSea: Game<GameState> = {
   name: GAME_ID,
@@ -59,7 +66,7 @@ export const AirLandSea: Game<GameState> = {
           next: (G, ctx) => Number(G.players[0].firstPlayer ? '1' : '0'),
         },
         stages: {
-          select: { moves: { selectCard, resign } },
+          select: { moves: { selectCard, withdraw } },
           place: { moves: { placeCardFaceDown, placeCardFaceUp } },
         },
       },
