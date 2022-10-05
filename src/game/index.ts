@@ -24,10 +24,7 @@ const placeCardFaceDown: Move<GameState> = (G, ctx) => {};
 const placeCardFaceUp: Move<GameState> = (G, ctx) => {};
 const resign: Move<GameState> = (G, ctx) => {};
 const shuffleAndDeal: Move<GameState> = (G, ctx) => {
-  G.secret.deck = G.secret.deck
-    .map((card) => ({ card, randNum: Math.random() }))
-    .sort((a, b) => a.randNum - b.randNum)
-    .map(({ card }) => card);
+  G.secret.deck = ctx.random!.Shuffle<CardInfo>(G.secret.deck);
   G.players[0].cards = G.secret.deck.splice(0, 6);
   G.players[1].cards = G.secret.deck.splice(0, 6);
 };
