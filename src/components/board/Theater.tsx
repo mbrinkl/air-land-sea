@@ -11,7 +11,7 @@ interface Props {
 export const Theater = ({ theaterName }: Props): JSX.Element => {
   const { moves } = useBoardContext();
 
-  const demoCard = battleCards[0];
+  const demoCards = [battleCards[0], battleCards[1]];
 
   return (
     <div className="theater-column">
@@ -21,7 +21,8 @@ export const Theater = ({ theaterName }: Props): JSX.Element => {
           'theater-column__cards--opponent',
         )}
       >
-        <Card info={demoCard} facedown={false} />
+        <Card info={demoCards[0]} facedown={false} type="opponent-theater" />
+        <Card info={demoCards[1]} facedown={false} type="opponent-theater" />
       </div>
       <div
         className={classNames(
@@ -29,7 +30,7 @@ export const Theater = ({ theaterName }: Props): JSX.Element => {
           `theater-column__center--${theaterName}`,
         )}
       >
-        {theaterName}
+        - {theaterName.toUpperCase()} -
       </div>
       <div
         className={classNames(
@@ -38,7 +39,8 @@ export const Theater = ({ theaterName }: Props): JSX.Element => {
         )}
         onClick={() => moves.placeCardFaceUp()}
       >
-        <Card info={demoCard} facedown={true} />
+        <Card info={demoCards[0]} facedown={false} type="self-theater" />
+        <Card info={demoCards[1]} facedown={false} type="self-theater" />
       </div>
     </div>
   );
