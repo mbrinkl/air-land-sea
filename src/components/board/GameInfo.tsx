@@ -1,4 +1,5 @@
 import { useBoardContext } from './Board';
+import './GameInfo.scss';
 
 export const GameInfo = (): JSX.Element => {
   const { G, playerID, moves, isActive } = useBoardContext();
@@ -7,7 +8,9 @@ export const GameInfo = (): JSX.Element => {
   const playerTurnOrder = self?.firstPlayer ? '1st' : '2nd';
 
   return (
-    <>
+    <div className="game-info">
+      <h6>Baddie cards: C C C C C C</h6>
+      <h6>todo: thinking cute tiny black card icons ^^^</h6>
       <h6>Baddie score: {opponent?.score}</h6>
 
       <button onClick={() => moves.resign()} disabled={!isActive}>
@@ -19,6 +22,6 @@ export const GameInfo = (): JSX.Element => {
       <h5>Scoring info?</h5>
 
       <h6>My Score: {self?.score}</h6>
-    </>
+    </div>
   );
 };

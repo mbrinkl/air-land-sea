@@ -17,7 +17,6 @@ export const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
           <GameInfo />
         </div>
         <div className="board__game">
-          <Hand type="opponent" />
           <TheaterRow />
           <Hand type="self" />
         </div>
