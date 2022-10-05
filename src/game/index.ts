@@ -1,17 +1,19 @@
 import type { Game, Move } from 'boardgame.io';
 import { GAME_ID } from '../config';
-import { battleCards } from './cards';
+import { battleCards, TheaterType } from './cards';
 import { CardInfo } from './cards';
 
 export interface GameState {
   // aka 'G', your game's state
   players: Player[];
   secret: SecretInfo;
+  theaters: TheaterType[];
 }
 export interface Player {
   ID: string;
   ready: boolean;
   firstPlayer: boolean;
+  score: number;
   cards: CardInfo[];
 }
 export interface SecretInfo {
@@ -23,14 +25,6 @@ const selectCard: Move<GameState> = (G, ctx) => {};
 const placeCardFaceDown: Move<GameState> = (G, ctx) => {};
 const placeCardFaceUp: Move<GameState> = (G, ctx) => {};
 const resign: Move<GameState> = (G, ctx) => {};
-const shuffleAndDeal: Move<GameState> = (G, ctx) => {
-  G.secret.deck = G.secret.deck
-    .map((card) => ({ card, randNum: Math.random() }))
-    .sort((a, b) => a.randNum - b.randNum)
-    .map(({ card }) => card);
-  G.players[0].cards = G.secret.deck.splice(0, 6);
-  G.players[1].cards = G.secret.deck.splice(0, 6);
-};
 
 export const AirLandSea: Game<GameState> = {
   name: GAME_ID,
@@ -40,16 +34,23 @@ export const AirLandSea: Game<GameState> = {
   setup: () => ({
     secret: { deck: battleCards, discardPile: [] },
     players: [
-      { ID: '0', firstPlayer: true, cards: [], ready: false },
-      { ID: '1', firstPlayer: false, cards: [], ready: false },
+      { ID: '0', firstPlayer: true, cards: [], ready: false, score: 0 },
+      { ID: '1', firstPlayer: false, cards: [], ready: false, score: 0 },
     ],
+    theaters: ['air', 'land', 'sea'],
   }),
 
   phases: {
     shuffleAndDeal: {
       start: true,
       next: 'main',
-      moves: { shuffleAndDeal },
+      onBegin: (G, ctx) => {
+        G.theaters = ctx.random!.Shuffle<TheaterType>(G.theaters);
+        G.secret.deck = ctx.random!.Shuffle<CardInfo>(G.secret.deck);
+        G.players[0].cards = G.secret.deck.splice(0, 6);
+        G.players[1].cards = G.secret.deck.splice(0, 6);
+        ctx.events?.endPhase();
+      },
     },
     main: {
       turn: {
