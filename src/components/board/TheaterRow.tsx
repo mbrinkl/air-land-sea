@@ -1,13 +1,15 @@
+import { useBoardContext } from './Board';
 import { Theater } from './Theater';
 import './TheaterRow.scss';
 
 export const TheaterRow = () => {
-  // Get theater order from gamestate
+  const { G } = useBoardContext();
+
   return (
     <div className="theater-row">
-      <Theater theaterName="Air" />
-      <Theater theaterName="Land" />
-      <Theater theaterName="Sea" />
+      {G.theaters.map((theater) => (
+        <Theater theaterName={theater} />
+      ))}
     </div>
   );
 };
