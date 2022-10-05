@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { battleCards } from 'game/cards';
+import { useBoardContext } from './Board';
 import { Card } from './Card';
 import './Theater.scss';
 
@@ -8,11 +9,18 @@ interface Props {
 }
 
 export const Theater = ({ theaterName }: Props): JSX.Element => {
+  const { moves } = useBoardContext();
+
   const demoCard = battleCards[0];
 
   return (
     <div className="theater-column">
-      <div className="theater-column__cards">
+      <div
+        className={classNames(
+          'theater-column__cards',
+          'theater-column__cards--opponent',
+        )}
+      >
         <Card info={demoCard} facedown={false} />
       </div>
       <div
@@ -23,7 +31,13 @@ export const Theater = ({ theaterName }: Props): JSX.Element => {
       >
         {theaterName}
       </div>
-      <div className="theater-column__cards">
+      <div
+        className={classNames(
+          'theater-column__cards',
+          'theater-column__cards--self',
+        )}
+        onClick={() => moves.placeCardFaceUp()}
+      >
         <Card info={demoCard} facedown={true} />
       </div>
     </div>

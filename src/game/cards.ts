@@ -25,7 +25,7 @@ export const battleCards: CardInfo[] = [
     type: 'instant',
   },
   {
-    name: 'Maneuver*',
+    name: 'Maneuver',
     desc: 'Flip a battle card in an adjacent theater.',
     strength: 3,
     theater: 'air',
@@ -67,7 +67,7 @@ export const battleCards: CardInfo[] = [
     type: 'instant',
   },
   {
-    name: 'Maneuver*',
+    name: 'Maneuver',
     desc: 'Flip a battle card in an adjacent theater.',
     strength: 3,
     theater: 'land',
@@ -109,7 +109,7 @@ export const battleCards: CardInfo[] = [
     type: 'ongoing',
   },
   {
-    name: 'Maneuver*',
+    name: 'Maneuver',
     desc: 'Flip a battle card in an adjacent theater.',
     strength: 3,
     theater: 'sea',

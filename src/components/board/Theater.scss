@@ -5,6 +5,14 @@
   width: 25%;
   text-align: center;
 
+  &__cards {
+    background-color: red;
+
+    &--self:hover {
+      background-color: lightcoral;
+    }
+  }
+
   &__center {
     border: 2px solid black;
   }
