@@ -34,6 +34,7 @@ const selectCard: Move<GameState> = (G, ctx, cardID: number) => {
 //play a card face-down to any theater
 const improvise: Move<GameState> = (G, ctx, theaterID: number) => {
   let playerID = Number(ctx.currentPlayer);
+  G.players[playerID].cards[G.selectedCardID].faceDown = true;
   G.playingField[theaterID].deployedCards[ctx.currentPlayer].push(
     ...G.players[playerID].cards.splice(G.selectedCardID, 1),
   );
@@ -43,6 +44,7 @@ const improvise: Move<GameState> = (G, ctx, theaterID: number) => {
 //play a card face-up to matching theater
 const deploy: Move<GameState> = (G, ctx, theaterID: number) => {
   let playerID = Number(ctx.currentPlayer);
+  G.players[playerID].cards[G.selectedCardID].faceDown = false;
   G.playingField[theaterID].deployedCards[ctx.currentPlayer].push(
     ...G.players[playerID].cards.splice(G.selectedCardID, 1),
   );
