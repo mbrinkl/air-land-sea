@@ -7,8 +7,8 @@ export const TheaterRow = () => {
 
   return (
     <div className="theater-row">
-      {G.theaters.map((theater) => (
-        <Theater theaterName={theater} />
+      {G.playingField.map((theater) => (
+        <Theater theater={theater} />
       ))}
     </div>
   );

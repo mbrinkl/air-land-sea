@@ -3,7 +3,7 @@ import { CardIcon } from './CardIcon';
 import './GameInfo.scss';
 
 export const GameInfo = (): JSX.Element => {
-  const { G, playerID, moves, isActive } = useBoardContext();
+  const { G, ctx, playerID, moves, isActive, undo } = useBoardContext();
   const self = G.players.find((p) => p.ID === playerID);
   const opponent = G.players.find((p) => p.ID !== playerID);
   const playerTurnOrder = self?.firstPlayer ? '1st' : '2nd';
@@ -20,7 +20,11 @@ export const GameInfo = (): JSX.Element => {
       </div>
 
       <div className="game-info__self">
-        <button onClick={() => moves.withdraw()} disabled={!isActive}>
+        <button onClick={undo} disabled={!ctx.numMoves || !isActive}>
+          Undo
+        </button>
+
+        <button onClick={moves.withdraw} disabled={!isActive}>
           Withdraw
         </button>
 

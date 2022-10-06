@@ -7,6 +7,21 @@
   border: 2px solid black;
   border-radius: 5%;
 
+  cursor: pointer;
+
+  // hover-grow related properties
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  transition-duration: 0.3s;
+  transition-property: transform;
+
+  &:hover,
+  &:focus,
+  &:active {
+    transform: scale(1.1);
+  }
+
   &--air {
     background-color: $c-air;
   }
@@ -23,25 +38,25 @@
     background-color: $c-flipped;
   }
 
-  &--self {
-    cursor: pointer;
+  // &--self {
+  //   cursor: pointer;
 
-    // hover-grow related properties
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    backface-visibility: hidden;
-    -moz-osx-font-smoothing: grayscale;
-    transition-duration: 0.3s;
-    transition-property: transform;
+  //   // hover-grow related properties
+  //   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  //   backface-visibility: hidden;
+  //   -moz-osx-font-smoothing: grayscale;
+  //   transition-duration: 0.3s;
+  //   transition-property: transform;
 
-    &:hover,
-    &:focus,
-    &:active {
-      transform: scale(1.1);
-    }
-  }
+  //   &:hover,
+  //   &:focus,
+  //   &:active {
+  //     transform: scale(1.1);
+  //   }
+  // }
 
-  &--self-theater,
-  &--opponent-theater {
+  &--deployed-self,
+  &--deployed-opponent {
     margin-right: -50px;
   }
 }

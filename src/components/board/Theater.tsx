@@ -1,17 +1,27 @@
 import classNames from 'classnames';
-import { battleCards } from 'game/cards';
+import { Theater as GameTheater } from 'game';
 import { useBoardContext } from './Board';
 import { Card } from './Card';
 import './Theater.scss';
 
 interface Props {
-  theaterName: string;
+  theater: GameTheater;
 }
 
-export const Theater = ({ theaterName }: Props): JSX.Element => {
-  const { moves } = useBoardContext();
+export const Theater = ({ theater }: Props): JSX.Element => {
+  const { theater: theaterName, deployedCards } = theater;
+  const { G, moves, playerID } = useBoardContext();
 
-  const demoCards = [battleCards[0], battleCards[1]];
+  function getTheaterId(): number {
+    return G.playingField.findIndex((t) => t.theater === theaterName);
+  }
+
+  // todo: better way to play card face down
+  function onRightClick(e: any) {
+    e.preventDefault();
+    moves.improvise(getTheaterId());
+    return false;
+  }
 
   return (
     <div className="theater-column">
@@ -21,8 +31,9 @@ export const Theater = ({ theaterName }: Props): JSX.Element => {
           'theater-column__cards--opponent',
         )}
       >
-        <Card info={demoCards[0]} facedown={false} type="opponent-theater" />
-        <Card info={demoCards[1]} facedown={false} type="opponent-theater" />
+        {deployedCards[Number(playerID) ^ 1].cards.map((card) => (
+          <Card info={card} deployed="opponent" />
+        ))}
       </div>
       <div
         className={classNames(
@@ -37,10 +48,12 @@ export const Theater = ({ theaterName }: Props): JSX.Element => {
           'theater-column__cards',
           'theater-column__cards--self',
         )}
-        onClick={() => moves.placeCardFaceUp()}
+        onClick={() => moves.deploy(getTheaterId())}
+        onContextMenu={onRightClick}
       >
-        <Card info={demoCards[0]} facedown={false} type="self-theater" />
-        <Card info={demoCards[1]} facedown={false} type="self-theater" />
+        {deployedCards[Number(playerID)].cards.map((card) => (
+          <Card info={card} deployed="self" />
+        ))}
       </div>
     </div>
   );

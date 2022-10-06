@@ -21,7 +21,7 @@ export const Hand = ({ type }: Props) => {
   return (
     <div className="hand">
       {hand.map((card) => (
-        <Card info={card} facedown={type === 'opponent'} type={type} />
+        <Card info={card} />
       ))}
     </div>
   );
