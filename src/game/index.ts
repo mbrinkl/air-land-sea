@@ -8,7 +8,7 @@ export interface GameState {
   // aka 'G', your game's state
   players: Player[];
   secret: SecretInfo;
-  theaters: TheaterType[];
+  playingField: Theater[];
 }
 export interface Player {
   ID: string;
@@ -16,15 +16,40 @@ export interface Player {
   firstPlayer: boolean;
   score: number;
   cards: CardInfo[];
+  selectedCardID: number;
+}
+export interface Theater {
+  theater: TheaterType;
+  deployedCards: DeployedCards[];
+}
+export interface DeployedCards {
+  ID: string;
+  cards: CardInfo[];
 }
 export interface SecretInfo {
   deck: CardInfo[];
   discardPile: CardInfo[];
 }
 
-const selectCard: Move<GameState> = (G, ctx) => {};
-const placeCardFaceDown: Move<GameState> = (G, ctx) => {};
-const placeCardFaceUp: Move<GameState> = (G, ctx) => {};
+const selectCard: Move<GameState> = (G, ctx, cardID: number) => {
+  console.log(cardID);
+  let playerID = Number(ctx.currentPlayer);
+  G.players[playerID].selectedCardID = cardID;
+  ctx.events?.setStage('place');
+};
+//play a card face-down to any theater
+const improvise: Move<GameState> = (G, ctx) => {};
+
+//play a card face-up to matching theater
+const deploy: Move<GameState> = (G, ctx, theaterID: number) => {
+  let playerID = Number(ctx.currentPlayer);
+  G.playingField[theaterID].deployedCards[playerID].cards.push(
+    ...G.players[playerID].cards.splice(G.players[playerID].selectedCardID, 1),
+  );
+  ctx.events?.endTurn();
+};
+
+//lose battle, opponent gains points based on how many cards you have left
 const withdraw: Move<GameState> = (G, ctx) => {
   let lostPlayer = Number(ctx.currentPlayer);
   G.players[lostPlayer ^ 1].score += getPointsScored(
@@ -41,10 +66,46 @@ export const AirLandSea: Game<GameState> = {
   setup: () => ({
     secret: { deck: battleCards, discardPile: [] },
     players: [
-      { ID: '0', firstPlayer: true, cards: [], ready: false, score: 0 },
-      { ID: '1', firstPlayer: false, cards: [], ready: false, score: 0 },
+      {
+        ID: '0',
+        firstPlayer: true,
+        cards: [],
+        ready: false,
+        score: 0,
+        selectedCardID: -1,
+      },
+      {
+        ID: '1',
+        firstPlayer: false,
+        cards: [],
+        ready: false,
+        score: 0,
+        selectedCardID: -1,
+      },
     ],
-    theaters: ['air', 'land', 'sea'],
+    playingField: [
+      {
+        theater: 'air',
+        deployedCards: [
+          { ID: '0', cards: [] },
+          { ID: '1', cards: [] },
+        ],
+      },
+      {
+        theater: 'land',
+        deployedCards: [
+          { ID: '0', cards: [] },
+          { ID: '1', cards: [] },
+        ],
+      },
+      {
+        theater: 'sea',
+        deployedCards: [
+          { ID: '0', cards: [] },
+          { ID: '1', cards: [] },
+        ],
+      },
+    ],
   }),
 
   phases: {
@@ -52,7 +113,7 @@ export const AirLandSea: Game<GameState> = {
       start: true,
       next: 'main',
       onBegin: (G, ctx) => {
-        G.theaters = ctx.random!.Shuffle<TheaterType>(G.theaters);
+        G.playingField = ctx.random!.Shuffle<Theater>(G.playingField);
         G.secret.deck = ctx.random!.Shuffle<CardInfo>(G.secret.deck);
         G.players[0].cards = G.secret.deck.splice(0, 6);
         G.players[1].cards = G.secret.deck.splice(0, 6);
@@ -61,13 +122,14 @@ export const AirLandSea: Game<GameState> = {
     },
     main: {
       turn: {
+        activePlayers: { currentPlayer: 'select' },
         order: {
           first: (G, ctx) => Number(G.players[0].firstPlayer ? '0' : '1'),
           next: (G, ctx) => Number(G.players[0].firstPlayer ? '1' : '0'),
         },
         stages: {
           select: { moves: { selectCard, withdraw } },
-          place: { moves: { placeCardFaceDown, placeCardFaceUp } },
+          place: { moves: { deploy, improvise } },
         },
       },
     },
