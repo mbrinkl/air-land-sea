@@ -9,6 +9,7 @@ export interface GameState {
   players: Player[];
   secret: SecretInfo;
   playingField: Theater[];
+  selectedCardID: number;
 }
 export interface Player {
   ID: string;
@@ -16,15 +17,10 @@ export interface Player {
   firstPlayer: boolean;
   score: number;
   cards: CardInfo[];
-  selectedCardID: number;
 }
 export interface Theater {
   theater: TheaterType;
-  deployedCards: DeployedCards[];
-}
-export interface DeployedCards {
-  ID: string;
-  cards: CardInfo[];
+  deployedCards: Record<string, CardInfo[]>;
 }
 export interface SecretInfo {
   deck: CardInfo[];
@@ -32,19 +28,23 @@ export interface SecretInfo {
 }
 
 const selectCard: Move<GameState> = (G, ctx, cardID: number) => {
-  console.log(cardID);
-  let playerID = Number(ctx.currentPlayer);
-  G.players[playerID].selectedCardID = cardID;
+  G.selectedCardID = cardID;
   ctx.events?.setStage('place');
 };
 //play a card face-down to any theater
-const improvise: Move<GameState> = (G, ctx) => {};
+const improvise: Move<GameState> = (G, ctx, theaterID: number) => {
+  let playerID = Number(ctx.currentPlayer);
+  G.playingField[theaterID].deployedCards[ctx.currentPlayer].push(
+    ...G.players[playerID].cards.splice(G.selectedCardID, 1),
+  );
+  ctx.events?.endTurn();
+};
 
 //play a card face-up to matching theater
 const deploy: Move<GameState> = (G, ctx, theaterID: number) => {
   let playerID = Number(ctx.currentPlayer);
-  G.playingField[theaterID].deployedCards[playerID].cards.push(
-    ...G.players[playerID].cards.splice(G.players[playerID].selectedCardID, 1),
+  G.playingField[theaterID].deployedCards[ctx.currentPlayer].push(
+    ...G.players[playerID].cards.splice(G.selectedCardID, 1),
   );
   ctx.events?.endTurn();
 };
@@ -65,6 +65,7 @@ export const AirLandSea: Game<GameState> = {
 
   setup: () => ({
     secret: { deck: battleCards, discardPile: [] },
+    selectedCardID: -1,
     players: [
       {
         ID: '0',
@@ -72,7 +73,6 @@ export const AirLandSea: Game<GameState> = {
         cards: [],
         ready: false,
         score: 0,
-        selectedCardID: -1,
       },
       {
         ID: '1',
@@ -80,30 +80,20 @@ export const AirLandSea: Game<GameState> = {
         cards: [],
         ready: false,
         score: 0,
-        selectedCardID: -1,
       },
     ],
     playingField: [
       {
         theater: 'air',
-        deployedCards: [
-          { ID: '0', cards: [] },
-          { ID: '1', cards: [] },
-        ],
+        deployedCards: { '0': [], '1': [] },
       },
       {
         theater: 'land',
-        deployedCards: [
-          { ID: '0', cards: [] },
-          { ID: '1', cards: [] },
-        ],
+        deployedCards: { '0': [], '1': [] },
       },
       {
         theater: 'sea',
-        deployedCards: [
-          { ID: '0', cards: [] },
-          { ID: '1', cards: [] },
-        ],
+        deployedCards: { '0': [], '1': [] },
       },
     ],
   }),
