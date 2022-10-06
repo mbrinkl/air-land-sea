@@ -20,8 +20,8 @@ export const GameInfo = (): JSX.Element => {
       </div>
 
       <div className="game-info__self">
-        <button onClick={() => moves.resign()} disabled={!isActive}>
-          Resign
+        <button onClick={() => moves.withdraw()} disabled={!isActive}>
+          Withdraw
         </button>
 
         <h5>You are the {playerTurnOrder} player</h5>
