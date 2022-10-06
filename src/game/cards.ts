@@ -7,6 +7,8 @@ export interface CardInfo {
   desc: string;
   type: AbilityType;
   theater: TheaterType;
+  covered?: boolean;
+  faceDown?: boolean;
 }
 
 export const battleCards: CardInfo[] = [
