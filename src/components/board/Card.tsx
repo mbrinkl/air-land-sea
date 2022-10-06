@@ -5,21 +5,28 @@ import './Card.scss';
 
 interface Props {
   info: CardInfo;
-  facedown: boolean;
-  type: 'self' | 'opponent' | 'self-theater' | 'opponent-theater';
+  deployed?: 'self' | 'opponent';
 }
 
-export const Card = ({ info, facedown, type }: Props) => {
-  const { moves } = useBoardContext();
-  const { theater, strength, name } = info;
-  const cardClassName =
-    facedown || type === 'opponent' ? 'card--face-down' : `card--${theater}`;
-  const cardDisplay = facedown ? 2 : `${strength} ${name}`;
+export const Card = ({ info, deployed }: Props) => {
+  const { G, moves, playerID } = useBoardContext();
+  const { theater, strength, name, faceDown } = info;
+  let cardClassName = faceDown ? 'card--face-down' : `card--${theater}`;
+  if (deployed != null) {
+    cardClassName += ` card--deployed-${deployed}`;
+  }
+  const cardDisplay = faceDown ? strength : `${strength} ${name}`;
+
+  function getCardId(): number {
+    return G.players[Number(playerID)].cards.findIndex(
+      (c) => c.theater === theater && c.name === name,
+    );
+  }
 
   return (
     <div
-      className={classnames('card', cardClassName, `card--${type}`)}
-      onClick={() => moves.selectCard()} // todo: add card num args ; only allow for client hand, not opponent
+      className={classnames('card', cardClassName)}
+      onClick={!deployed ? () => moves.selectCard(getCardId()) : undefined} // todo: add card num args ; only allow for client hand, not opponent
       tabIndex={0}
     >
       {cardDisplay}
