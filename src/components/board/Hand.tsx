@@ -18,7 +18,7 @@ const Hand = ({ type }: Props) => {
     return (
       <>
         {hand.map((card) => (
-          <Card info={card} />
+          <Card key={`${card.theater}${card.name}`} info={card} />
         ))}
       </>
     );
@@ -30,8 +30,8 @@ const Hand = ({ type }: Props) => {
     <>
       {G.players
         .find((p) => p.ID !== playerID)
-        ?.cards.map(() => (
-          <CardIcon />
+        ?.cards.map((card) => (
+          <CardIcon key={`${card.theater}${card.name}`} />
         ))}
     </>
   );

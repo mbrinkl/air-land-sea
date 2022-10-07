@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import path from 'path';
 import serve from 'koa-static';
 import { historyApiFallback } from 'koa2-connect-history-api-fallback';
