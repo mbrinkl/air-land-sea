@@ -1,4 +1,3 @@
-import { CardInfo } from '../../game/cards';
 import { useBoardContext } from './Board';
 import Card from './Card';
 import CardIcon from './CardIcon';
@@ -10,21 +9,17 @@ interface Props {
 const Hand = ({ type }: Props) => {
   const { G, playerID } = useBoardContext();
 
-  let hand: CardInfo[] = [];
-
   if (type === 'self') {
-    hand = G.players.find((p) => p.ID === playerID)!.cards;
-
     return (
       <>
-        {hand.map((card) => (
-          <Card info={card} />
-        ))}
+        {G.players
+          .find((p) => p.ID === playerID)
+          ?.cards.map((card) => (
+            <Card card={card} />
+          ))}
       </>
     );
   }
-
-  hand = G.players.find((p) => p.ID !== playerID)!.cards;
 
   return (
     <>
