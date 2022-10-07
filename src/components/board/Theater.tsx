@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Theater as GameTheater } from 'game';
+import { Theater as GameTheater } from 'game/gameTypes';
 import { useBoardContext } from './Board';
 import { Card } from './Card';
 import './Theater.scss';
