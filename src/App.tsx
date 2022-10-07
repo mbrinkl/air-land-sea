@@ -1,7 +1,12 @@
-import { Lobby } from 'components/Lobby';
+import { ChakraProvider } from '@chakra-ui/react';
+import Lobby from 'components/Lobby';
 
 const App = (): JSX.Element => {
-  return <Lobby />;
+  return (
+    <ChakraProvider>
+      <Lobby />
+    </ChakraProvider>
+  );
 };
 
 export default App;

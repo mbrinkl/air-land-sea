@@ -1,10 +1,10 @@
+import { StackDivider, VStack } from '@chakra-ui/react';
 import { Local } from 'boardgame.io/multiplayer';
 // import { SocketIO } from 'boardgame.io/multiplayer';
 import { Client } from 'boardgame.io/react';
 import { AirLandSea } from '../game';
-import { Board } from './board/Board';
+import Board from './board/Board';
 // import { SERVER_URL } from '../config/client';
-import './Lobby.scss';
 
 const GameClient = Client({
   game: AirLandSea,
@@ -13,14 +13,17 @@ const GameClient = Client({
   multiplayer: Local(),
 });
 
-export const Lobby = (): JSX.Element => {
+const Lobby = (): JSX.Element => {
   return (
-    <div className="lobby">
+    <VStack
+      divider={<StackDivider borderColor="gray" />}
+      spacing={4}
+      align="stretch"
+    >
       <GameClient playerID="0" />
-      <div>
-        <h1>--------------------------------------</h1>
-      </div>
       <GameClient playerID="1" />
-    </div>
+    </VStack>
   );
 };
+
+export default Lobby;
