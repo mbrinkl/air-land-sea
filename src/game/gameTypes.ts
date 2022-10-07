@@ -1,4 +1,4 @@
-import { CardInfo, TheaterType } from './cards';
+import { Card, TheaterType } from './cards';
 
 export interface GameState {
   // aka 'G', your game's state
@@ -12,13 +12,14 @@ export interface Player {
   ready: boolean;
   firstPlayer: boolean;
   score: number;
-  cards: CardInfo[];
+  cards: Card[];
 }
 export interface Theater {
   theater: TheaterType;
-  deployedCards: Record<string, CardInfo[]>;
+  deployedCards: Record<string, Card[]>;
+  totalStrength: Record<string, number>;
 }
 export interface SecretInfo {
-  deck: CardInfo[];
-  discardPile: CardInfo[];
+  deck: Card[];
+  discardPile: Card[];
 }
