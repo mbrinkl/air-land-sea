@@ -1,38 +1,18 @@
-import { useBoardContext } from './Board';
-import { CardIcon } from './CardIcon';
-import './GameInfo.scss';
+import { Flex, Text } from '@chakra-ui/react';
+import { Controls } from './Controls';
+import { HelpText } from './HelpText';
 
 export const GameInfo = (): JSX.Element => {
-  const { G, ctx, playerID, moves, isActive, undo } = useBoardContext();
-  const self = G.players.find((p) => p.ID === playerID);
-  const opponent = G.players.find((p) => p.ID !== playerID);
-  const playerTurnOrder = self?.firstPlayer ? '1st' : '2nd';
-
   return (
-    <div className="game-info">
-      <div className="game-info__opponent">
-        <h6>Baddie score: {opponent?.score}</h6>
-        <div className="game-info__opponent-cards">
-          {opponent?.cards.map(() => (
-            <CardIcon />
-          ))}
-        </div>
-      </div>
-
-      <div className="game-info__self">
-        <button onClick={undo} disabled={!ctx.numMoves || !isActive}>
-          Undo
-        </button>
-
-        <button onClick={moves.withdraw} disabled={!isActive}>
-          Withdraw
-        </button>
-
-        <h5>You are the {playerTurnOrder} player</h5>
-        <h5>Scoring info?</h5>
-
-        <h6>My Score: {self?.score}</h6>
-      </div>
-    </div>
+    <Flex
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      height="100%"
+    >
+      <HelpText />
+      <Controls />
+      <Text>todo: card info</Text>
+    </Flex>
   );
 };

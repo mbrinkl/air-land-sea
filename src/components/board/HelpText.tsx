@@ -1,6 +1,7 @@
+import { Text } from '@chakra-ui/react';
 import { useBoardContext } from './Board';
 
-export const HelpText = () => {
+export const HelpText = (): JSX.Element => {
   const { isActive, ctx } = useBoardContext();
 
   const stage: string | null =
@@ -9,5 +10,9 @@ export const HelpText = () => {
   // todo: make more descriptive
   const text = isActive ? `${ctx.phase} : ${stage}` : 'Waiting for Opponent...';
 
-  return <h1>{text}</h1>;
+  return (
+    <Text fontSize="3xl" margin="0.5em">
+      {text}
+    </Text>
+  );
 };

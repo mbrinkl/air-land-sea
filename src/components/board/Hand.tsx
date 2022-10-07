@@ -1,6 +1,7 @@
 import { CardInfo } from '../../game/cards';
 import { useBoardContext } from './Board';
 import { Card } from './Card';
+import { CardIcon } from './CardIcon';
 import './Hand.scss';
 
 interface Props {
@@ -14,15 +15,25 @@ export const Hand = ({ type }: Props) => {
 
   if (type === 'self') {
     hand = G.players.find((p) => p.ID === playerID)!.cards;
-  } else {
-    hand = G.players.find((p) => p.ID !== playerID)!.cards;
+
+    return (
+      <div className="hand">
+        {hand.map((card) => (
+          <Card info={card} />
+        ))}
+      </div>
+    );
   }
 
+  hand = G.players.find((p) => p.ID !== playerID)!.cards;
+
   return (
-    <div className="hand">
-      {hand.map((card) => (
-        <Card info={card} />
-      ))}
-    </div>
+    <>
+      {G.players
+        .find((p) => p.ID !== playerID)
+        ?.cards.map(() => (
+          <CardIcon />
+        ))}
+    </>
   );
 };
