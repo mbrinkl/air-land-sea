@@ -1,3 +1,6 @@
+import { Ctx } from 'boardgame.io';
+import { GameState } from './gameTypes';
+
 export type TheaterType = 'air' | 'land' | 'sea';
 export type AbilityType = 'ongoing' | 'instant' | 'none';
 
@@ -10,7 +13,15 @@ export interface CardInfo {
   covered?: boolean;
   faceDown?: boolean;
 }
-
+export interface Card {
+  cardID: string;
+  cardInfo: CardInfo;
+  strength: number;
+  covered: boolean;
+  faceDown: boolean;
+  effect: (gameState: GameState, ctx: Ctx) => void;
+}
+//export const battleCards: Record<string, Card[]>
 export const battleCards: CardInfo[] = [
   {
     name: 'Support',
