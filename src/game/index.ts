@@ -1,7 +1,6 @@
 import type { Game } from 'boardgame.io';
 import { GAME_ID } from '../config';
-import { battleCards } from './cards';
-import { CardInfo } from './cards';
+import { battleCards, Card } from './cards';
 import { GameState, Theater } from './gameTypes';
 import { selectCard, withdraw, deploy, improvise } from './moves';
 
@@ -30,9 +29,21 @@ export const AirLandSea: Game<GameState> = {
       },
     ],
     playingField: [
-      { theater: 'air', deployedCards: { '0': [], '1': [] } },
-      { theater: 'land', deployedCards: { '0': [], '1': [] } },
-      { theater: 'sea', deployedCards: { '0': [], '1': [] } },
+      {
+        theater: 'air',
+        deployedCards: { '0': [], '1': [] },
+        totalStrength: { '0': 0, '1': 0 },
+      },
+      {
+        theater: 'land',
+        deployedCards: { '0': [], '1': [] },
+        totalStrength: { '0': 0, '1': 0 },
+      },
+      {
+        theater: 'sea',
+        deployedCards: { '0': [], '1': [] },
+        totalStrength: { '0': 0, '1': 0 },
+      },
     ],
   }),
 
@@ -42,7 +53,7 @@ export const AirLandSea: Game<GameState> = {
       next: 'main',
       onBegin: (G, ctx) => {
         G.playingField = ctx.random!.Shuffle<Theater>(G.playingField);
-        G.secret.deck = ctx.random!.Shuffle<CardInfo>(G.secret.deck);
+        G.secret.deck = ctx.random!.Shuffle<Card>(G.secret.deck);
         G.players[0].cards = G.secret.deck.splice(0, 6);
         G.players[1].cards = G.secret.deck.splice(0, 6);
         ctx.events?.endPhase();

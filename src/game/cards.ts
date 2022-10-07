@@ -1,18 +1,10 @@
 import { Ctx } from 'boardgame.io';
+import { CardInfo, cardInfoRecords } from './cardInfo';
 import { GameState } from './gameTypes';
 
 export type TheaterType = 'air' | 'land' | 'sea';
 export type AbilityType = 'ongoing' | 'instant' | 'none';
 
-export interface CardInfo {
-  name: string;
-  strength: number;
-  desc: string;
-  type: AbilityType;
-  theater: TheaterType;
-  covered?: boolean;
-  faceDown?: boolean;
-}
 export interface Card {
   cardID: string;
   cardInfo: CardInfo;
@@ -20,133 +12,160 @@ export interface Card {
   covered: boolean;
   faceDown: boolean;
   effect: (gameState: GameState, ctx: Ctx) => void;
+  flip(): void;
 }
-//export const battleCards: Record<string, Card[]>
-export const battleCards: CardInfo[] = [
-  {
-    name: 'Support',
-    desc: 'You gain +3 strength in each adjacent theater.',
-    strength: 1,
-    theater: 'air',
-    type: 'ongoing',
-  },
-  {
-    name: 'Air Drop',
-    desc: 'On your next turn, you may play a battle card to a non-matching theater.',
-    strength: 2,
-    theater: 'air',
-    type: 'instant',
-  },
-  {
-    name: 'Maneuver',
-    desc: 'Flip a battle card in an adjacent theater.',
-    strength: 3,
-    theater: 'air',
-    type: 'instant',
-  },
-  {
-    name: 'Aerodrome',
-    desc: 'You may play battle cards of strength 3 or less to non-matching theaters.',
-    strength: 4,
-    theater: 'air',
-    type: 'ongoing',
-  },
-  {
-    name: 'Containment',
-    desc: 'If either player plays a battle card face-down, immediately discard that card.',
-    strength: 5,
-    theater: 'air',
-    type: 'ongoing',
-  },
-  {
-    name: 'Heavy Bombers',
-    desc: '',
-    strength: 6,
+
+const genericCard: Card = {
+  cardID: 'Generic Card',
+  cardInfo: {
+    name: 'None',
+    desc: 'None',
+    strength: -1,
     theater: 'air',
     type: 'none',
   },
+  strength: -1,
+  covered: false,
+  faceDown: false,
+  flip() {
+    if (!this.covered) {
+      if (this.faceDown) {
+        this.strength = this.cardInfo.strength;
+        this.faceDown = false;
+      } else {
+        this.strength = 2;
+        this.faceDown = true;
+      }
+    }
+  },
+  effect: (G, ctx) => {},
+};
+
+export const battleCards: Card[] = [
   {
-    name: 'Reinforce',
-    desc: 'Look at the top card of the battle deck. You may play it face-down to an adjacent theater.',
-    strength: 1,
-    theater: 'land',
-    type: 'instant',
+    ...genericCard,
+    cardID: 'Support',
+    cardInfo: cardInfoRecords.Support,
+    strength: cardInfoRecords.Support.strength,
+    effect: (G, ctx) => {},
   },
   {
-    name: 'Ambush',
-    desc: 'Flip a battle card in any theater.',
-    strength: 2,
-    theater: 'land',
-    type: 'instant',
+    ...genericCard,
+    cardID: 'Air_Drop',
+    cardInfo: cardInfoRecords.Air_Drop,
+    strength: cardInfoRecords.Air_Drop.strength,
+    effect: (G, ctx) => {},
   },
   {
-    name: 'Maneuver',
-    desc: 'Flip a battle card in an adjacent theater.',
-    strength: 3,
-    theater: 'land',
-    type: 'instant',
+    ...genericCard,
+    cardID: 'Maneuver_Air',
+    cardInfo: cardInfoRecords.Maneuver_Air,
+    strength: cardInfoRecords.Maneuver_Air.strength,
+    effect: (G, ctx) => {},
   },
   {
-    name: 'Cover Fire',
-    desc: 'All battle cards covered by this card are now strength 4.',
-    strength: 4,
-    theater: 'land',
-    type: 'ongoing',
+    ...genericCard,
+    cardID: 'Aerodrome',
+    cardInfo: cardInfoRecords.Aerodrome,
+    strength: cardInfoRecords.Aerodrome.strength,
+    effect: (G, ctx) => {},
   },
   {
-    name: 'Disrupt',
-    desc: 'Your opponent chooses and flips 1 of their battle cards. Then you flip 1 of yours.',
-    strength: 5,
-    theater: 'land',
-    type: 'instant',
+    ...genericCard,
+    cardID: 'Containment',
+    cardInfo: cardInfoRecords.Containment,
+    strength: cardInfoRecords.Containment.strength,
+    effect: (G, ctx) => {},
   },
   {
-    name: 'Heavy Tanks',
-    desc: '',
-    strength: 6,
-    theater: 'land',
-    type: 'none',
+    ...genericCard,
+    cardID: 'Heavy_Bombers',
+    cardInfo: cardInfoRecords.Heavy_Bombers,
+    strength: cardInfoRecords.Heavy_Bombers.strength,
+    effect: (G, ctx) => {},
   },
   {
-    name: 'Transport',
-    desc: 'You may move 1 of your battle cards to a different theater.',
-    strength: 1,
-    theater: 'sea',
-    type: 'instant',
+    ...genericCard,
+    cardID: 'Reinforce',
+    cardInfo: cardInfoRecords.Reinforce,
+    strength: cardInfoRecords.Reinforce.strength,
+    effect: (G, ctx) => {},
   },
   {
-    name: 'Escalation',
-    desc: 'All of your face-down battle cards are now strength 4.',
-    strength: 2,
-    theater: 'sea',
-    type: 'ongoing',
+    ...genericCard,
+    cardID: 'Ambush',
+    cardInfo: cardInfoRecords.Ambush,
+    strength: cardInfoRecords.Ambush.strength,
+    effect: (G, ctx) => {},
   },
   {
-    name: 'Maneuver',
-    desc: 'Flip a battle card in an adjacent theater.',
-    strength: 3,
-    theater: 'sea',
-    type: 'instant',
+    ...genericCard,
+    cardID: 'Maneuver_Land',
+    cardInfo: cardInfoRecords.Maneuver_Land,
+    strength: cardInfoRecords.Maneuver_Land.strength,
+    effect: (G, ctx) => {},
   },
   {
-    name: 'Redeploy',
-    desc: 'Return 1 of your face-down battle cards to your hand. If you do, gain an extra turn.',
-    strength: 4,
-    theater: 'sea',
-    type: 'instant',
+    ...genericCard,
+    cardID: 'Cover_Fire',
+    cardInfo: cardInfoRecords.Cover_Fire,
+    strength: cardInfoRecords.Cover_Fire.strength,
+    effect: (G, ctx) => {},
   },
   {
-    name: 'Blockade',
-    desc: "If a battle card is played in an adjacent theater with 3 or more cards already in it (counting both players' cards), discard that card with no effect.",
-    strength: 5,
-    theater: 'sea',
-    type: 'ongoing',
+    ...genericCard,
+    cardID: 'Disrupt',
+    cardInfo: cardInfoRecords.Disrupt,
+    strength: cardInfoRecords.Disrupt.strength,
+    effect: (G, ctx) => {},
   },
   {
-    name: 'Super Battleship',
-    desc: '',
-    strength: 6,
-    theater: 'sea',
-    type: 'none',
+    ...genericCard,
+    cardID: 'Heavy_Tanks',
+    cardInfo: cardInfoRecords.Heavy_Tanks,
+    strength: cardInfoRecords.Heavy_Tanks.strength,
+    effect: (G, ctx) => {},
+  },
+  {
+    ...genericCard,
+    cardID: 'Transport',
+    cardInfo: cardInfoRecords.Transport,
+    strength: cardInfoRecords.Transport.strength,
+    effect: (G, ctx) => {},
+  },
+  {
+    ...genericCard,
+    cardID: 'Escalation',
+    cardInfo: cardInfoRecords.Escalation,
+    strength: cardInfoRecords.Escalation.strength,
+    effect: (G, ctx) => {},
+  },
+  {
+    ...genericCard,
+    cardID: 'Maneuver_Sea',
+    cardInfo: cardInfoRecords.Maneuver_Sea,
+    strength: cardInfoRecords.Maneuver_Sea.strength,
+    effect: (G, ctx) => {},
+  },
+  {
+    ...genericCard,
+    cardID: 'Redeploy',
+    cardInfo: cardInfoRecords.Redeploy,
+    strength: cardInfoRecords.Redeploy.strength,
+    effect: (G, ctx) => {},
+  },
+  {
+    ...genericCard,
+    cardID: 'Blockade',
+    cardInfo: cardInfoRecords.Blockade,
+    strength: cardInfoRecords.Blockade.strength,
+    effect: (G, ctx) => {},
+  },
+  {
+    ...genericCard,
+    cardID: 'Super_Battleship',
+    cardInfo: cardInfoRecords.Super_Battleship,
+    strength: cardInfoRecords.Super_Battleship.strength,
+    effect: (G, ctx) => {},
   },
 ];

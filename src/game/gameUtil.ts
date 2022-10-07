@@ -1,3 +1,6 @@
+import { TheaterType } from './cards';
+import { GameState } from './gameTypes';
+
 export function getPointsScored(
   firstPlayer: boolean,
   cardsLeft: number,
@@ -41,4 +44,15 @@ export function getPointsScored(
     }
   }
   return points;
+}
+
+export function GetAdjacentTheaters(
+  G: GameState,
+  theaterID: number,
+): TheaterType[] {
+  if (theaterID === 1) {
+    return [G.playingField[0].theater, G.playingField[2].theater];
+  } else {
+    return [G.playingField[1].theater];
+  }
 }
