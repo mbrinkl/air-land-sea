@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Theater as GameTheater } from 'game';
+import { Theater as GameTheater } from 'game/gameTypes';
 import { useBoardContext } from './Board';
 import { Card } from './Card';
 import './Theater.scss';
@@ -31,7 +31,7 @@ export const Theater = ({ theater }: Props): JSX.Element => {
           'theater-column__cards--opponent',
         )}
       >
-        {deployedCards[Number(playerID) ^ 1].cards.map((card) => (
+        {deployedCards[(Number(playerID) ^ 1).toString()].map((card) => (
           <Card info={card} deployed="opponent" />
         ))}
       </div>
@@ -51,7 +51,7 @@ export const Theater = ({ theater }: Props): JSX.Element => {
         onClick={() => moves.deploy(getTheaterId())}
         onContextMenu={onRightClick}
       >
-        {deployedCards[Number(playerID)].cards.map((card) => (
+        {deployedCards[Number(playerID).toString()].map((card) => (
           <Card info={card} deployed="self" />
         ))}
       </div>

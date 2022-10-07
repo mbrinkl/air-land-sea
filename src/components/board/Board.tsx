@@ -1,6 +1,6 @@
 import { useContext, createContext } from 'react';
 import { BoardProps } from 'boardgame.io/react';
-import { GameState } from '../../game';
+import { GameState } from '../../game/gameTypes';
 import { Hand } from './Hand';
 import { TheaterRow } from './TheaterRow';
 import { GameInfo } from './GameInfo';
