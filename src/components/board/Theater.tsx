@@ -1,14 +1,14 @@
-import classNames from 'classnames';
+import { Box, Flex } from '@chakra-ui/react';
+import { theme } from 'config/theme';
 import { Theater as GameTheater } from 'game/gameTypes';
 import { useBoardContext } from './Board';
-import { Card } from './Card';
-import './Theater.scss';
+import Card from './Card';
 
 interface Props {
   theater: GameTheater;
 }
 
-export const Theater = ({ theater }: Props): JSX.Element => {
+const Theater = ({ theater }: Props): JSX.Element => {
   const { theater: theaterName, deployedCards } = theater;
   const { G, moves, playerID } = useBoardContext();
 
@@ -24,37 +24,28 @@ export const Theater = ({ theater }: Props): JSX.Element => {
   }
 
   return (
-    <div className="theater-column">
-      <div
-        className={classNames(
-          'theater-column__cards',
-          'theater-column__cards--opponent',
-        )}
-      >
+    <Box w="25%">
+      <Flex bg="gray" height="150px">
         {deployedCards[(Number(playerID) ^ 1).toString()].map((card) => (
           <Card info={card} deployed="opponent" />
         ))}
-      </div>
-      <div
-        className={classNames(
-          'theater-column__center',
-          `theater-column__center--${theaterName}`,
-        )}
-      >
+      </Flex>
+      <Box color="white" bg={theme[theaterName]} textAlign="center">
         - {theaterName.toUpperCase()} -
-      </div>
-      <div
-        className={classNames(
-          'theater-column__cards',
-          'theater-column__cards--self',
-        )}
+      </Box>
+      <Flex
+        bg="gray"
+        height="150px"
+        _hover={{ bg: 'gainsboro' }}
         onClick={() => moves.deploy(getTheaterId())}
         onContextMenu={onRightClick}
       >
-        {deployedCards[Number(playerID).toString()].map((card) => (
+        {deployedCards[playerID!].map((card) => (
           <Card info={card} deployed="self" />
         ))}
-      </div>
-    </div>
+      </Flex>
+    </Box>
   );
 };
+
+export default Theater;
