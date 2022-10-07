@@ -22,15 +22,15 @@ export const Card = ({ info, deployed }: Props) => {
 
   return (
     <Box
-      width="75px"
-      height="125px"
-      backgroundColor={faceDown ? theme['faceDown'] : theme[theater]}
+      w="75px"
+      h="125px"
+      bg={faceDown ? theme['faceDown'] : theme[theater]}
       border="2px solid black"
       color="white"
       borderRadius="10%"
       cursor="pointer"
       margin={deployed != null ? '-50px' : '0'}
-      onClick={!deployed ? () => moves.selectCard(getCardId()) : undefined} // todo: add card num args ; only allow for client hand, not opponent
+      onClick={!deployed ? () => moves.selectCard(getCardId()) : undefined}
       tabIndex={0}
     >
       {cardDisplay}

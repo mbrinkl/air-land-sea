@@ -24,21 +24,17 @@ export const Theater = ({ theater }: Props): JSX.Element => {
   }
 
   return (
-    <Box width="25%">
-      <Flex backgroundColor="gray" height="150px">
+    <Box w="25%">
+      <Flex bg="gray" height="150px">
         {deployedCards[(Number(playerID) ^ 1).toString()].map((card) => (
           <Card info={card} deployed="opponent" />
         ))}
       </Flex>
-      <Box
-        color="white"
-        backgroundColor={theme[theaterName]}
-        textAlign="center"
-      >
+      <Box color="white" bg={theme[theaterName]} textAlign="center">
         - {theaterName.toUpperCase()} -
       </Box>
       <Flex
-        backgroundColor="gray"
+        bg="gray"
         height="150px"
         _hover={{ bg: 'gainsboro' }}
         onClick={() => moves.deploy(getTheaterId())}

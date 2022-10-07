@@ -5,7 +5,7 @@ import { Hand } from './Hand';
 import { TheaterRow } from './TheaterRow';
 import { GameInfo } from './GameInfo';
 import { PlayerSide } from './PlayerSide';
-import { Flex } from '@chakra-ui/react';
+import { Box, HStack } from '@chakra-ui/react';
 
 export const BoardContext = createContext({} as BoardProps<GameState>);
 export const useBoardContext = () => useContext(BoardContext);
@@ -13,9 +13,11 @@ export const useBoardContext = () => useContext(BoardContext);
 export const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
   return (
     <BoardContext.Provider value={boardProps}>
-      <Flex>
-        <GameInfo />
-        <div className="board__game">
+      <HStack>
+        <Box w="20%">
+          <GameInfo />
+        </Box>
+        <Box w="80%">
           <PlayerSide
             sidePlayerID={(Number(boardProps.playerID) ^ 1).toString()}
           >
@@ -25,8 +27,8 @@ export const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
           <PlayerSide sidePlayerID={boardProps.playerID!}>
             <Hand type="self" />
           </PlayerSide>
-        </div>
-      </Flex>
+        </Box>
+      </HStack>
     </BoardContext.Provider>
   );
 };
