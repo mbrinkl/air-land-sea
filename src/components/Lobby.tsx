@@ -3,7 +3,7 @@ import { Local } from 'boardgame.io/multiplayer';
 // import { SocketIO } from 'boardgame.io/multiplayer';
 import { Client } from 'boardgame.io/react';
 import { AirLandSea } from '../game';
-import { Board } from './board/Board';
+import Board from './board/Board';
 // import { SERVER_URL } from '../config/client';
 
 const GameClient = Client({
@@ -13,7 +13,7 @@ const GameClient = Client({
   multiplayer: Local(),
 });
 
-export const Lobby = (): JSX.Element => {
+const Lobby = (): JSX.Element => {
   return (
     <VStack
       divider={<StackDivider borderColor="gray" />}
@@ -25,3 +25,5 @@ export const Lobby = (): JSX.Element => {
     </VStack>
   );
 };
+
+export default Lobby;

@@ -2,13 +2,14 @@ import { Box } from '@chakra-ui/react';
 import { theme } from 'config/theme';
 import { CardInfo } from 'game/cards';
 import { useBoardContext } from './Board';
+import { css } from '@emotion/react';
 
 interface Props {
   info: CardInfo;
   deployed?: 'self' | 'opponent';
 }
 
-export const Card = ({ info, deployed }: Props) => {
+const Card = ({ info, deployed }: Props) => {
   const { G, moves, playerID } = useBoardContext();
   const { theater, strength, name, faceDown } = info;
 
@@ -32,8 +33,17 @@ export const Card = ({ info, deployed }: Props) => {
       margin={deployed != null ? '-50px' : '0'}
       onClick={!deployed ? () => moves.selectCard(getCardId()) : undefined}
       tabIndex={0}
+      css={css`
+        transition-duration: 0.3s;
+        transition-property: transform;
+        &:hover {
+          transform: scale(1.1);
+        }
+      `}
     >
       {cardDisplay}
     </Box>
   );
 };
+
+export default Card;

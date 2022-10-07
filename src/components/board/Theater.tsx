@@ -2,13 +2,13 @@ import { Box, Flex } from '@chakra-ui/react';
 import { theme } from 'config/theme';
 import { Theater as GameTheater } from 'game/gameTypes';
 import { useBoardContext } from './Board';
-import { Card } from './Card';
+import Card from './Card';
 
 interface Props {
   theater: GameTheater;
 }
 
-export const Theater = ({ theater }: Props): JSX.Element => {
+const Theater = ({ theater }: Props): JSX.Element => {
   const { theater: theaterName, deployedCards } = theater;
   const { G, moves, playerID } = useBoardContext();
 
@@ -47,3 +47,5 @@ export const Theater = ({ theater }: Props): JSX.Element => {
     </Box>
   );
 };
+
+export default Theater;

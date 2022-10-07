@@ -86,7 +86,7 @@ const ScoreInfoModel = ({
   );
 };
 
-export const Controls = (): JSX.Element => {
+const Controls = (): JSX.Element => {
   const { undo, ctx, isActive } = useBoardContext();
   const {
     isOpen: isDialogOpen,
@@ -118,3 +118,5 @@ export const Controls = (): JSX.Element => {
     </div>
   );
 };
+
+export default Controls;

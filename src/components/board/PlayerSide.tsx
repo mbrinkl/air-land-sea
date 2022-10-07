@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const PlayerSide = ({ sidePlayerID, children }: Props): JSX.Element => {
+const PlayerSide = ({ sidePlayerID, children }: Props): JSX.Element => {
   const { G, playerID } = useBoardContext();
   const player = G.players.find((p) => p.ID === sidePlayerID);
 
@@ -21,3 +21,5 @@ export const PlayerSide = ({ sidePlayerID, children }: Props): JSX.Element => {
     </Flex>
   );
 };
+
+export default PlayerSide;

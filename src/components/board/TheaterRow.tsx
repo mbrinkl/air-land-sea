@@ -1,8 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 import { useBoardContext } from './Board';
-import { Theater } from './Theater';
+import Theater from './Theater';
 
-export const TheaterRow = () => {
+const TheaterRow = () => {
   const { G } = useBoardContext();
 
   return (
@@ -13,3 +13,5 @@ export const TheaterRow = () => {
     </Flex>
   );
 };
+
+export default TheaterRow;

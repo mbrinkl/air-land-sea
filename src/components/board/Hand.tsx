@@ -1,13 +1,13 @@
 import { CardInfo } from '../../game/cards';
 import { useBoardContext } from './Board';
-import { Card } from './Card';
-import { CardIcon } from './CardIcon';
+import Card from './Card';
+import CardIcon from './CardIcon';
 
 interface Props {
   type: 'self' | 'opponent';
 }
 
-export const Hand = ({ type }: Props) => {
+const Hand = ({ type }: Props) => {
   const { G, playerID } = useBoardContext();
 
   let hand: CardInfo[] = [];
@@ -36,3 +36,5 @@ export const Hand = ({ type }: Props) => {
     </>
   );
 };
+
+export default Hand;

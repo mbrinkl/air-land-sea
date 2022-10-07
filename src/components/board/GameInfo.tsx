@@ -1,8 +1,8 @@
 import { Flex, Text } from '@chakra-ui/react';
-import { Controls } from './Controls';
-import { HelpText } from './HelpText';
+import Controls from './Controls';
+import HelpText from './HelpText';
 
-export const GameInfo = (): JSX.Element => {
+const GameInfo = (): JSX.Element => {
   return (
     <Flex
       direction="column"
@@ -16,3 +16,5 @@ export const GameInfo = (): JSX.Element => {
     </Flex>
   );
 };
+
+export default GameInfo;

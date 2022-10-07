@@ -1,7 +1,7 @@
 import { Text } from '@chakra-ui/react';
 import { useBoardContext } from './Board';
 
-export const HelpText = (): JSX.Element => {
+const HelpText = (): JSX.Element => {
   const { isActive, ctx } = useBoardContext();
 
   const stage: string | null =
@@ -16,3 +16,5 @@ export const HelpText = (): JSX.Element => {
     </Text>
   );
 };
+
+export default HelpText;
