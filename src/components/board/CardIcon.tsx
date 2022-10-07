@@ -1,5 +1,5 @@
-import './CardIcon.scss';
+import { Box } from '@chakra-ui/react';
 
 export const CardIcon = () => {
-  return <div className="card-icon" />;
+  return <Box bg="black" width="1.5em" height="2em" borderRadius="15%" />;
 };

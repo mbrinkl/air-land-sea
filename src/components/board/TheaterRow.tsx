@@ -1,15 +1,15 @@
+import { Flex } from '@chakra-ui/react';
 import { useBoardContext } from './Board';
 import { Theater } from './Theater';
-import './TheaterRow.scss';
 
 export const TheaterRow = () => {
   const { G } = useBoardContext();
 
   return (
-    <div className="theater-row">
+    <Flex alignItems="center" justifyContent="center">
       {G.playingField.map((theater) => (
         <Theater theater={theater} />
       ))}
-    </div>
+    </Flex>
   );
 };

@@ -8,7 +8,7 @@ interface Props {
 
 export const PlayerSide = ({ sidePlayerID, children }: Props): JSX.Element => {
   const { G, playerID } = useBoardContext();
-  const player = G.players.find((p) => p.ID === playerID);
+  const player = G.players.find((p) => p.ID === sidePlayerID);
 
   return (
     <Flex justifyContent="space-between" paddingLeft="15%" paddingRight="15%">

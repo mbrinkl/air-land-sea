@@ -3,7 +3,7 @@ import { Lobby } from 'components/Lobby';
 
 const App = (): JSX.Element => {
   return (
-    <ChakraProvider resetCSS={false}>
+    <ChakraProvider>
       <Lobby />
     </ChakraProvider>
   );

@@ -1,7 +1,7 @@
-import classnames from 'classnames';
+import { Box } from '@chakra-ui/react';
+import { theme } from 'config/theme';
 import { CardInfo } from 'game/cards';
 import { useBoardContext } from './Board';
-import './Card.scss';
 
 interface Props {
   info: CardInfo;
@@ -11,10 +11,7 @@ interface Props {
 export const Card = ({ info, deployed }: Props) => {
   const { G, moves, playerID } = useBoardContext();
   const { theater, strength, name, faceDown } = info;
-  let cardClassName = faceDown ? 'card--face-down' : `card--${theater}`;
-  if (deployed != null) {
-    cardClassName += ` card--deployed-${deployed}`;
-  }
+
   const cardDisplay = faceDown ? strength : `${strength} ${name}`;
 
   function getCardId(): number {
@@ -24,12 +21,19 @@ export const Card = ({ info, deployed }: Props) => {
   }
 
   return (
-    <div
-      className={classnames('card', cardClassName)}
+    <Box
+      width="75px"
+      height="125px"
+      backgroundColor={faceDown ? theme['faceDown'] : theme[theater]}
+      border="2px solid black"
+      color="white"
+      borderRadius="10%"
+      cursor="pointer"
+      margin={deployed != null ? '-50px' : '0'}
       onClick={!deployed ? () => moves.selectCard(getCardId()) : undefined} // todo: add card num args ; only allow for client hand, not opponent
       tabIndex={0}
     >
       {cardDisplay}
-    </div>
+    </Box>
   );
 };

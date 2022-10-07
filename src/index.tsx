@@ -1,7 +1,7 @@
 import { render } from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import './index.scss';
+import './index.css';
 
 render(<App />, document.getElementById('root'));
 
