@@ -30,7 +30,7 @@ const Card = ({ info, deployed }: Props) => {
       color="white"
       borderRadius="10%"
       cursor="pointer"
-      margin={deployed != null ? '-50px' : '0'}
+      marginRight={deployed != null ? '-50px' : '0'}
       onClick={!deployed ? () => moves.selectCard(getCardId()) : undefined}
       tabIndex={0}
       css={css`
