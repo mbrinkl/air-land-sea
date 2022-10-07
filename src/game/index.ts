@@ -1,64 +1,9 @@
-import type { Game, Move } from 'boardgame.io';
+import type { Game } from 'boardgame.io';
 import { GAME_ID } from '../config';
-import { battleCards, TheaterType } from './cards';
+import { battleCards } from './cards';
 import { CardInfo } from './cards';
-import { getPointsScored } from './gameUtil';
-
-export interface GameState {
-  // aka 'G', your game's state
-  players: Player[];
-  secret: SecretInfo;
-  playingField: Theater[];
-  selectedCardID: number;
-}
-export interface Player {
-  ID: string;
-  ready: boolean;
-  firstPlayer: boolean;
-  score: number;
-  cards: CardInfo[];
-}
-export interface Theater {
-  theater: TheaterType;
-  deployedCards: Record<string, CardInfo[]>;
-}
-export interface SecretInfo {
-  deck: CardInfo[];
-  discardPile: CardInfo[];
-}
-
-const selectCard: Move<GameState> = (G, ctx, cardID: number) => {
-  G.selectedCardID = cardID;
-  ctx.events?.setStage('place');
-};
-//play a card face-down to any theater
-const improvise: Move<GameState> = (G, ctx, theaterID: number) => {
-  let playerID = Number(ctx.currentPlayer);
-  G.players[playerID].cards[G.selectedCardID].faceDown = true;
-  G.playingField[theaterID].deployedCards[ctx.currentPlayer].push(
-    ...G.players[playerID].cards.splice(G.selectedCardID, 1),
-  );
-  ctx.events?.endTurn();
-};
-
-//play a card face-up to matching theater
-const deploy: Move<GameState> = (G, ctx, theaterID: number) => {
-  let playerID = Number(ctx.currentPlayer);
-  G.players[playerID].cards[G.selectedCardID].faceDown = false;
-  G.playingField[theaterID].deployedCards[ctx.currentPlayer].push(
-    ...G.players[playerID].cards.splice(G.selectedCardID, 1),
-  );
-  ctx.events?.endTurn();
-};
-
-//lose battle, opponent gains points based on how many cards you have left
-const withdraw: Move<GameState> = (G, ctx) => {
-  let lostPlayer = Number(ctx.currentPlayer);
-  G.players[lostPlayer ^ 1].score += getPointsScored(
-    G.players[lostPlayer].firstPlayer,
-    G.players[lostPlayer].cards.length,
-  );
-};
+import { GameState, Theater } from './gameTypes';
+import { selectCard, withdraw, deploy, improvise } from './moves';
 
 export const AirLandSea: Game<GameState> = {
   name: GAME_ID,
@@ -85,18 +30,9 @@ export const AirLandSea: Game<GameState> = {
       },
     ],
     playingField: [
-      {
-        theater: 'air',
-        deployedCards: { '0': [], '1': [] },
-      },
-      {
-        theater: 'land',
-        deployedCards: { '0': [], '1': [] },
-      },
-      {
-        theater: 'sea',
-        deployedCards: { '0': [], '1': [] },
-      },
+      { theater: 'air', deployedCards: { '0': [], '1': [] } },
+      { theater: 'land', deployedCards: { '0': [], '1': [] } },
+      { theater: 'sea', deployedCards: { '0': [], '1': [] } },
     ],
   }),
 
