@@ -12,7 +12,7 @@
     "server": "ts-node-dev --no-notify ./server/index.ts",
     "server:prod": "ts-node -T ./server/index.ts",
     "client": "start http://localhost:3000 & next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "lint": "next lint",
     "test": "jest"
   },
