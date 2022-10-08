@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import path from 'path';
 import serve from 'koa-static';
 import { historyApiFallback } from 'koa2-connect-history-api-fallback';
@@ -20,6 +19,6 @@ server.app.use(
     whiteList: ['/games', '/.well-known'],
   }),
 );
-server.app.use(serve(path.join(__dirname, '../build')));
+server.app.use(serve(path.join(__dirname, '../out')));
 
 server.run(Number(process.env.PORT || DEFAULT_PORT));

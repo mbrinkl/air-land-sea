@@ -8,7 +8,7 @@ const TheaterRow = () => {
   return (
     <Flex alignItems="center" justifyContent="center">
       {G.playingField.map((theater) => (
-        <Theater theater={theater} />
+        <Theater key={theater.theater} theater={theater} />
       ))}
     </Flex>
   );

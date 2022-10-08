@@ -27,7 +27,7 @@ const Theater = ({ theater }: Props): JSX.Element => {
     <Box w="25%">
       <Flex bg="gray" height="150px" alignItems="center">
         {deployedCards[(Number(playerID) ^ 1).toString()].map((card) => (
-          <Card card={card} deployed="opponent" />
+          <Card key={card.cardID} card={card} deployed="opponent" />
         ))}
       </Flex>
       <Box color="white" bg={theme[theaterName]} textAlign="center">
@@ -42,7 +42,7 @@ const Theater = ({ theater }: Props): JSX.Element => {
         onContextMenu={onRightClick}
       >
         {deployedCards[playerID!].map((card) => (
-          <Card card={card} deployed="self" />
+          <Card key={card.cardID} card={card} deployed="self" />
         ))}
       </Flex>
     </Box>

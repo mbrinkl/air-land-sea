@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -18,13 +18,14 @@
     "noEmit": true,
     "baseUrl": "src",
     "removeComments": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "incremental": true
   },
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"
     }
   },
-  "include": ["src/**/*", "server/**/*"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
