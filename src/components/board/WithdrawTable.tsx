@@ -1,19 +1,46 @@
 import {
   Table,
-  TableCaption,
   TableContainer,
+  TabList,
+  Tabs,
+  Tab,
   Tbody,
   Td,
   Th,
   Thead,
   Tr,
+  TabPanels,
+  TabPanel,
 } from '@chakra-ui/react';
+import { useBoardContext } from './Board';
 
-const WithdrawTable = (): JSX.Element => {
+interface ScoringChart {
+  cardsRemaining: string;
+  opponentPoints: number;
+}
+
+const scoringChartP1: ScoringChart[] = [
+  { cardsRemaining: '4 - 6', opponentPoints: 2 },
+  { cardsRemaining: '2 - 3', opponentPoints: 3 },
+  { cardsRemaining: '1', opponentPoints: 4 },
+  { cardsRemaining: '0', opponentPoints: 6 },
+];
+
+const scoringChartP2: ScoringChart[] = [
+  { cardsRemaining: '5 - 6', opponentPoints: 2 },
+  { cardsRemaining: '3 - 4', opponentPoints: 3 },
+  { cardsRemaining: '2', opponentPoints: 4 },
+  { cardsRemaining: '0 - 1', opponentPoints: 6 },
+];
+
+const WithdrawTable = ({
+  scoringChart,
+}: {
+  scoringChart: ScoringChart[];
+}): JSX.Element => {
   return (
     <TableContainer>
       <Table size="sm">
-        <TableCaption>Withdraw Table</TableCaption>
         <Thead>
           <Tr>
             <Th isNumeric>Cards Remaining In Hand</Th>
@@ -21,26 +48,40 @@ const WithdrawTable = (): JSX.Element => {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td isNumeric>4 - 6</Td>
-            <Td isNumeric>2</Td>
-          </Tr>
-          <Tr>
-            <Td isNumeric>2 - 3</Td>
-            <Td isNumeric>4</Td>
-          </Tr>
-          <Tr>
-            <Td isNumeric>1</Td>
-            <Td isNumeric>5</Td>
-          </Tr>
-          <Tr>
-            <Td isNumeric>11</Td>
-            <Td isNumeric>6</Td>
-          </Tr>
+          {scoringChart.map((data) => (
+            <Tr key={data.opponentPoints}>
+              <Td isNumeric>{data.cardsRemaining}</Td>
+              <Td isNumeric>{data.opponentPoints}</Td>
+            </Tr>
+          ))}
         </Tbody>
       </Table>
     </TableContainer>
   );
 };
 
-export default WithdrawTable;
+const TabbedWithdrawTables = () => {
+  const { G, playerID } = useBoardContext();
+
+  const firstPlayer = G.players.find((p) => p.ID === playerID)?.firstPlayer;
+
+  return (
+    <Tabs>
+      <TabList>
+        <Tab>1st Player {firstPlayer && '(You)'}</Tab>
+        <Tab>2nd Player {!firstPlayer && '(You)'}</Tab>
+      </TabList>
+
+      <TabPanels>
+        <TabPanel>
+          <WithdrawTable scoringChart={scoringChartP1} />
+        </TabPanel>
+        <TabPanel>
+          <WithdrawTable scoringChart={scoringChartP2} />
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
+  );
+};
+
+export default TabbedWithdrawTables;
