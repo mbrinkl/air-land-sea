@@ -15,6 +15,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from '@chakra-ui/react';
+import { getPointsScored } from 'game/gameUtil';
 import { useRef } from 'react';
 import { useBoardContext } from './Board';
 import WithdrawTable from './WithdrawTable';
@@ -26,12 +27,17 @@ const WithdrawDialog = ({
   isOpen: boolean;
   onClose: () => void;
 }): JSX.Element => {
-  const { moves } = useBoardContext();
+  const { G, playerID, moves } = useBoardContext();
   const cancelRef = useRef<any>();
   function onConfirm() {
     moves.withdraw();
     onClose();
   }
+  const player = G.players.find((p) => p.ID !== playerID);
+  const opponentPoints = getPointsScored(
+    player!.firstPlayer,
+    player!.cards.length,
+  );
 
   return (
     <AlertDialog
@@ -46,7 +52,7 @@ const WithdrawDialog = ({
       <AlertDialogContent>
         <AlertDialogHeader>Withdraw?</AlertDialogHeader>
         <AlertDialogBody>
-          Opponent will score n points if you withdraw.
+          Opponent will score {opponentPoints} points if you withdraw.
         </AlertDialogBody>
         <AlertDialogFooter>
           <Button ref={cancelRef} onClick={onClose}>
@@ -70,7 +76,7 @@ const ScoreInfoModel = ({
 }): JSX.Element => {
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Scoring Info</ModalHeader>
@@ -120,7 +126,7 @@ const Controls = (): JSX.Element => {
         Withdraw
       </Button>
 
-      <Button colorScheme="blue" onClick={onModalOpen} disabled={!isActive}>
+      <Button colorScheme="blue" onClick={onModalOpen}>
         ?
       </Button>
 
