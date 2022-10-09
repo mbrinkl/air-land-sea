@@ -1,4 +1,4 @@
-import { StackDivider, VStack } from '@chakra-ui/react';
+import { Box, StackDivider, VStack } from '@chakra-ui/react';
 import { Local } from 'boardgame.io/multiplayer';
 // import { SocketIO } from 'boardgame.io/multiplayer';
 import { Client } from 'boardgame.io/react';
@@ -20,8 +20,12 @@ const Lobby = (): JSX.Element => {
       spacing={4}
       align="stretch"
     >
-      <GameClient playerID="0" />
-      <GameClient playerID="1" />
+      <Box w="100vw" h="100vh" padding="10px">
+        <GameClient playerID="0" />
+      </Box>
+      <Box w="100vw" h="100vh" padding="10px">
+        <GameClient playerID="1" />
+      </Box>
     </VStack>
   );
 };

@@ -6,6 +6,7 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   Button,
+  Flex,
   Modal,
   ModalBody,
   ModalContent,
@@ -16,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { useBoardContext } from './Board';
+import WithdrawTable from './WithdrawTable';
 
 const WithdrawDialog = ({
   isOpen,
@@ -26,7 +28,6 @@ const WithdrawDialog = ({
 }): JSX.Element => {
   const { moves } = useBoardContext();
   const cancelRef = useRef<any>();
-
   function onConfirm() {
     moves.withdraw();
     onClose();
@@ -73,8 +74,9 @@ const ScoreInfoModel = ({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Scoring Info</ModalHeader>
-          <ModalBody>Deezer</ModalBody>
-
+          <ModalBody>
+            <WithdrawTable />
+          </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
@@ -100,22 +102,31 @@ const Controls = (): JSX.Element => {
   } = useDisclosure();
 
   return (
-    <div>
-      <Button onClick={undo} disabled={!ctx.numMoves || !isActive}>
+    <Flex gap="5px">
+      <Button
+        colorScheme="red"
+        onClick={undo}
+        disabled={!ctx.numMoves || !isActive}
+      >
         Undo
       </Button>
 
-      <Button onClick={onDialogOpen} disabled={!isActive}>
+      <Button
+        colorScheme="red"
+        variant="outline"
+        onClick={onDialogOpen}
+        disabled={!isActive}
+      >
         Withdraw
       </Button>
 
-      <Button onClick={onModalOpen} disabled={!isActive}>
+      <Button colorScheme="blue" onClick={onModalOpen} disabled={!isActive}>
         ?
       </Button>
 
       <WithdrawDialog isOpen={isDialogOpen} onClose={onDialogClose} />
       <ScoreInfoModel isOpen={isModalOpen} onClose={onModalClose} />
-    </div>
+    </Flex>
   );
 };
 
