@@ -43,6 +43,7 @@ const Theater = ({ theater, setDesc }: Props): JSX.Element => {
         height="150px"
         alignItems="center"
         _hover={{ bg: 'gainsboro' }}
+        cursor="pointer"
         onClick={() => moves.deploy(getTheaterId())}
         onContextMenu={onRightClick}
       >

@@ -13,7 +13,7 @@ interface Props {
 const Card = ({ card, deployed, setDesc }: Props) => {
   const { G, moves, playerID } = useBoardContext();
   const { cardInfo, strength, faceDown } = card;
-  const { name, theater } = cardInfo;
+  const { name, desc, theater } = cardInfo;
 
   const cardDisplay = faceDown ? strength : `${strength} ${name}`;
 
@@ -22,6 +22,9 @@ const Card = ({ card, deployed, setDesc }: Props) => {
       (c) => c.cardID === card.cardID,
     );
   }
+
+  const description =
+    deployed === 'opponent' && faceDown ? '' : `${name} (${strength}): ${desc}`;
 
   return (
     <Box
@@ -42,7 +45,7 @@ const Card = ({ card, deployed, setDesc }: Props) => {
           transform: scale(1.1);
         }
       `}
-      onMouseOver={() => (setDesc ? setDesc(card.cardInfo.desc) : undefined)}
+      onMouseOver={() => (setDesc ? setDesc(description) : undefined)}
       onMouseOut={() => (setDesc ? setDesc('') : undefined)}
     >
       {cardDisplay}
