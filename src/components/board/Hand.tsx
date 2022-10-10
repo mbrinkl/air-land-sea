@@ -4,9 +4,10 @@ import CardIcon from './CardIcon';
 
 interface Props {
   type: 'self' | 'opponent';
+  setDesc?: (desc: string) => void;
 }
 
-const Hand = ({ type }: Props) => {
+const Hand = ({ type, setDesc }: Props) => {
   const { G, playerID } = useBoardContext();
 
   if (type === 'self') {
@@ -15,7 +16,7 @@ const Hand = ({ type }: Props) => {
         {G.players
           .find((p) => p.ID === playerID)
           ?.cards.map((card) => (
-            <Card key={card.cardID} card={card} />
+            <Card key={card.cardID} card={card} setDesc={setDesc} />
           ))}
       </>
     );

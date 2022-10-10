@@ -44,7 +44,7 @@ const WithdrawTable = ({
         <Thead>
           <Tr>
             <Th isNumeric>Cards Remaining In Hand</Th>
-            <Th isNumeric>Points Your Opponent Will Score</Th>
+            <Th isNumeric>Points Opponent Will Score</Th>
           </Tr>
         </Thead>
         <Tbody>

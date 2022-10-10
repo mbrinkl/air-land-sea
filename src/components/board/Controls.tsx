@@ -114,7 +114,7 @@ const Controls = (): JSX.Element => {
         onClick={undo}
         disabled={!ctx.numMoves || !isActive}
       >
-        Undo
+        ⭮
       </Button>
 
       <Button
