@@ -1,4 +1,4 @@
-import { Flex, Text, Stack } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { useBoardContext } from './Board';
 import SupremeCommanderCard from './SupremeCommanderCard';
 import Theater from './Theater';
