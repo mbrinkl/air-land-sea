@@ -7,14 +7,21 @@ import { css } from '@emotion/react';
 interface Props {
   card: GameCard;
   deployed?: 'self' | 'opponent';
+  setDesc?: (desc: string) => void;
 }
 
-const Card = ({ card, deployed }: Props) => {
-  const { moves } = useBoardContext();
+const Card = ({ card, deployed, setDesc }: Props) => {
+  const { G, moves, playerID } = useBoardContext();
   const { cardInfo, strength, faceDown } = card;
   const { name, theater } = cardInfo;
 
   const cardDisplay = faceDown ? strength : `${strength} ${name}`;
+
+  function getCardId(): number {
+    return G.players[Number(playerID)].cards.findIndex(
+      (c) => c.cardID === card.cardID,
+    );
+  }
 
   return (
     <Box
@@ -26,7 +33,7 @@ const Card = ({ card, deployed }: Props) => {
       borderRadius="10%"
       cursor="pointer"
       marginRight={deployed != null ? '-50px' : '0'}
-      onClick={!deployed ? () => moves.selectCard(card.cardID) : undefined}
+      onClick={!deployed ? () => moves.selectCard(getCardId()) : undefined}
       tabIndex={0}
       css={css`
         transition-duration: 0.3s;
@@ -35,6 +42,8 @@ const Card = ({ card, deployed }: Props) => {
           transform: scale(1.1);
         }
       `}
+      onMouseOver={() => (setDesc ? setDesc(card.cardInfo.desc) : undefined)}
+      onMouseOut={() => (setDesc ? setDesc('') : undefined)}
     >
       {cardDisplay}
     </Box>

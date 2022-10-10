@@ -3,7 +3,11 @@ import { useBoardContext } from './Board';
 import SupremeCommanderCard from './SupremeCommanderCard';
 import Theater from './Theater';
 
-const TheaterRow = () => {
+interface Props {
+  setDesc?: (desc: string) => void;
+}
+
+const TheaterRow = ({ setDesc }: Props) => {
   const { G, playerID } = useBoardContext();
 
   return (
@@ -12,7 +16,7 @@ const TheaterRow = () => {
         <SupremeCommanderCard playerID={playerID!} />
       </Flex>
       {G.playingField.map((theater) => (
-        <Theater key={theater.theater} theater={theater} />
+        <Theater key={theater.theater} theater={theater} setDesc={setDesc} />
       ))}
       <Flex h="300px" alignItems="flex-start" marginLeft="10px">
         <SupremeCommanderCard playerID={(Number(playerID) ^ 1).toString()} />

@@ -6,9 +6,10 @@ import Card from './Card';
 
 interface Props {
   theater: GameTheater;
+  setDesc?: (desc: string) => void;
 }
 
-const Theater = ({ theater }: Props): JSX.Element => {
+const Theater = ({ theater, setDesc }: Props): JSX.Element => {
   const { theater: theaterName, deployedCards } = theater;
   const { G, moves, playerID } = useBoardContext();
 
@@ -27,7 +28,12 @@ const Theater = ({ theater }: Props): JSX.Element => {
     <Box w="25%">
       <Flex height="150px" alignItems="center">
         {deployedCards[(Number(playerID) ^ 1).toString()].map((card) => (
-          <Card key={card.cardID} card={card} deployed="opponent" />
+          <Card
+            key={card.cardID}
+            card={card}
+            deployed="opponent"
+            setDesc={setDesc}
+          />
         ))}
       </Flex>
       <Box color="white" bg={theme[theaterName]} textAlign="center">
@@ -41,7 +47,12 @@ const Theater = ({ theater }: Props): JSX.Element => {
         onContextMenu={onRightClick}
       >
         {deployedCards[playerID!].map((card) => (
-          <Card key={card.cardID} card={card} deployed="self" />
+          <Card
+            key={card.cardID}
+            card={card}
+            deployed="self"
+            setDesc={setDesc}
+          />
         ))}
       </Flex>
     </Box>
