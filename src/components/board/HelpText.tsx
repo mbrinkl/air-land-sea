@@ -11,7 +11,7 @@ const HelpText = (): JSX.Element => {
   const text = isActive ? `${ctx.phase} : ${stage}` : 'Waiting for Opponent...';
 
   return (
-    <Text fontSize="3xl" margin="0.5em">
+    <Text fontSize="lg" textAlign="center">
       {text}
     </Text>
   );

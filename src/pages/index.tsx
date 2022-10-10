@@ -20,10 +20,10 @@ const Lobby = (): JSX.Element => {
       spacing={4}
       align="stretch"
     >
-      <Box w="100vw" h="100vh" padding="10px">
+      <Box w="100vw" h="100vh">
         <GameClient playerID="0" />
       </Box>
-      <Box w="100vw" h="100vh" padding="10px">
+      <Box w="100vw" h="100vh">
         <GameClient playerID="1" />
       </Box>
     </VStack>

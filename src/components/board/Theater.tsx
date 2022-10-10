@@ -25,7 +25,7 @@ const Theater = ({ theater }: Props): JSX.Element => {
 
   return (
     <Box w="25%">
-      <Flex bg="gray" height="150px" alignItems="center">
+      <Flex height="150px" alignItems="center">
         {deployedCards[(Number(playerID) ^ 1).toString()].map((card) => (
           <Card key={card.cardID} card={card} deployed="opponent" />
         ))}
@@ -34,7 +34,6 @@ const Theater = ({ theater }: Props): JSX.Element => {
         - {theaterName.toUpperCase()} -
       </Box>
       <Flex
-        bg="gray"
         height="150px"
         alignItems="center"
         _hover={{ bg: 'gainsboro' }}

@@ -3,9 +3,9 @@ import { BoardProps } from 'boardgame.io/react';
 import { GameState } from '../../game/gameTypes';
 import Hand from './Hand';
 import TheaterRow from './TheaterRow';
-import GameInfo from './GameInfo';
-import PlayerSide from './PlayerSide';
-import { Box, HStack } from '@chakra-ui/react';
+import { Box, VStack, Flex, Text, Grid, GridItem } from '@chakra-ui/react';
+import Controls from './Controls';
+import HelpText from './HelpText';
 
 export const BoardContext = createContext({} as BoardProps<GameState>);
 export const useBoardContext = () => useContext(BoardContext);
@@ -13,22 +13,35 @@ export const useBoardContext = () => useContext(BoardContext);
 const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
   return (
     <BoardContext.Provider value={boardProps}>
-      <HStack>
-        <Box w="20%">
-          <GameInfo />
-        </Box>
-        <Box w="80%">
-          <PlayerSide
-            sidePlayerID={(Number(boardProps.playerID) ^ 1).toString()}
-          >
-            <Hand type="opponent" />
-          </PlayerSide>
+      <VStack h="100vh">
+        <Flex h="10%" gap="3px" alignItems="center">
+          <Hand type="opponent" />
+        </Flex>
+        <Box h="60%" w="100%">
           <TheaterRow />
-          <PlayerSide sidePlayerID={boardProps.playerID!}>
-            <Hand type="self" />
-          </PlayerSide>
         </Box>
-      </HStack>
+        <Grid h="30%" w="100%" templateColumns="repeat(4, 1fr)" gap={4}>
+          <GridItem h="100%">
+            <Flex
+              h="100%"
+              alignItems="center"
+              justifyContent="center"
+              gap="3px"
+            >
+              <Controls />
+            </Flex>
+          </GridItem>
+          <GridItem colSpan={2} h="100%">
+            <HelpText />
+            <Flex alignItems="center" justifyContent="center" gap="3px">
+              <Hand type="self" />
+            </Flex>
+          </GridItem>
+          <GridItem h="100%">
+            <Text>Todo: Card Info on hover</Text>
+          </GridItem>
+        </Grid>
+      </VStack>
     </BoardContext.Provider>
   );
 };
