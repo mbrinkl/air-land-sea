@@ -1,4 +1,5 @@
-import { TheaterType } from './cards';
+import { Ctx } from 'boardgame.io';
+import { Card, TheaterType } from './cards';
 import { GameState } from './gameTypes';
 
 export function getPointsScored(
@@ -45,7 +46,80 @@ export function getPointsScored(
   }
   return points;
 }
-
+export function Flip(G: GameState, ctx: Ctx): void {
+  // flip() {
+  //   if (!this.covered) {
+  //     if (this.faceDown) {
+  //       this.strength = this.cardInfo.strength;
+  //       this.faceDown = false;
+  //     } else {
+  //       this.strength = 2;
+  //       this.faceDown = true;
+  //     }
+  //   }
+  // },
+  // effect: (G, ctx) => {},
+}
+export function CardEffect(G: GameState, ctx: Ctx, cardID: string): void {
+  switch (cardID) {
+    case 'Support':
+      break;
+    case 'Air_Drop':
+      break;
+    case 'Maneuver_Air':
+      break;
+    case 'Aerodrome':
+      break;
+    case 'Containment':
+      break;
+    case 'Heavy_Bombers':
+      break;
+    case 'Reinforce':
+      break;
+    case 'Ambush':
+      break;
+    case 'Maneuver_Land':
+      break;
+    case 'Cover_Fire':
+      break;
+    case 'Disrupt':
+      break;
+    case 'Heavy_Tanks':
+      break;
+    case 'Transport':
+      break;
+    case 'Escalation':
+      break;
+    case 'Maneuver_Sea':
+      break;
+    case 'Redeploy':
+      break;
+    case 'Blockade':
+      break;
+    case 'Super_Battleship':
+      break;
+    default:
+      break;
+  }
+}
+export function SetValidTheaters(G: GameState, ctx: Ctx, card: Card): void {
+  let validTheater = card.cardInfo.theater;
+  G.playingField.map((theater) => {
+    //need to check for ongoing effects here
+    theater.isValid = theater.theater === validTheater;
+  });
+}
+export function CalculateCardStrength(
+  G: GameState,
+  player: string,
+  card: Card,
+): number {
+  //need to check for ongoing effects here
+  if (card.faceDown) return 2;
+  else {
+    return card.strength;
+  }
+}
 export function GetAdjacentTheaters(
   G: GameState,
   theaterID: number,
