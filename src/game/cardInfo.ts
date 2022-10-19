@@ -1,4 +1,4 @@
-import { AbilityType, TheaterType } from './cards';
+import { AbilityType, TheaterType, OngoingType } from './cards';
 
 export interface CardInfo {
   name: string;
@@ -6,6 +6,7 @@ export interface CardInfo {
   desc: string;
   type: AbilityType;
   theater: TheaterType;
+  ongoingType?: OngoingType;
 }
 
 export const cardInfoRecords: Record<string, CardInfo> = {
@@ -36,6 +37,7 @@ export const cardInfoRecords: Record<string, CardInfo> = {
     strength: 4,
     theater: 'air',
     type: 'ongoing',
+    ongoingType: 'player',
   },
   Containment: {
     name: 'Containment',
@@ -43,6 +45,7 @@ export const cardInfoRecords: Record<string, CardInfo> = {
     strength: 5,
     theater: 'air',
     type: 'ongoing',
+    ongoingType: 'global',
   },
   Heavy_Bombers: {
     name: 'Heavy Bombers',
@@ -78,6 +81,7 @@ export const cardInfoRecords: Record<string, CardInfo> = {
     strength: 4,
     theater: 'land',
     type: 'ongoing',
+    ongoingType: 'player',
   },
   Disrupt: {
     name: 'Disrupt',
@@ -106,6 +110,7 @@ export const cardInfoRecords: Record<string, CardInfo> = {
     strength: 2,
     theater: 'sea',
     type: 'ongoing',
+    ongoingType: 'player',
   },
   Maneuver_Sea: {
     name: 'Maneuver',
@@ -127,6 +132,7 @@ export const cardInfoRecords: Record<string, CardInfo> = {
     strength: 5,
     theater: 'sea',
     type: 'ongoing',
+    ongoingType: 'global',
   },
   Super_Battleship: {
     name: 'Super Battleship',
