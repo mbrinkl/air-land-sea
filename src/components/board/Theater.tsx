@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { theme } from 'config/theme';
+import { colors } from 'config/theme';
 import { Theater as GameTheater } from 'game/gameTypes';
 import { useBoardContext } from './Board';
 import Card from './Card';
@@ -33,7 +33,7 @@ const Theater = ({ theater }: Props): JSX.Element => {
           {totalStrength[Number(playerID) ^ 1]}
         </Text>
       </Flex>
-      <Box color="white" bg={theme[theaterName]} textAlign="center">
+      <Box color="white" bg={colors[theaterName]} textAlign="center">
         - {theaterName.toUpperCase()} -
       </Box>
       <Flex

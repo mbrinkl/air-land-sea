@@ -1,5 +1,5 @@
 import { Text, Stack } from '@chakra-ui/react';
-import { theme } from 'config/theme';
+import { colors } from 'config/theme';
 import { useBoardContext } from './Board';
 
 const SupremeCommanderCard = ({
@@ -9,7 +9,7 @@ const SupremeCommanderCard = ({
 }): JSX.Element => {
   const { G, playerID: clientPlayerID } = useBoardContext();
   const player = G.players.find((p) => p.ID === playerID);
-  const color = player?.firstPlayer ? theme['first'] : theme['second'];
+  const color = player?.firstPlayer ? colors['first'] : colors['second'];
 
   return (
     <Stack

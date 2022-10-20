@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { theme } from 'config/theme';
+import { colors } from 'config/theme';
 import { Card as GameCard } from 'game/cards';
 import { useBoardContext } from './Board';
 import { css } from '@emotion/react';
@@ -33,7 +33,7 @@ const Card = ({ card, deployed }: Props) => {
     <Box
       w="75px"
       h="125px"
-      bg={faceDown ? theme['faceDown'] : theme[theater]}
+      bg={faceDown ? colors['faceDown'] : colors[theater]}
       border="2px solid black"
       color="white"
       borderRadius="10%"
