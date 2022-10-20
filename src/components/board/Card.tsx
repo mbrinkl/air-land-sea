@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import { colors } from 'config/theme';
 import { Card as GameCard } from 'game/cards';
 import { useBoardContext } from './Board';
