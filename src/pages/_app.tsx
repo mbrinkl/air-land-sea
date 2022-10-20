@@ -1,18 +1,23 @@
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
 import { ChakraProvider } from '@chakra-ui/react';
-import '../styles/globals.css';
+import { wrapper } from '../store';
+import { theme } from 'config/theme';
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, ...rest }: AppProps) => {
+  const { store, props } = wrapper.useWrappedStore(rest);
   return (
     <>
       <Head>
         <title>Air, Land, & Sea</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <ChakraProvider>
-        <Component {...pageProps} />
-      </ChakraProvider>
+      <Provider store={store}>
+        <ChakraProvider theme={theme}>
+          <Component {...props.pageProps} />
+        </ChakraProvider>
+      </Provider>
     </>
   );
 };

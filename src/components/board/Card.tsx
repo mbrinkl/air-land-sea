@@ -1,21 +1,22 @@
-import { Box } from '@chakra-ui/react';
-import { theme } from 'config/theme';
+import { Flex, Text } from '@chakra-ui/react';
+import { colors } from 'config/theme';
 import { Card as GameCard } from 'game/cards';
 import { useBoardContext } from './Board';
 import { css } from '@emotion/react';
+import { useDispatch } from 'react-redux';
+import { setActiveCardDesc } from 'store';
 
 interface Props {
   card: GameCard;
   deployed?: 'self' | 'opponent';
-  setDesc?: (desc: string) => void;
 }
 
-const Card = ({ card, deployed, setDesc }: Props) => {
+const Card = ({ card, deployed }: Props) => {
+  const dispatch = useDispatch();
+
   const { G, moves, playerID } = useBoardContext();
   const { cardInfo, strength, faceDown } = card;
   const { name, desc, theater } = cardInfo;
-
-  const cardDisplay = faceDown ? strength : `${strength} ${name}`;
 
   function getCardId(): number {
     return G.players[Number(playerID)].cards.findIndex(
@@ -27,12 +28,15 @@ const Card = ({ card, deployed, setDesc }: Props) => {
     deployed === 'opponent' && faceDown ? '' : `${name} (${strength}): ${desc}`;
 
   return (
-    <Box
+    <Flex
+      pos="relative"
       w="75px"
       h="125px"
-      bg={faceDown ? theme['faceDown'] : theme[theater]}
+      bg={faceDown ? colors['faceDown'] : colors[theater]}
       border="2px solid black"
       color="white"
+      alignItems="center"
+      justifyContent="center"
       borderRadius="10%"
       cursor="pointer"
       marginRight={deployed != null ? '-50px' : '0'}
@@ -45,11 +49,18 @@ const Card = ({ card, deployed, setDesc }: Props) => {
           transform: scale(1.1);
         }
       `}
-      onMouseOver={() => (setDesc ? setDesc(description) : undefined)}
-      onMouseOut={() => (setDesc ? setDesc('') : undefined)}
+      onMouseOver={() => dispatch(setActiveCardDesc(description))}
+      onMouseOut={() => dispatch(setActiveCardDesc(''))}
     >
-      {cardDisplay}
-    </Box>
+      <Text pos="absolute" top={0} left={1}>
+        {strength}
+      </Text>
+      {!faceDown && (
+        <Text textAlign="center" wordBreak="break-word">
+          {name}
+        </Text>
+      )}
+    </Flex>
   );
 };
 
