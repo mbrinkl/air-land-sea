@@ -1,4 +1,5 @@
 import type { Game } from 'boardgame.io';
+import { TurnOrder } from 'boardgame.io/core';
 import { GAME_ID } from '../config';
 import { battleCards, Card } from './cards';
 import { GameState, Theater } from './gameTypes';
@@ -12,6 +13,8 @@ export const AirLandSea: Game<GameState> = {
   setup: () => ({
     secret: { deck: battleCards, discardPile: [] },
     selectedCardID: -1,
+    ongoingEffects: [],
+    playOrder: ['0', '1'],
     players: [
       {
         ID: '0',
@@ -19,6 +22,7 @@ export const AirLandSea: Game<GameState> = {
         cards: [],
         ready: false,
         score: 0,
+        ongoingEffects: [],
       },
       {
         ID: '1',
@@ -26,6 +30,7 @@ export const AirLandSea: Game<GameState> = {
         cards: [],
         ready: false,
         score: 0,
+        ongoingEffects: [],
       },
     ],
     playingField: [
@@ -62,14 +67,16 @@ export const AirLandSea: Game<GameState> = {
     main: {
       turn: {
         activePlayers: { currentPlayer: 'select' },
-        order: {
-          first: (G, ctx) => Number(G.players[0].firstPlayer ? '0' : '1'),
-          next: (G, ctx) => Number(G.players[0].firstPlayer ? '1' : '0'),
-        },
+        order: TurnOrder.CUSTOM_FROM('playOrder'), //{
         stages: {
           select: { moves: { selectCard, withdraw } },
           place: { moves: { deploy, improvise } },
         },
+      },
+    },
+    epicWinningAnimation: {
+      onBegin: (G, ctx) => {
+        //something crazy idk
       },
     },
   },
