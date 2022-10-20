@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { theme } from 'config/theme';
 import { Theater as GameTheater } from 'game/gameTypes';
 import { useBoardContext } from './Board';
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Theater = ({ theater, setDesc }: Props): JSX.Element => {
-  const { theater: theaterName, deployedCards } = theater;
+  const { theater: theaterName, deployedCards, totalStrength } = theater;
   const { G, moves, playerID } = useBoardContext();
 
   function getTheaterId(): number {
@@ -26,7 +26,7 @@ const Theater = ({ theater, setDesc }: Props): JSX.Element => {
 
   return (
     <Box w="25%">
-      <Flex height="150px" alignItems="center">
+      <Flex pos="relative" height="150px" alignItems="end">
         {deployedCards[(Number(playerID) ^ 1).toString()].map((card) => (
           <Card
             key={card.cardID}
@@ -35,13 +35,16 @@ const Theater = ({ theater, setDesc }: Props): JSX.Element => {
             setDesc={setDesc}
           />
         ))}
+        <Text pos="absolute" top={0} left={0} right={0} textAlign="center">
+          {totalStrength[Number(playerID) ^ 1]}
+        </Text>
       </Flex>
       <Box color="white" bg={theme[theaterName]} textAlign="center">
         - {theaterName.toUpperCase()} -
       </Box>
       <Flex
+        pos="relative"
         height="150px"
-        alignItems="center"
         _hover={{ bg: 'gainsboro' }}
         cursor="pointer"
         onClick={() => moves.deploy(getTheaterId())}
@@ -55,6 +58,9 @@ const Theater = ({ theater, setDesc }: Props): JSX.Element => {
             setDesc={setDesc}
           />
         ))}
+        <Text pos="absolute" bottom={0} left={0} right={0} textAlign="center">
+          {totalStrength[playerID!]}
+        </Text>
       </Flex>
     </Box>
   );
