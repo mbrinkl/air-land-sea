@@ -1,4 +1,4 @@
-import { useContext, createContext, useState } from 'react';
+import { useContext, createContext } from 'react';
 import { BoardProps } from 'boardgame.io/react';
 import { GameState } from '../../game/gameTypes';
 import Hand from './Hand';
@@ -6,12 +6,14 @@ import TheaterRow from './TheaterRow';
 import { Box, VStack, Flex, Text, Grid, GridItem } from '@chakra-ui/react';
 import Controls from './Controls';
 import HelpText from './HelpText';
+import { useSelector } from 'react-redux';
+import { getActiveCardDesc } from 'store';
 
 export const BoardContext = createContext({} as BoardProps<GameState>);
 export const useBoardContext = () => useContext(BoardContext);
 
 const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
-  const [activeCardDesc, setActiveCardDesc] = useState('');
+  const activeCardDesc = useSelector(getActiveCardDesc);
 
   return (
     <BoardContext.Provider value={boardProps}>
@@ -20,7 +22,7 @@ const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
           <Hand type="opponent" />
         </Flex>
         <Box h="60%" w="100%">
-          <TheaterRow setDesc={setActiveCardDesc} />
+          <TheaterRow />
         </Box>
         <Grid h="30%" w="100%" templateColumns="repeat(4, 1fr)" gap={4}>
           <GridItem h="100%">
@@ -36,7 +38,7 @@ const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
           <GridItem colSpan={2} h="100%">
             <HelpText />
             <Flex alignItems="center" justifyContent="center" gap="3px">
-              <Hand type="self" setDesc={setActiveCardDesc} />
+              <Hand type="self" />
             </Flex>
           </GridItem>
           <GridItem h="100%">

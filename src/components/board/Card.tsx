@@ -3,14 +3,17 @@ import { theme } from 'config/theme';
 import { Card as GameCard } from 'game/cards';
 import { useBoardContext } from './Board';
 import { css } from '@emotion/react';
+import { useDispatch } from 'react-redux';
+import { setActiveCardDesc } from 'store';
 
 interface Props {
   card: GameCard;
   deployed?: 'self' | 'opponent';
-  setDesc?: (desc: string) => void;
 }
 
-const Card = ({ card, deployed, setDesc }: Props) => {
+const Card = ({ card, deployed }: Props) => {
+  const dispatch = useDispatch();
+
   const { G, moves, playerID } = useBoardContext();
   const { cardInfo, strength, faceDown } = card;
   const { name, desc, theater } = cardInfo;
@@ -45,8 +48,8 @@ const Card = ({ card, deployed, setDesc }: Props) => {
           transform: scale(1.1);
         }
       `}
-      onMouseOver={() => (setDesc ? setDesc(description) : undefined)}
-      onMouseOut={() => (setDesc ? setDesc('') : undefined)}
+      onMouseOver={() => dispatch(setActiveCardDesc(description))}
+      onMouseOut={() => dispatch(setActiveCardDesc(''))}
     >
       {cardDisplay}
     </Box>
