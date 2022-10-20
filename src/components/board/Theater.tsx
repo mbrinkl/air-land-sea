@@ -25,7 +25,7 @@ const Theater = ({ theater }: Props): JSX.Element => {
 
   return (
     <Box w="25%">
-      <Flex pos="relative" height="150px" alignItems="end">
+      <Flex pos="relative" h="150px" bg="gainsboro" alignItems="end">
         {deployedCards[(Number(playerID) ^ 1).toString()].map((card) => (
           <Card key={card.cardID} card={card} deployed="opponent" />
         ))}
@@ -38,8 +38,9 @@ const Theater = ({ theater }: Props): JSX.Element => {
       </Box>
       <Flex
         pos="relative"
-        height="150px"
-        _hover={{ bg: 'gainsboro' }}
+        h="150px"
+        bg="gainsboro"
+        _hover={{ bg: 'silver' }}
         cursor="pointer"
         onClick={() => moves.deploy(getTheaterId())}
         onContextMenu={onRightClick}

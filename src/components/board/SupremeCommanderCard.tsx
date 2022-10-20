@@ -15,6 +15,7 @@ const SupremeCommanderCard = ({
     <Stack
       w="75px"
       h="125px"
+      bg="gainsboro"
       border={`2px solid ${color}`}
       borderRadius="10%"
       textAlign="center"
