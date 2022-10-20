@@ -37,7 +37,7 @@ const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
           </GridItem>
           <GridItem colSpan={2} h="100%">
             <HelpText />
-            <Flex alignItems="center" justifyContent="center" gap="3px">
+            <Flex alignItems="center" justifyContent="center" gap="5px">
               <Hand type="self" />
             </Flex>
           </GridItem>
