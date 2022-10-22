@@ -17,7 +17,6 @@ server.app.use(
     whiteList: ['/games', '/.well-known'],
   }),
 );
-console.log(path.join(__dirname, '../dist'));
-// server.app.use(serve(path.join(__dirname, '../dist')));
+server.app.use(serve(path.join(__dirname, '../dist')));
 
 server.run(Number(process.env.PORT || DEFAULT_PORT));

@@ -7,10 +7,11 @@
     "npm": ">=8"
   },
   "scripts": {
-    "start": "start http://localhost:5173 & concurrently -c cyan,magenta --kill-others npm:server npm:client",
+    "start": "start http://localhost:5173 & concurrently -c cyan,magenta,yellow --kill-others npm:server npm:client npm:tsc",
     "start:prod": "npm run server:prod",
     "server": "ts-node-dev -T --no-notify ./server/index.ts",
     "server:prod": "ts-node -T ./server/index.ts",
+    "tsc": "tsc --noEmit --incremental --watch --preserveWatchOutput --pretty",
     "client": "vite",
     "preview": "vite preview",
     "build": "tsc && vite build",
