@@ -25,6 +25,9 @@ interface IState {
 }
 
 const localRoomData = localStorage.getItem(PLAYER_STORAGE_KEY);
+
+console.log('getting local', localRoomData);
+
 const initialState: IState = {
   nickname: localStorage.getItem(NICKNAME_STORAGE_KEY),
   roomData: localRoomData && JSON.parse(localRoomData),
@@ -33,6 +36,7 @@ const initialState: IState = {
 export const joinMatchThunk = createAsyncThunk<IRoomData, IJoinRoomParams>(
   'user/joinMatch',
   async (params) => {
+    console.log('in join match thunk');
     const [playerID, credentials] = await joinMatch(params);
     return {
       matchID: params.matchID,
@@ -43,7 +47,7 @@ export const joinMatchThunk = createAsyncThunk<IRoomData, IJoinRoomParams>(
 );
 
 export const leaveMatchThunk = createAsyncThunk<void, ILeaveRoomParams>(
-  'user/joinMatch',
+  'user/leaveMatch',
   async (params) => {
     await leaveMatch(params);
   },
@@ -55,9 +59,7 @@ export const userSlice = createSlice({
   reducers: {
     setNickname: (state, action: PayloadAction<string>) => {
       state.nickname = action.payload;
-    },
-    setRoomData: (state, action: PayloadAction<IRoomData | null>) => {
-      state.roomData = action.payload;
+      localStorage.setItem(NICKNAME_STORAGE_KEY, action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -66,10 +68,15 @@ export const userSlice = createSlice({
       .addCase(joinMatchThunk.fulfilled, (state, action) => {
         // Add user to the state array
         state.roomData = action.payload;
+        localStorage.setItem(
+          PLAYER_STORAGE_KEY,
+          JSON.stringify(action.payload),
+        );
       })
       .addCase(leaveMatchThunk.fulfilled, (state) => {
         // Add user to the state array
         state.roomData = null;
+        localStorage.removeItem(PLAYER_STORAGE_KEY);
       });
   },
 });
