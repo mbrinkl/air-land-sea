@@ -1,5 +1,5 @@
 import { Text, Stack } from '@chakra-ui/react';
-import { colors } from 'config/theme';
+import { colors } from '../../config/theme';
 import { useBoardContext } from './Board';
 
 const SupremeCommanderCard = ({

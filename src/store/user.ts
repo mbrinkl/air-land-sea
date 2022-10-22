@@ -1,5 +1,5 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
-import { NICKNAME_STORAGE_KEY, PLAYER_STORAGE_KEY } from 'config/client';
+import { NICKNAME_STORAGE_KEY, PLAYER_STORAGE_KEY } from '../config/client';
 
 interface IRoomData {
   matchID: string;

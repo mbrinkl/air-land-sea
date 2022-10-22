@@ -4,7 +4,7 @@ import { historyApiFallback } from 'koa2-connect-history-api-fallback';
 import { Server, Origins } from 'boardgame.io/server';
 import { DEFAULT_PORT } from '../src/config';
 import { AirLandSea } from '../src/game';
-import { SERVER_URL } from 'config/client';
+import { SERVER_URL } from '../src/config/client';
 
 const server = Server({
   games: [AirLandSea],
@@ -17,6 +17,7 @@ server.app.use(
     whiteList: ['/games', '/.well-known'],
   }),
 );
-server.app.use(serve(path.join(__dirname, '../out')));
+console.log(path.join(__dirname, '../dist'));
+// server.app.use(serve(path.join(__dirname, '../dist')));
 
 server.run(Number(process.env.PORT || DEFAULT_PORT));

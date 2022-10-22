@@ -1,10 +1,10 @@
 import { Flex, Text } from '@chakra-ui/react';
-import { colors } from 'config/theme';
-import { Card as GameCard } from 'game/cards';
+import { colors } from '../../config/theme';
+import { Card as GameCard } from '../../game/cards';
 import { useBoardContext } from './Board';
 import { css } from '@emotion/react';
-import { setHoveredCardInfo } from 'store/board';
-import { useAppDispatch } from 'hooks';
+import { setHoveredCardInfo } from '../../store/board';
+import { useAppDispatch } from '../../hooks';
 
 interface Props {
   card: GameCard;

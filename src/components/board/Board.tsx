@@ -6,7 +6,7 @@ import TheaterRow from './TheaterRow';
 import { Box, VStack, Flex, Text, Grid, GridItem } from '@chakra-ui/react';
 import Controls from './Controls';
 import HelpText from './HelpText';
-import { useAppSelector } from 'hooks';
+import { useAppSelector } from '../../hooks';
 
 export const BoardContext = createContext({} as BoardProps<GameState>);
 export const useBoardContext = () => useContext(BoardContext);
