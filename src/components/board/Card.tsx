@@ -3,7 +3,7 @@ import { colors } from '../../config/theme';
 import { Card as GameCard } from '../../game/cards';
 import { useBoardContext } from './Board';
 import { css } from '@emotion/react';
-import { setHoveredCardInfo } from '../../store/board';
+import { boardSlice } from '../../store/board';
 import { useAppDispatch } from '../../hooks';
 
 interface Props {
@@ -49,8 +49,10 @@ const Card = ({ card, deployed }: Props) => {
           transform: scale(1.1);
         }
       `}
-      onMouseOver={() => dispatch(setHoveredCardInfo(description))}
-      onMouseOut={() => dispatch(setHoveredCardInfo(''))}
+      onMouseOver={() =>
+        dispatch(boardSlice.actions.setHoveredCardInfo(description))
+      }
+      onMouseOut={() => dispatch(boardSlice.actions.setHoveredCardInfo(''))}
     >
       <Text pos="absolute" top={0} left={1}>
         {strength}
