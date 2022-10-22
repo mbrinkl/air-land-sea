@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { boardReducer } from './board';
-import { userReducer } from './user';
+import { boardSlice } from './board';
+import { userSlice } from './user';
 
 export const store = configureStore({
   reducer: {
-    user: userReducer,
-    board: boardReducer,
+    user: userSlice.reducer,
+    board: boardSlice.reducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

@@ -1,20 +1,19 @@
-import { createAction, createReducer } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// state
-export interface IBoardState {
+interface IState {
   hoveredCardInfo: string;
 }
 
-const preloadedState: IBoardState = {
+const initialState: IState = {
   hoveredCardInfo: '',
 };
 
-// actions
-export const setHoveredCardInfo = createAction<string>('board/hoveredCardInfo');
-
-// reducers
-export const boardReducer = createReducer(preloadedState, (builder) => {
-  builder.addCase(setHoveredCardInfo, (state, action) => {
-    state.hoveredCardInfo = action.payload;
-  });
+export const boardSlice = createSlice({
+  name: 'board',
+  initialState,
+  reducers: {
+    setHoveredCardInfo: (state, action: PayloadAction<string>) => {
+      state.hoveredCardInfo = action.payload;
+    },
+  },
 });

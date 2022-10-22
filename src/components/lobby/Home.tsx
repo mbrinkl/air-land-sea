@@ -1,33 +1,39 @@
-import { Box, StackDivider, VStack } from '@chakra-ui/react';
-import { Local } from 'boardgame.io/multiplayer';
-// import { SocketIO } from 'boardgame.io/multiplayer';
-import { Client } from 'boardgame.io/react';
-import { AirLandSea } from '../../game';
-import Board from '../board/Board';
-// import { SERVER_URL } from '../config/client';
+import { Input, Button } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { createMatch } from '../../api';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { userSlice } from '../../store/user';
 
-const GameClient = Client({
-  game: AirLandSea,
-  board: Board,
-  // multiplayer: SocketIO({ server: SERVER_URL }),
-  multiplayer: Local(),
-});
+const Home = (): JSX.Element => {
+  const navigate = useNavigate();
+  const nickname = useAppSelector((state) => state.user.nickname);
+  const dispatch = useAppDispatch();
 
-const Lobby = (): JSX.Element => {
+  const onSetNicknameInputChanged = (e: any) => {
+    const nickname = e.target.value;
+    dispatch(userSlice.actions.setNickname(nickname));
+  };
+
+  const onOnlineClicked = async (e: any) => {
+    const matchID = await createMatch(2);
+    navigate(`/${matchID}`);
+  };
+
+  const onLocalClicked = async (e: any) => {
+    navigate('/local');
+  };
+
   return (
-    <VStack
-      divider={<StackDivider borderColor="gray" />}
-      spacing={4}
-      align="stretch"
-    >
-      <Box w="100vw" h="100vh">
-        <GameClient playerID="0" />
-      </Box>
-      <Box w="100vw" h="100vh">
-        <GameClient playerID="1" />
-      </Box>
-    </VStack>
+    <div>
+      <Input
+        value={nickname || ''}
+        placeholder="nickname"
+        onChange={onSetNicknameInputChanged}
+      />
+      <Button onClick={onOnlineClicked}>Online</Button>
+      <Button onClick={onLocalClicked}>Local</Button>
+    </div>
   );
 };
 
-export default Lobby;
+export default Home;
