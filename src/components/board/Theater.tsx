@@ -6,7 +6,6 @@ import Card from './Card';
 
 interface Props {
   theater: GameTheater;
-  setDesc?: (desc: string) => void;
 }
 
 const Theater = ({ theater }: Props): JSX.Element => {
