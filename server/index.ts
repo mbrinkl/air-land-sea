@@ -4,13 +4,11 @@ import { historyApiFallback } from 'koa2-connect-history-api-fallback';
 import { Server, Origins } from 'boardgame.io/server';
 import { DEFAULT_PORT } from '../src/config';
 import { AirLandSea } from '../src/game';
+import { SERVER_URL } from 'config/client';
 
 const server = Server({
   games: [AirLandSea],
-  origins: [
-    'https://air-land-and-sea.herokuapp.com',
-    Origins.LOCALHOST_IN_DEVELOPMENT,
-  ],
+  origins: [SERVER_URL, Origins.LOCALHOST_IN_DEVELOPMENT],
 });
 
 server.app.use(

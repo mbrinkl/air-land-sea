@@ -6,14 +6,15 @@ import TheaterRow from './TheaterRow';
 import { Box, VStack, Flex, Text, Grid, GridItem } from '@chakra-ui/react';
 import Controls from './Controls';
 import HelpText from './HelpText';
-import { useSelector } from 'react-redux';
-import { getActiveCardDesc } from 'store';
+import { useAppSelector } from 'hooks';
 
 export const BoardContext = createContext({} as BoardProps<GameState>);
 export const useBoardContext = () => useContext(BoardContext);
 
 const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
-  const activeCardDesc = useSelector(getActiveCardDesc);
+  const hoveredCardInfo = useAppSelector(
+    (state) => state.board.hoveredCardInfo,
+  );
 
   return (
     <BoardContext.Provider value={boardProps}>
@@ -43,7 +44,7 @@ const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
           </GridItem>
           <GridItem h="100%">
             <Flex h="100%" alignItems="center">
-              <Text>{activeCardDesc}</Text>
+              <Text>{hoveredCardInfo}</Text>
             </Flex>
           </GridItem>
         </Grid>
