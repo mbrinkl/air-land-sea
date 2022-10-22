@@ -1,10 +1,10 @@
 import { Flex, Text } from '@chakra-ui/react';
-import { colors } from 'config/theme';
-import { Card as GameCard } from 'game/cards';
+import { colors } from '../../config/theme';
+import { Card as GameCard } from '../../game/cards';
 import { useBoardContext } from './Board';
 import { css } from '@emotion/react';
-import { useDispatch } from 'react-redux';
-import { setActiveCardDesc } from 'store';
+import { setHoveredCardInfo } from '../../store/board';
+import { useAppDispatch } from '../../hooks';
 
 interface Props {
   card: GameCard;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const Card = ({ card, deployed }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { G, moves, playerID } = useBoardContext();
   const { cardInfo, strength, faceDown } = card;
@@ -49,8 +49,8 @@ const Card = ({ card, deployed }: Props) => {
           transform: scale(1.1);
         }
       `}
-      onMouseOver={() => dispatch(setActiveCardDesc(description))}
-      onMouseOut={() => dispatch(setActiveCardDesc(''))}
+      onMouseOver={() => dispatch(setHoveredCardInfo(description))}
+      onMouseOut={() => dispatch(setHoveredCardInfo(''))}
     >
       <Text pos="absolute" top={0} left={1}>
         {strength}

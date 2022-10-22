@@ -1,37 +1,14 @@
-import { createWrapper } from 'next-redux-wrapper';
-import {
-  configureStore,
-  Store,
-  createAction,
-  createReducer,
-} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
+import { boardReducer } from './board';
+import { userReducer } from './user';
 
-// state
-interface State {
-  activeCardDesc: string;
-}
-
-const preloadedState: State = {
-  activeCardDesc: '',
-};
-
-// actions
-export const setActiveCardDesc = createAction<string>('SET_ACTIVE_CARD_DESC');
-
-// reducers
-const rootReducer = createReducer(preloadedState, (builder) => {
-  builder.addCase(setActiveCardDesc, (state, action) => {
-    state.activeCardDesc = action.payload;
-  });
+export const store = configureStore({
+  reducer: {
+    user: userReducer,
+    board: boardReducer,
+  },
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
-// selectors
-export const getActiveCardDesc = (state: State) => state.activeCardDesc;
-
-const makeStore = () =>
-  configureStore({
-    reducer: rootReducer,
-    devTools: process.env.NODE_ENV !== 'production',
-  });
-
-export const wrapper = createWrapper<Store<State>>(makeStore);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

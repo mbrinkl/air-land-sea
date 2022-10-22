@@ -2,8 +2,8 @@ import { Box, StackDivider, VStack } from '@chakra-ui/react';
 import { Local } from 'boardgame.io/multiplayer';
 // import { SocketIO } from 'boardgame.io/multiplayer';
 import { Client } from 'boardgame.io/react';
-import { AirLandSea } from '../game';
-import Board from '../components/board/Board';
+import { AirLandSea } from '../../game';
+import Board from '../board/Board';
 // import { SERVER_URL } from '../config/client';
 
 const GameClient = Client({

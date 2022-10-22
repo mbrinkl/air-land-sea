@@ -1,7 +1,5 @@
 /node_modules
 /coverage
-/out
+/dist
 npm-debug.log*
-.next
-next-env.d.ts
 tsconfig.tsbuildinfo
