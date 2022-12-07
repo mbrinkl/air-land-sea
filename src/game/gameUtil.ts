@@ -60,15 +60,23 @@ export function Flip(G: GameState, ctx: Ctx): void {
   // },
   // effect: (G, ctx) => {},
 }
-export function CardEffect(G: GameState, ctx: Ctx, cardID: string): void {
+export function CardEffect(
+  G: GameState,
+  ctx: Ctx,
+  cardID: string,
+  theaterID: number,
+): void {
+  const theater = G.playingField[theaterID].theater;
   switch (cardID) {
     case 'Support':
       break;
     case 'Air_Drop':
+      G.players[Number(ctx.playerID!)].ongoingEffects.push(cardID);
       break;
     case 'Maneuver_Air':
       break;
     case 'Aerodrome':
+      G.players[Number(ctx.playerID!)].ongoingEffects.push(cardID);
       break;
     case 'Containment':
       break;
@@ -105,8 +113,20 @@ export function CardEffect(G: GameState, ctx: Ctx, cardID: string): void {
 export function SetValidTheaters(G: GameState, ctx: Ctx, card: Card): void {
   let validTheater = card.cardInfo.theater;
   G.playingField.map((theater) => {
-    //need to check for ongoing effects here
-    theater.isValid = theater.theater === validTheater;
+    if (G.players[Number(ctx.playerID!)].ongoingEffects.includes('Air_Drop')) {
+      theater.isValid = true;
+      G.players[Number(ctx.playerID!)].ongoingEffects.splice(
+        G.ongoingEffects.indexOf('Air_Drop'),
+        1,
+      );
+    } else if (
+      G.players[Number(ctx.playerID!)].ongoingEffects.includes('Aerodrome') &&
+      card.strength <= 3
+    ) {
+      theater.isValid = true;
+    } else {
+      theater.isValid = theater.theater === validTheater;
+    }
   });
 }
 export function CalculateCardStrength(
