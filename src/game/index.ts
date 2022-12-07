@@ -77,5 +77,10 @@ export const AirLandSea: Game<GameState> = {
         },
       },
     },
+    epicWinningAnimation: {
+      onBegin: (G, ctx) => {
+        //something crazy idk
+      },
+    },
   },
 };

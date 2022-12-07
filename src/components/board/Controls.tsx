@@ -15,7 +15,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from '@chakra-ui/react';
-import { getPointsScored } from 'game/gameUtil';
+import { getPointsScored } from '../../game/gameUtil';
 import { useRef } from 'react';
 import { useBoardContext } from './Board';
 import WithdrawTable from './WithdrawTable';
