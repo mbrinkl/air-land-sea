@@ -115,10 +115,6 @@ export function SetValidTheaters(G: GameState, ctx: Ctx, card: Card): void {
   G.playingField.map((theater) => {
     if (G.players[Number(ctx.playerID!)].ongoingEffects.includes('Air_Drop')) {
       theater.isValid = true;
-      G.players[Number(ctx.playerID!)].ongoingEffects.splice(
-        G.ongoingEffects.indexOf('Air_Drop'),
-        1,
-      );
     } else if (
       G.players[Number(ctx.playerID!)].ongoingEffects.includes('Aerodrome') &&
       card.strength <= 3
@@ -128,6 +124,14 @@ export function SetValidTheaters(G: GameState, ctx: Ctx, card: Card): void {
       theater.isValid = theater.theater === validTheater;
     }
   });
+
+  //on the turn after Air Drop is played, this effect should go away
+  if (G.players[Number(ctx.playerID!)].ongoingEffects.includes('Air_Drop')) {
+    G.players[Number(ctx.playerID!)].ongoingEffects.splice(
+      G.ongoingEffects.indexOf('Air_Drop'),
+      1,
+    );
+  }
 }
 export function CalculateCardStrength(
   G: GameState,
