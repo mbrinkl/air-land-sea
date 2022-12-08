@@ -19,7 +19,7 @@ const Card = ({ card, deployed }: Props) => {
   const { name, desc, theater } = cardInfo;
 
   function getCardId(): number {
-    return G.players[Number(playerID)].cards.findIndex(
+    return G.players[playerID!].cards.findIndex(
       (c) => c.cardID === card.cardID,
     );
   }

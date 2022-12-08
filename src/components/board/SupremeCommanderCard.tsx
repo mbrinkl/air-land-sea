@@ -8,7 +8,7 @@ const SupremeCommanderCard = ({
   playerID: string;
 }): JSX.Element => {
   const { G, playerID: clientPlayerID } = useBoardContext();
-  const player = G.players.find((p) => p.ID === playerID);
+  const player = G.players[playerID];
   const color = player?.firstPlayer ? colors['first'] : colors['second'];
 
   return (

@@ -12,22 +12,18 @@ const Hand = ({ type }: Props) => {
   if (type === 'self') {
     return (
       <>
-        {G.players
-          .find((p) => p.ID === playerID)
-          ?.cards.map((card) => (
-            <Card key={card.cardID} card={card} />
-          ))}
+        {G.players[playerID!].cards.map((card) => (
+          <Card key={card.cardID} card={card} />
+        ))}
       </>
     );
   }
 
   return (
     <>
-      {G.players
-        .find((p) => p.ID !== playerID)
-        ?.cards.map((card) => (
-          <CardIcon key={card.cardID} />
-        ))}
+      {G.players[playerID!].cards.map((card) => (
+        <CardIcon key={card.cardID} />
+      ))}
     </>
   );
 };

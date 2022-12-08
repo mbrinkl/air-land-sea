@@ -7,19 +7,24 @@ import {
   SetValidTheaters,
 } from './gameUtil';
 
-export const selectCard: Move<GameState> = (G, ctx, cardID: number) => {
+export const selectCard: Move<GameState> = (
+  { G, ctx, events, playerID },
+  cardID: number,
+) => {
   G.selectedCardID = cardID;
   SetValidTheaters(
     G,
-    ctx,
-    G.players[Number(ctx.currentPlayer)].cards[G.selectedCardID],
+    playerID,
+    G.players[ctx.currentPlayer].cards[G.selectedCardID],
   );
-  ctx.events?.setStage('place');
+  events.setStage('place');
 };
 //play a card face-down to any theater
-export const improvise: Move<GameState> = (G, ctx, theaterID: number) => {
+export const improvise: Move<GameState> = (
+  { G, ctx, events, playerID },
+  theaterID: number,
+) => {
   //TODO: if blockade, immediately discard card
-  let playerID = Number(ctx.currentPlayer);
   G.players[playerID].cards[G.selectedCardID].faceDown = true;
   let arrLength = G.playingField[theaterID].deployedCards[
     ctx.currentPlayer
@@ -39,7 +44,7 @@ export const improvise: Move<GameState> = (G, ctx, theaterID: number) => {
     arrLength - 1
   ].strength = CalculateCardStrength(
     G,
-    ctx,
+    playerID,
     G.playingField[theaterID].deployedCards[ctx.currentPlayer][arrLength - 1],
   );
 
@@ -49,38 +54,40 @@ export const improvise: Move<GameState> = (G, ctx, theaterID: number) => {
       arrLength - 1
     ].strength;
 
-  ctx.events?.endTurn();
+  events.endTurn();
 };
 
 //play a card face-up to matching theater
-export const deploy: Move<GameState> = (G, ctx, theaterID: number) => {
+export const deploy: Move<GameState> = (
+  { G, ctx, events, playerID },
+  theaterID: number,
+) => {
   if (G.playingField[theaterID].isValid) {
-    let playerID = Number(ctx.playerID);
     let { cardID } = G.players[playerID].cards[G.selectedCardID];
     G.players[playerID].cards[G.selectedCardID].faceDown = false;
     const arrLength = G.playingField[theaterID].deployedCards[
       ctx.currentPlayer
     ].push(...G.players[playerID].cards.splice(G.selectedCardID, 1));
 
-    CardEffect(G, ctx, cardID, theaterID);
+    CardEffect(G, playerID, cardID, theaterID);
 
     //set previous uncovered card to covered
     const coveredCard =
-      G.playingField[theaterID].deployedCards[ctx.playerID!].at(-2);
+      G.playingField[theaterID].deployedCards[playerID].at(-2);
     if (coveredCard !== undefined) {
-      G.playingField[theaterID].deployedCards[ctx.playerID!][
-        arrLength - 2
-      ].covered = true;
+      G.playingField[theaterID].deployedCards[playerID][arrLength - 2].covered =
+        true;
     }
 
     //set card strength
-    G.playingField[theaterID].deployedCards[ctx.playerID!][
-      arrLength - 1
-    ].strength = CalculateCardStrength(
-      G,
-      ctx,
-      G.playingField[theaterID].deployedCards[ctx.currentPlayer][arrLength - 1],
-    );
+    G.playingField[theaterID].deployedCards[playerID][arrLength - 1].strength =
+      CalculateCardStrength(
+        G,
+        playerID,
+        G.playingField[theaterID].deployedCards[ctx.currentPlayer][
+          arrLength - 1
+        ],
+      );
 
     //update total strength for theater
     G.playingField[theaterID].totalStrength[ctx.currentPlayer] +=
@@ -88,15 +95,15 @@ export const deploy: Move<GameState> = (G, ctx, theaterID: number) => {
         arrLength - 1
       ].strength;
 
-    ctx.events?.endTurn();
+    events.endTurn();
   } else {
     //keep letting them try til they click the right theater
-    ctx.events?.setStage('place');
+    events.setStage('place');
   }
 };
 
 //lose battle, opponent gains points based on how many cards you have left
-export const withdraw: Move<GameState> = (G, ctx) => {
+export const withdraw: Move<GameState> = ({ G, ctx, events }) => {
   let lostPlayer = Number(ctx.currentPlayer);
   G.players[lostPlayer ^ 1].score += getPointsScored(
     G.players[lostPlayer].firstPlayer,
@@ -111,6 +118,6 @@ export const withdraw: Move<GameState> = (G, ctx) => {
     G.players[lostPlayer].firstPlayer = !G.players[lostPlayer].firstPlayer;
     [G.playOrder[0], G.playOrder[1]] = [G.playOrder[1], G.playOrder[0]];
 
-    ctx.events?.setPhase('shuffleAndDeal');
+    events.setPhase('shuffleAndDeal');
   }
 };
