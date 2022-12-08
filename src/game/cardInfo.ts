@@ -16,6 +16,7 @@ export const cardInfoRecords: Record<string, CardInfo> = {
     strength: 1,
     theater: 'air',
     type: 'ongoing',
+    ongoingType: 'player',
   },
   Air_Drop: {
     name: 'Air Drop',

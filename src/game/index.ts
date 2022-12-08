@@ -38,16 +38,19 @@ export const AirLandSea: Game<GameState> = {
         theater: 'air',
         deployedCards: { '0': [], '1': [] },
         totalStrength: { '0': 0, '1': 0 },
+        isValid: false,
       },
       {
         theater: 'land',
         deployedCards: { '0': [], '1': [] },
         totalStrength: { '0': 0, '1': 0 },
+        isValid: false,
       },
       {
         theater: 'sea',
         deployedCards: { '0': [], '1': [] },
         totalStrength: { '0': 0, '1': 0 },
+        isValid: false,
       },
     ],
   }),
@@ -67,7 +70,7 @@ export const AirLandSea: Game<GameState> = {
     main: {
       turn: {
         activePlayers: { currentPlayer: 'select' },
-        order: TurnOrder.CUSTOM_FROM('playOrder'), //{
+        order: TurnOrder.CUSTOM_FROM('playOrder'),
         stages: {
           select: { moves: { selectCard, withdraw } },
           place: { moves: { deploy, improvise } },

@@ -39,7 +39,7 @@ export const improvise: Move<GameState> = (G, ctx, theaterID: number) => {
     arrLength - 1
   ].strength = CalculateCardStrength(
     G,
-    ctx.currentPlayer,
+    ctx,
     G.playingField[theaterID].deployedCards[ctx.currentPlayer][arrLength - 1],
   );
 
@@ -55,30 +55,30 @@ export const improvise: Move<GameState> = (G, ctx, theaterID: number) => {
 //play a card face-up to matching theater
 export const deploy: Move<GameState> = (G, ctx, theaterID: number) => {
   if (G.playingField[theaterID].isValid) {
-    let playerID = Number(ctx.currentPlayer);
-    let selectedCard = G.players[playerID].cards[G.selectedCardID];
+    let playerID = Number(ctx.playerID);
+    let { cardID } = G.players[playerID].cards[G.selectedCardID];
     G.players[playerID].cards[G.selectedCardID].faceDown = false;
-    let arrLength = G.playingField[theaterID].deployedCards[
+    const arrLength = G.playingField[theaterID].deployedCards[
       ctx.currentPlayer
     ].push(...G.players[playerID].cards.splice(G.selectedCardID, 1));
 
-    CardEffect(G, ctx, selectedCard.cardID);
+    CardEffect(G, ctx, cardID, theaterID);
 
     //set previous uncovered card to covered
     const coveredCard =
-      G.playingField[theaterID].deployedCards[ctx.currentPlayer].at(-2);
+      G.playingField[theaterID].deployedCards[ctx.playerID!].at(-2);
     if (coveredCard !== undefined) {
-      G.playingField[theaterID].deployedCards[ctx.currentPlayer][
+      G.playingField[theaterID].deployedCards[ctx.playerID!][
         arrLength - 2
       ].covered = true;
     }
 
     //set card strength
-    G.playingField[theaterID].deployedCards[ctx.currentPlayer][
+    G.playingField[theaterID].deployedCards[ctx.playerID!][
       arrLength - 1
     ].strength = CalculateCardStrength(
       G,
-      ctx.currentPlayer,
+      ctx,
       G.playingField[theaterID].deployedCards[ctx.currentPlayer][arrLength - 1],
     );
 
@@ -104,7 +104,7 @@ export const withdraw: Move<GameState> = (G, ctx) => {
   );
 
   if (G.players[lostPlayer ^ 1].score >= 12) {
-    ctx.events?.setPhase('epicWinningAnimation');
+    ctx.gameover;
   } else {
     //probably don't need the firstPlayer variable now that I need playOrder, oh well leaving for now
     G.players[lostPlayer ^ 1].firstPlayer = G.players[lostPlayer].firstPlayer;

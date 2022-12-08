@@ -19,7 +19,7 @@ export interface Player {
 }
 export interface Theater {
   theater: TheaterType;
-  isValid?: boolean;
+  isValid: boolean;
   deployedCards: Record<string, Card[]>;
   totalStrength: Record<string, number>;
 }
