@@ -24,36 +24,46 @@ export const improvise: Move<GameState> = (
   { G, ctx, events, playerID },
   theaterID: number,
 ) => {
-  //TODO: if blockade, immediately discard card
-  G.players[playerID].cards[G.selectedCardID].faceDown = true;
-  let arrLength = G.playingField[theaterID].deployedCards[
-    ctx.currentPlayer
-  ].push(...G.players[playerID].cards.splice(G.selectedCardID, 1));
+  //if blockade in play and total cards in theater >= 3 immediately discard card
+  if (
+    G.ongoingEffects.includes('Blockade') &&
+    G.playingField[theaterID].deployedCards['0'].length +
+      G.playingField[theaterID].deployedCards['1'].length >=
+      3
+  ) {
+    G.secret.discardPile.push(
+      ...G.players[playerID].cards.splice(G.selectedCardID, 1),
+    );
+  } else {
+    G.players[playerID].cards[G.selectedCardID].faceDown = true;
+    let arrLength = G.playingField[theaterID].deployedCards[
+      ctx.currentPlayer
+    ].push(...G.players[playerID].cards.splice(G.selectedCardID, 1));
 
-  //set previous uncovered card to covered
-  const coveredCard =
-    G.playingField[theaterID].deployedCards[ctx.currentPlayer].at(-2);
-  if (coveredCard !== undefined) {
-    G.playingField[theaterID].deployedCards[ctx.currentPlayer][
-      arrLength - 2
-    ].covered = true;
-  }
+    //set previous uncovered card to covered
+    const coveredCard =
+      G.playingField[theaterID].deployedCards[ctx.currentPlayer].at(-2);
+    if (coveredCard !== undefined) {
+      G.playingField[theaterID].deployedCards[ctx.currentPlayer][
+        arrLength - 2
+      ].covered = true;
+    }
 
-  //set card strength
-  G.playingField[theaterID].deployedCards[ctx.currentPlayer][
-    arrLength - 1
-  ].strength = CalculateCardStrength(
-    G,
-    playerID,
-    G.playingField[theaterID].deployedCards[ctx.currentPlayer][arrLength - 1],
-  );
-
-  //update total strength for theater
-  G.playingField[theaterID].totalStrength[ctx.currentPlayer] +=
+    //set card strength
     G.playingField[theaterID].deployedCards[ctx.currentPlayer][
       arrLength - 1
-    ].strength;
+    ].strength = CalculateCardStrength(
+      G,
+      playerID,
+      G.playingField[theaterID].deployedCards[ctx.currentPlayer][arrLength - 1],
+    );
 
+    //update total strength for theater
+    G.playingField[theaterID].totalStrength[ctx.currentPlayer] +=
+      G.playingField[theaterID].deployedCards[ctx.currentPlayer][
+        arrLength - 1
+      ].strength;
+  }
   events.endTurn();
 };
 
