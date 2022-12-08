@@ -39,7 +39,7 @@ export const improvise: Move<GameState> = (G, ctx, theaterID: number) => {
     arrLength - 1
   ].strength = CalculateCardStrength(
     G,
-    ctx.currentPlayer,
+    ctx,
     G.playingField[theaterID].deployedCards[ctx.currentPlayer][arrLength - 1],
   );
 
@@ -78,7 +78,7 @@ export const deploy: Move<GameState> = (G, ctx, theaterID: number) => {
       arrLength - 1
     ].strength = CalculateCardStrength(
       G,
-      ctx.playerID!,
+      ctx,
       G.playingField[theaterID].deployedCards[ctx.currentPlayer][arrLength - 1],
     );
 
