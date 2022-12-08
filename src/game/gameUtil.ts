@@ -1,4 +1,5 @@
 import { Ctx } from 'boardgame.io';
+import { cardInfoRecords } from './cardInfo';
 import { Card, TheaterType } from './cards';
 import { GameState } from './gameTypes';
 
@@ -67,6 +68,17 @@ export function CardEffect(
   theaterID: number,
 ): void {
   //const theater = G.playingField[theaterID].theater;
+  if (
+    cardInfoRecords[cardID].type == 'ongoing' &&
+    cardInfoRecords[cardID].ongoingType == 'player'
+  ) {
+    G.players[playerID].ongoingEffects.push(cardID);
+  } else if (
+    cardInfoRecords[cardID].type == 'ongoing' &&
+    cardInfoRecords[cardID].ongoingType == 'global'
+  ) {
+    G.ongoingEffects.push(cardID);
+  }
   switch (cardID) {
     case 'Support':
       break;
@@ -76,7 +88,7 @@ export function CardEffect(
     case 'Maneuver_Air':
       break;
     case 'Aerodrome':
-      G.players[playerID].ongoingEffects.push(cardID);
+      //G.players[playerID].ongoingEffects.push(cardID);
       break;
     case 'Containment':
       break;
@@ -89,6 +101,7 @@ export function CardEffect(
     case 'Maneuver_Land':
       break;
     case 'Cover_Fire':
+      //G.players[playerID].ongoingEffects.push(cardID);
       break;
     case 'Disrupt':
       break;
@@ -97,7 +110,7 @@ export function CardEffect(
     case 'Transport':
       break;
     case 'Escalation':
-      G.players[playerID].ongoingEffects.push(cardID);
+      //G.players[playerID].ongoingEffects.push(cardID);
       break;
     case 'Maneuver_Sea':
       break;
@@ -149,7 +162,7 @@ export function CalculateCardStrength(
   )
     return 4;
   else if (card.faceDown) return 2;
-  else return card.strength;
+  else return card.cardInfo.strength;
 }
 
 //recalculate card strength and total strength for player
