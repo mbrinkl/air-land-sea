@@ -71,12 +71,12 @@ export function CardEffect(
     case 'Support':
       break;
     case 'Air_Drop':
-      G.players[Number(playerID)].ongoingEffects.push(cardID);
+      G.players[playerID].ongoingEffects.push(cardID);
       break;
     case 'Maneuver_Air':
       break;
     case 'Aerodrome':
-      G.players[Number(playerID)].ongoingEffects.push(cardID);
+      G.players[playerID].ongoingEffects.push(cardID);
       break;
     case 'Containment':
       break;
@@ -97,7 +97,7 @@ export function CardEffect(
     case 'Transport':
       break;
     case 'Escalation':
-      G.players[Number(playerID)].ongoingEffects.push(cardID);
+      G.players[playerID].ongoingEffects.push(cardID);
       break;
     case 'Maneuver_Sea':
       break;
@@ -118,10 +118,10 @@ export function SetValidTheaters(
 ): void {
   let validTheater = card.cardInfo.theater;
   G.playingField.map((theater) => {
-    if (G.players[Number(playerID)].ongoingEffects.includes('Air_Drop')) {
+    if (G.players[playerID].ongoingEffects.includes('Air_Drop')) {
       theater.isValid = true;
     } else if (
-      G.players[Number(playerID)].ongoingEffects.includes('Aerodrome') &&
+      G.players[playerID].ongoingEffects.includes('Aerodrome') &&
       card.strength <= 3
     ) {
       theater.isValid = true;
@@ -131,8 +131,8 @@ export function SetValidTheaters(
   });
 
   //on the turn after Air Drop is played, this effect should go away
-  if (G.players[Number(playerID)].ongoingEffects.includes('Air_Drop')) {
-    G.players[Number(playerID)].ongoingEffects.splice(
+  if (G.players[playerID].ongoingEffects.includes('Air_Drop')) {
+    G.players[playerID].ongoingEffects.splice(
       G.ongoingEffects.indexOf('Air_Drop'),
       1,
     );
@@ -145,7 +145,7 @@ export function CalculateCardStrength(
 ): number {
   if (
     card.faceDown &&
-    G.players[Number(playerID)].ongoingEffects.includes('Escalation')
+    G.players[playerID].ongoingEffects.includes('Escalation')
   )
     return 4;
   else if (card.faceDown) return 2;

@@ -15,8 +15,8 @@ export const AirLandSea: Game<GameState> = {
     selectedCardID: -1,
     ongoingEffects: [],
     playOrder: ['0', '1'],
-    players: [
-      {
+    players: {
+      '0': {
         ID: '0',
         firstPlayer: true,
         cards: [],
@@ -24,7 +24,7 @@ export const AirLandSea: Game<GameState> = {
         score: 0,
         ongoingEffects: [],
       },
-      {
+      '1': {
         ID: '1',
         firstPlayer: false,
         cards: [],
@@ -32,7 +32,7 @@ export const AirLandSea: Game<GameState> = {
         score: 0,
         ongoingEffects: [],
       },
-    ],
+    },
     playingField: [
       {
         theater: 'air',
@@ -62,8 +62,8 @@ export const AirLandSea: Game<GameState> = {
       onBegin: ({ G, ctx, random, events }) => {
         G.playingField = random.Shuffle<Theater>(G.playingField);
         G.secret.deck = random.Shuffle<Card>(G.secret.deck);
-        G.players[0].cards = G.secret.deck.splice(0, 6);
-        G.players[1].cards = G.secret.deck.splice(0, 6);
+        G.players['0'].cards = G.secret.deck.splice(0, 6);
+        G.players['1'].cards = G.secret.deck.splice(0, 6);
         events.endPhase();
       },
     },

@@ -1,8 +1,7 @@
 import { Card, TheaterType } from './cards';
 
 export interface GameState {
-  // aka 'G', your game's state
-  players: Player[];
+  players: Record<string, Player>;
   secret: SecretInfo;
   playingField: Theater[];
   selectedCardID: number;

@@ -15,7 +15,7 @@ export const selectCard: Move<GameState> = (
   SetValidTheaters(
     G,
     playerID,
-    G.players[Number(ctx.currentPlayer)].cards[G.selectedCardID],
+    G.players[ctx.currentPlayer].cards[G.selectedCardID],
   );
   events.setStage('place');
 };
@@ -25,11 +25,10 @@ export const improvise: Move<GameState> = (
   theaterID: number,
 ) => {
   //TODO: if blockade, immediately discard card
-  let playerIDNum = Number(playerID);
-  G.players[playerIDNum].cards[G.selectedCardID].faceDown = true;
+  G.players[playerID].cards[G.selectedCardID].faceDown = true;
   let arrLength = G.playingField[theaterID].deployedCards[
     ctx.currentPlayer
-  ].push(...G.players[playerIDNum].cards.splice(G.selectedCardID, 1));
+  ].push(...G.players[playerID].cards.splice(G.selectedCardID, 1));
 
   //set previous uncovered card to covered
   const coveredCard =
@@ -64,12 +63,11 @@ export const deploy: Move<GameState> = (
   theaterID: number,
 ) => {
   if (G.playingField[theaterID].isValid) {
-    let playerIDNum = Number(playerID);
-    let { cardID } = G.players[playerIDNum].cards[G.selectedCardID];
-    G.players[playerIDNum].cards[G.selectedCardID].faceDown = false;
+    let { cardID } = G.players[playerID].cards[G.selectedCardID];
+    G.players[playerID].cards[G.selectedCardID].faceDown = false;
     const arrLength = G.playingField[theaterID].deployedCards[
       ctx.currentPlayer
-    ].push(...G.players[playerIDNum].cards.splice(G.selectedCardID, 1));
+    ].push(...G.players[playerID].cards.splice(G.selectedCardID, 1));
 
     CardEffect(G, playerID, cardID, theaterID);
 

@@ -33,7 +33,7 @@ const WithdrawDialog = ({
     moves.withdraw();
     onClose();
   }
-  const player = G.players.find((p) => p.ID !== playerID);
+  const player = G.players[playerID!];
   const opponentPoints = getPointsScored(
     player!.firstPlayer,
     player!.cards.length,

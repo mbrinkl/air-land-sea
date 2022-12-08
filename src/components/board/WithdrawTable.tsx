@@ -63,7 +63,7 @@ const WithdrawTable = ({
 const TabbedWithdrawTables = () => {
   const { G, playerID } = useBoardContext();
 
-  const firstPlayer = G.players.find((p) => p.ID === playerID)?.firstPlayer;
+  const firstPlayer = G.players[playerID!].firstPlayer;
 
   return (
     <Tabs>
