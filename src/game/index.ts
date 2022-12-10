@@ -13,7 +13,7 @@ export const AirLandSea: Game<GameState> = {
   setup: () => ({
     secret: { deck: battleCards, discardPile: [] },
     selectedCardID: -1,
-    ongoingEffects: [],
+    ongoingEffects: {},
     playOrder: ['0', '1'],
     players: {
       '0': {
@@ -22,7 +22,7 @@ export const AirLandSea: Game<GameState> = {
         cards: [],
         ready: false,
         score: 0,
-        ongoingEffects: [],
+        ongoingEffects: {},
       },
       '1': {
         ID: '1',
@@ -30,7 +30,7 @@ export const AirLandSea: Game<GameState> = {
         cards: [],
         ready: false,
         score: 0,
-        ongoingEffects: [],
+        ongoingEffects: {},
       },
     },
     playingField: [
@@ -74,12 +74,8 @@ export const AirLandSea: Game<GameState> = {
         stages: {
           select: { moves: { selectCard, withdraw } },
           place: { moves: { deploy, improvise } },
+          //cardEffect: { moves: {} }, //guessing this'll be needed for instant effects
         },
-      },
-    },
-    epicWinningAnimation: {
-      onBegin: ({ G, ctx }) => {
-        //something crazy idk
       },
     },
   },
