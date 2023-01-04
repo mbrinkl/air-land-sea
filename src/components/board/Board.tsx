@@ -1,12 +1,13 @@
 import { useContext, createContext } from 'react';
 import { BoardProps } from 'boardgame.io/react';
+import { Box, VStack, Flex, Text } from '@chakra-ui/react';
 import { GameState } from '../../game/gameTypes';
+import { useAppSelector } from '../../store';
 import Hand from './Hand';
 import TheaterRow from './TheaterRow';
-import { Box, VStack, Flex, Text, Grid, GridItem } from '@chakra-ui/react';
 import Controls from './Controls';
 import HelpText from './HelpText';
-import { useAppSelector } from '../../hooks';
+import PlayerInfo from './PlayerInfo';
 
 export const BoardContext = createContext({} as BoardProps<GameState>);
 export const useBoardContext = () => useContext(BoardContext);
@@ -18,36 +19,45 @@ const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
 
   return (
     <BoardContext.Provider value={boardProps}>
-      <VStack h="100vh">
-        <Flex h="10%" gap="3px" alignItems="center">
-          <Hand type="opponent" />
+      <VStack h="100vh" padding="10px">
+        <Flex
+          h="10%"
+          w="100%"
+          px="10px"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <PlayerInfo playerID={(Number(boardProps.playerID) ^ 1).toString()} />
+          <Flex gap="3px">
+            <Hand type="opponent" />
+          </Flex>
         </Flex>
-        <Box h="60%" w="100%">
+        <Box h="50%" w="100%">
           <TheaterRow />
         </Box>
-        <Grid h="30%" w="100%" templateColumns="repeat(4, 1fr)" gap={4}>
-          <GridItem h="100%">
-            <Flex
-              h="100%"
-              alignItems="center"
-              justifyContent="center"
-              gap="3px"
-            >
-              <Controls />
-            </Flex>
-          </GridItem>
-          <GridItem colSpan={2} h="100%">
+        <Flex
+          h="40%"
+          w="100%"
+          direction="column"
+          gap="10px"
+          justifyContent="flex-end"
+        >
+          <Box px="10px">
+            <PlayerInfo playerID={boardProps.playerID!} />
+          </Box>
+          <Box textAlign="center">
             <HelpText />
-            <Flex alignItems="center" justifyContent="center" gap="5px">
-              <Hand type="self" />
-            </Flex>
-          </GridItem>
-          <GridItem h="100%">
-            <Flex h="100%" alignItems="center">
-              <Text>{hoveredCardInfo}</Text>
-            </Flex>
-          </GridItem>
-        </Grid>
+            <Text>
+              {hoveredCardInfo.length > 0 ? hoveredCardInfo : '\u00A0'}
+            </Text>
+          </Box>
+          <Flex alignItems="center" justifyContent="center" gap="5px">
+            <Hand type="self" />
+          </Flex>
+          <Flex alignItems="center" justifyContent="center" gap="3px">
+            <Controls />
+          </Flex>
+        </Flex>
       </VStack>
     </BoardContext.Provider>
   );

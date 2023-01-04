@@ -23,14 +23,31 @@ const Theater = ({ theater }: Props): JSX.Element => {
     return false;
   }
 
+  const getStrengthColor = (strength: number, opponentStrength: number) => {
+    if (strength > opponentStrength) return 'green.500';
+    if (strength < opponentStrength) return 'red.500';
+    return undefined;
+  };
+
+  const strength = totalStrength[playerID!];
+  const opponentStrength = totalStrength[Number(playerID) ^ 1];
+
   return (
-    <Box w="25%">
+    <Box w="33%">
       <Flex pos="relative" h="150px" bg="gainsboro" alignItems="end">
         {deployedCards[(Number(playerID) ^ 1).toString()].map((card) => (
           <Card key={card.cardID} card={card} deployed="opponent" />
         ))}
-        <Text pos="absolute" top={0} left={0} right={0} textAlign="center">
-          {totalStrength[Number(playerID) ^ 1]}
+        <Text
+          as="b"
+          pos="absolute"
+          color={getStrengthColor(opponentStrength, strength)}
+          top={0}
+          left={0}
+          right={0}
+          textAlign="center"
+        >
+          {opponentStrength}
         </Text>
       </Flex>
       <Box color="white" bg={colors[theaterName]} textAlign="center">
@@ -48,8 +65,16 @@ const Theater = ({ theater }: Props): JSX.Element => {
         {deployedCards[playerID!].map((card) => (
           <Card key={card.cardID} card={card} deployed="self" />
         ))}
-        <Text pos="absolute" bottom={0} left={0} right={0} textAlign="center">
-          {totalStrength[playerID!]}
+        <Text
+          as="b"
+          pos="absolute"
+          color={getStrengthColor(strength, opponentStrength)}
+          bottom={0}
+          left={0}
+          right={0}
+          textAlign="center"
+        >
+          {strength}
         </Text>
       </Flex>
     </Box>

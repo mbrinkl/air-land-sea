@@ -1,7 +1,7 @@
 import { Input, Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { createMatch } from '../../api';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { userSlice } from '../../store/user';
 
 const Home = (): JSX.Element => {

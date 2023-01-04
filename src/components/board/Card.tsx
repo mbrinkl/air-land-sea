@@ -4,7 +4,7 @@ import { Card as GameCard } from '../../game/cards';
 import { useBoardContext } from './Board';
 import { css } from '@emotion/react';
 import { boardSlice } from '../../store/board';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch } from '../../store';
 
 interface Props {
   card: GameCard;
@@ -18,14 +18,13 @@ const Card = ({ card, deployed }: Props) => {
   const { cardInfo, strength, faceDown } = card;
   const { name, desc, theater } = cardInfo;
 
-  function getCardId(): number {
-    return G.players[playerID!].cards.findIndex(
-      (c) => c.cardID === card.cardID,
-    );
-  }
+  const getCardId = () =>
+    G.players[playerID!].cards.findIndex((c) => c.cardID === card.cardID);
 
   const description =
-    deployed === 'opponent' && faceDown ? '' : `${name} (${strength}): ${desc}`;
+    (deployed === 'opponent' && faceDown) || desc.length === 0
+      ? ''
+      : `${name} (${strength}): ${desc}`;
 
   return (
     <Flex
