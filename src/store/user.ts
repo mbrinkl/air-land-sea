@@ -24,19 +24,19 @@ interface IState {
   roomData: IRoomData | null;
 }
 
-const localRoomData = localStorage.getItem(PLAYER_STORAGE_KEY);
+const initialState = (): IState => {
+  const localRoomData = localStorage.getItem(PLAYER_STORAGE_KEY);
+  const localNickname = localStorage.getItem(NICKNAME_STORAGE_KEY);
 
-console.log('getting local', localRoomData);
-
-const initialState: IState = {
-  nickname: localStorage.getItem(NICKNAME_STORAGE_KEY),
-  roomData: localRoomData && JSON.parse(localRoomData),
+  return {
+    nickname: localNickname,
+    roomData: JSON.parse(localRoomData ?? 'null'),
+  };
 };
 
 export const joinMatchThunk = createAsyncThunk<IRoomData, IJoinRoomParams>(
   'user/joinMatch',
   async (params) => {
-    console.log('in join match thunk');
     const [playerID, credentials] = await joinMatch(params);
     return {
       matchID: params.matchID,
