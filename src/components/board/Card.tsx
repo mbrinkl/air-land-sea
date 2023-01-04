@@ -18,11 +18,8 @@ const Card = ({ card, deployed }: Props) => {
   const { cardInfo, strength, faceDown } = card;
   const { name, desc, theater } = cardInfo;
 
-  function getCardId(): number {
-    return G.players[playerID!].cards.findIndex(
-      (c) => c.cardID === card.cardID,
-    );
-  }
+  const getCardId = () =>
+    G.players[playerID!].cards.findIndex((c) => c.cardID === card.cardID);
 
   const description =
     deployed === 'opponent' && faceDown ? '' : `${name} (${strength}): ${desc}`;

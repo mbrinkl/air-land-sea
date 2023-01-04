@@ -20,9 +20,9 @@ const LocalGame = () => {
       <Box w="100vw" h="100vh">
         <GameClient playerID="0" />
       </Box>
-      {/* <Box w="100vw" h="100vh">
+      <Box w="100vw" h="100vh">
         <GameClient playerID="1" />
-      </Box> */}
+      </Box>
     </VStack>
   );
 };
