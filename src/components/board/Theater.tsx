@@ -24,7 +24,7 @@ const Theater = ({ theater }: Props): JSX.Element => {
   }
 
   return (
-    <Box w="25%">
+    <Box w="33%">
       <Flex pos="relative" h="150px" bg="gainsboro" alignItems="end">
         {deployedCards[(Number(playerID) ^ 1).toString()].map((card) => (
           <Card key={card.cardID} card={card} deployed="opponent" />
