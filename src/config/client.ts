@@ -1,7 +1,7 @@
 import { DEFAULT_PORT } from '.';
 
 export const SERVER_URL =
-  process.env.RENDER_EXTERNAL_URL ?? `http://localhost:${DEFAULT_PORT}`;
+  import.meta.env.RENDER_EXTERNAL_URL ?? `http://localhost:${DEFAULT_PORT}`;
 
 // nickname is used between games to simplify room user creation
 export const NICKNAME_STORAGE_KEY = 'airlandsea_nickname';
