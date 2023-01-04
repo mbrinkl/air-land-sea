@@ -24,7 +24,7 @@ export async function getMatches(): Promise<LobbyAPI.Match[]> {
 
 export async function createMatch(
   numPlayers: number,
-  unlisted: boolean = false,
+  unlisted = false,
 ): Promise<string> {
   const response = await axios.post<{ matchID: string }>('/create', {
     numPlayers,

@@ -22,7 +22,7 @@ export const selectCard: Move<GameState> = (
 };
 //play a card face-down to any theater
 export const improvise: Move<GameState> = (
-  { G, ctx, events, playerID },
+  { G, events, playerID },
   theaterID: number,
 ) => {
   //if blockade in play and total cards in adj theater >= 3 immediately discard card
@@ -42,7 +42,7 @@ export const improvise: Move<GameState> = (
     );
   } else {
     G.players[playerID].cards[G.selectedCardID].faceDown = true;
-    let arrLength = G.playingField[theaterID].deployedCards[playerID].push(
+    const arrLength = G.playingField[theaterID].deployedCards[playerID].push(
       ...G.players[playerID].cards.splice(G.selectedCardID, 1),
     );
 
@@ -78,7 +78,7 @@ export const deploy: Move<GameState> = (
         ...G.players[playerID].cards.splice(G.selectedCardID, 1),
       );
     } else {
-      let { cardID } = G.players[playerID].cards[G.selectedCardID];
+      const { cardID } = G.players[playerID].cards[G.selectedCardID];
       G.players[playerID].cards[G.selectedCardID].faceDown = false;
       const arrLength = G.playingField[theaterID].deployedCards[
         ctx.currentPlayer
@@ -105,7 +105,7 @@ export const deploy: Move<GameState> = (
 
 //lose battle, opponent gains points based on how many cards you have left
 export const withdraw: Move<GameState> = ({ G, ctx, events }) => {
-  let lostPlayer = Number(ctx.currentPlayer);
+  const lostPlayer = Number(ctx.currentPlayer);
   G.players[lostPlayer ^ 1].score += getPointsScored(
     G.players[lostPlayer].firstPlayer,
     G.players[lostPlayer].cards.length,

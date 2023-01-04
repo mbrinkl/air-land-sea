@@ -28,7 +28,7 @@ const WithdrawDialog = ({
   onClose: () => void;
 }): JSX.Element => {
   const { G, playerID, moves } = useBoardContext();
-  const cancelRef = useRef<any>();
+  const cancelRef = useRef<HTMLButtonElement | null>(null);
   function onConfirm() {
     moves.withdraw();
     onClose();
