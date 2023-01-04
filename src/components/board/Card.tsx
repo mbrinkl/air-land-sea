@@ -22,7 +22,9 @@ const Card = ({ card, deployed }: Props) => {
     G.players[playerID!].cards.findIndex((c) => c.cardID === card.cardID);
 
   const description =
-    deployed === 'opponent' && faceDown ? '' : `${name} (${strength}): ${desc}`;
+    (deployed === 'opponent' && faceDown) || desc.length === 0
+      ? ''
+      : `${name} (${strength}): ${desc}`;
 
   return (
     <Flex
