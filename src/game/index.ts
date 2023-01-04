@@ -59,7 +59,7 @@ export const AirLandSea: Game<GameState> = {
     shuffleAndDeal: {
       start: true,
       next: 'main',
-      onBegin: ({ G, ctx, random, events }) => {
+      onBegin: ({ G, random, events }) => {
         G.playingField = random.Shuffle<Theater>(G.playingField);
         G.secret.deck = random.Shuffle<Card>(G.secret.deck);
         G.players['0'].cards = G.secret.deck.splice(0, 6);

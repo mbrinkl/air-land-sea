@@ -86,7 +86,7 @@ const JoinGame = ({ startGame }: { startGame: () => void }): JSX.Element => {
         }),
       );
     }
-  }, [matchID, nickname]);
+  }, [matchID, nickname, roomData?.matchID, gameRoomFull, dispatch]);
 
   useEffect(() => {
     if (gameRoomFull) {

@@ -9,17 +9,19 @@ const Home = (): JSX.Element => {
   const nickname = useAppSelector((state) => state.user.nickname);
   const dispatch = useAppDispatch();
 
-  const onSetNicknameInputChanged = (e: any) => {
+  const onSetNicknameInputChanged = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const nickname = e.target.value;
     dispatch(userSlice.actions.setNickname(nickname));
   };
 
-  const onOnlineClicked = async (e: any) => {
+  const onOnlineClicked = async () => {
     const matchID = await createMatch(2);
     navigate(`/${matchID}`);
   };
 
-  const onLocalClicked = async (e: any) => {
+  const onLocalClicked = () => {
     navigate('/local');
   };
 

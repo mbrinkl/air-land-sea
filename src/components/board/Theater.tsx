@@ -17,7 +17,7 @@ const Theater = ({ theater }: Props): JSX.Element => {
   }
 
   // todo: better way to play card face down
-  function onRightClick(e: any) {
+  function onRightClick(e: React.MouseEvent<HTMLDivElement>) {
     e.preventDefault();
     moves.improvise(getTheaterId());
     return false;

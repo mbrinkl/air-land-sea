@@ -53,7 +53,7 @@ export function Flip(
   theaterID: number,
   deployedSideID: string,
 ): void {
-  var cards = G.playingField[theaterID].deployedCards[deployedSideID];
+  const cards = G.playingField[theaterID].deployedCards[deployedSideID];
   cards[cardIndex].faceDown = !cards[cardIndex].faceDown;
 
   //if card face down, remove from ongoing effects Records
@@ -141,7 +141,7 @@ export function SetValidTheaters(
   playerID: string,
   card: Card,
 ): void {
-  let validTheater = card.cardInfo.theater;
+  const validTheater = card.cardInfo.theater;
   G.playingField.map((theater) => {
     if ('Air_Drop' in G.players[playerID].ongoingEffects) {
       theater.isValid = true;
@@ -173,9 +173,9 @@ export function CalculateCardStrength(
     G.playingField[theaterID].theater ==
       G.players[playerID].ongoingEffects['Cover_Fire']
   ) {
-    var coverFireCard = G.playingField[theaterID].deployedCards[playerID].find(
-      (card) => card.cardID == 'Cover_Fire',
-    );
+    const coverFireCard = G.playingField[theaterID].deployedCards[
+      playerID
+    ].find((card) => card.cardID == 'Cover_Fire');
     if (
       G.playingField[theaterID].deployedCards[playerID].indexOf(card) <
       G.playingField[theaterID].deployedCards[playerID].indexOf(coverFireCard!)
@@ -190,18 +190,18 @@ export function CalculateCardStrength(
 //recalculate card strength and total strength for player
 export function RecalculateTotalStrength(G: GameState, playerID: string): void {
   //support gives +3 strength to your adjacent theaters
-  var adjacents;
+  let adjacents;
   if ('Support' in G.players[playerID].ongoingEffects) {
     adjacents = GetAdjacentTheatersByName(
       G,
       G.players[playerID].ongoingEffects['Support'],
     );
   }
-  for (let theater of G.playingField) {
+  for (const theater of G.playingField) {
     if (adjacents && adjacents.includes(theater.theater))
       theater.totalStrength[playerID] = 3;
     else theater.totalStrength[playerID] = 0;
-    for (let card of theater.deployedCards[playerID]) {
+    for (const card of theater.deployedCards[playerID]) {
       card.strength = CalculateCardStrength(
         G,
         playerID,

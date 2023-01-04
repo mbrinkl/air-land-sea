@@ -25,6 +25,7 @@
     "plugin:vitest-globals/recommended"
   ],
   "rules": {
+    "@typescript-eslint/no-non-null-assertion": "off",
     "react/react-in-jsx-scope": "off" // handled by @vitejs/plugin-react
   }
 }
