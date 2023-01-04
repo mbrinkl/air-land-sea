@@ -5,7 +5,7 @@ export interface GameState {
   secret: SecretInfo;
   playingField: Theater[];
   selectedCardID: number;
-  ongoingEffects: string[];
+  ongoingEffects: Record<string, TheaterType>;
   playOrder: string[]; //['0', '1'], needed for turn order change
 }
 export interface Player {
@@ -14,7 +14,7 @@ export interface Player {
   firstPlayer: boolean;
   score: number;
   cards: Card[];
-  ongoingEffects: string[];
+  ongoingEffects: Record<string, TheaterType>;
 }
 export interface Theater {
   theater: TheaterType;

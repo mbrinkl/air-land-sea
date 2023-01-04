@@ -1,17 +1,18 @@
 import { Move } from 'boardgame.io';
 import { GameState } from './gameTypes';
 import {
-  CalculateCardStrength,
   CardEffect,
+  GetAdjacentTheaters,
   getPointsScored,
+  RecalculateTotalStrength,
   SetValidTheaters,
 } from './gameUtil';
 
 export const selectCard: Move<GameState> = (
   { G, ctx, events, playerID },
-  cardID: number,
+  cardIndex: number,
 ) => {
-  G.selectedCardID = cardID;
+  G.selectedCardID = cardIndex;
   SetValidTheaters(
     G,
     playerID,
@@ -24,36 +25,36 @@ export const improvise: Move<GameState> = (
   { G, ctx, events, playerID },
   theaterID: number,
 ) => {
-  //TODO: if blockade, immediately discard card
-  G.players[playerID].cards[G.selectedCardID].faceDown = true;
-  let arrLength = G.playingField[theaterID].deployedCards[
-    ctx.currentPlayer
-  ].push(...G.players[playerID].cards.splice(G.selectedCardID, 1));
+  //if blockade in play and total cards in adj theater >= 3 immediately discard card
+  //or if containment in play, discard card
+  if (
+    ('Blockade' in G.ongoingEffects &&
+      GetAdjacentTheaters(G, theaterID).includes(
+        G.ongoingEffects['Blockade'],
+      ) &&
+      G.playingField[theaterID].deployedCards['0'].length +
+        G.playingField[theaterID].deployedCards['1'].length >=
+        3) ||
+    'Containment' in G.ongoingEffects
+  ) {
+    G.secret.discardPile.push(
+      ...G.players[playerID].cards.splice(G.selectedCardID, 1),
+    );
+  } else {
+    G.players[playerID].cards[G.selectedCardID].faceDown = true;
+    let arrLength = G.playingField[theaterID].deployedCards[playerID].push(
+      ...G.players[playerID].cards.splice(G.selectedCardID, 1),
+    );
 
-  //set previous uncovered card to covered
-  const coveredCard =
-    G.playingField[theaterID].deployedCards[ctx.currentPlayer].at(-2);
-  if (coveredCard !== undefined) {
-    G.playingField[theaterID].deployedCards[ctx.currentPlayer][
-      arrLength - 2
-    ].covered = true;
+    //set previous uncovered card to covered
+    const coveredCard =
+      G.playingField[theaterID].deployedCards[playerID].at(-2);
+    if (coveredCard !== undefined) {
+      G.playingField[theaterID].deployedCards[playerID][arrLength - 2].covered =
+        true;
+    }
+    RecalculateTotalStrength(G, playerID);
   }
-
-  //set card strength
-  G.playingField[theaterID].deployedCards[ctx.currentPlayer][
-    arrLength - 1
-  ].strength = CalculateCardStrength(
-    G,
-    playerID,
-    G.playingField[theaterID].deployedCards[ctx.currentPlayer][arrLength - 1],
-  );
-
-  //update total strength for theater
-  G.playingField[theaterID].totalStrength[ctx.currentPlayer] +=
-    G.playingField[theaterID].deployedCards[ctx.currentPlayer][
-      arrLength - 1
-    ].strength;
-
   events.endTurn();
 };
 
@@ -63,38 +64,38 @@ export const deploy: Move<GameState> = (
   theaterID: number,
 ) => {
   if (G.playingField[theaterID].isValid) {
-    let { cardID } = G.players[playerID].cards[G.selectedCardID];
-    G.players[playerID].cards[G.selectedCardID].faceDown = false;
-    const arrLength = G.playingField[theaterID].deployedCards[
-      ctx.currentPlayer
-    ].push(...G.players[playerID].cards.splice(G.selectedCardID, 1));
-
-    CardEffect(G, playerID, cardID, theaterID);
-
-    //set previous uncovered card to covered
-    const coveredCard =
-      G.playingField[theaterID].deployedCards[playerID].at(-2);
-    if (coveredCard !== undefined) {
-      G.playingField[theaterID].deployedCards[playerID][arrLength - 2].covered =
-        true;
-    }
-
-    //set card strength
-    G.playingField[theaterID].deployedCards[playerID][arrLength - 1].strength =
-      CalculateCardStrength(
-        G,
-        playerID,
-        G.playingField[theaterID].deployedCards[ctx.currentPlayer][
-          arrLength - 1
-        ],
+    //if blockade in play and total cards in adj theater >= 3 immediately discard card
+    if (
+      'Blockade' in G.ongoingEffects &&
+      GetAdjacentTheaters(G, theaterID).includes(
+        G.ongoingEffects['Blockade'],
+      ) &&
+      G.playingField[theaterID].deployedCards['0'].length +
+        G.playingField[theaterID].deployedCards['1'].length >=
+        3
+    ) {
+      G.secret.discardPile.push(
+        ...G.players[playerID].cards.splice(G.selectedCardID, 1),
       );
+    } else {
+      let { cardID } = G.players[playerID].cards[G.selectedCardID];
+      G.players[playerID].cards[G.selectedCardID].faceDown = false;
+      const arrLength = G.playingField[theaterID].deployedCards[
+        ctx.currentPlayer
+      ].push(...G.players[playerID].cards.splice(G.selectedCardID, 1));
 
-    //update total strength for theater
-    G.playingField[theaterID].totalStrength[ctx.currentPlayer] +=
-      G.playingField[theaterID].deployedCards[ctx.currentPlayer][
-        arrLength - 1
-      ].strength;
+      CardEffect(G, playerID, cardID, theaterID);
 
+      //set previous uncovered card to covered
+      const coveredCard =
+        G.playingField[theaterID].deployedCards[playerID].at(-2);
+      if (coveredCard !== undefined) {
+        G.playingField[theaterID].deployedCards[playerID][
+          arrLength - 2
+        ].covered = true;
+      }
+      RecalculateTotalStrength(G, playerID);
+    }
     events.endTurn();
   } else {
     //keep letting them try til they click the right theater
