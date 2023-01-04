@@ -2,7 +2,7 @@ import { useContext, createContext } from 'react';
 import { BoardProps } from 'boardgame.io/react';
 import { Box, VStack, Flex, Text } from '@chakra-ui/react';
 import { GameState } from '../../game/gameTypes';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../store';
 import Hand from './Hand';
 import TheaterRow from './TheaterRow';
 import Controls from './Controls';

@@ -1,16 +1,16 @@
+import { useEffect, useState } from 'react';
 import { Box } from '@chakra-ui/react';
-// import { Local } from 'boardgame.io/multiplayer';
 import { useParams } from 'react-router-dom';
+import { LobbyAPI } from 'boardgame.io';
 import { SocketIO } from 'boardgame.io/multiplayer';
+// import { Local } from 'boardgame.io/multiplayer';
 import { Client } from 'boardgame.io/react';
 import { AirLandSea } from '../../game';
-import Board from '../board/Board';
 import { SERVER_URL } from '../../config/client';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { joinMatchThunk } from '../../store/user';
-import { LobbyAPI } from 'boardgame.io';
 import { getMatch } from '../../api';
+import Board from '../board/Board';
 
 const GameClient = Client({
   game: AirLandSea,

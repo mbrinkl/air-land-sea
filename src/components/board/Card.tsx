@@ -4,7 +4,7 @@ import { Card as GameCard } from '../../game/cards';
 import { useBoardContext } from './Board';
 import { css } from '@emotion/react';
 import { boardSlice } from '../../store/board';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch } from '../../store';
 
 interface Props {
   card: GameCard;
