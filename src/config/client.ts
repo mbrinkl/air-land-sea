@@ -1,8 +1,7 @@
-import { isProduction, DEFAULT_PORT } from '.';
+import { DEFAULT_PORT } from '.';
 
-export const SERVER_URL = isProduction
-  ? 'https://air-land-and-sea.herokuapp.com'
-  : `http://localhost:${DEFAULT_PORT}`;
+export const SERVER_URL =
+  process.env.RENDER_EXTERNAL_URL ?? `http://localhost:${DEFAULT_PORT}`;
 
 // nickname is used between games to simplify room user creation
 export const NICKNAME_STORAGE_KEY = 'airlandsea_nickname';
