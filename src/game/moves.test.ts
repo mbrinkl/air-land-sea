@@ -1,12 +1,6 @@
 import { Client } from 'boardgame.io/client';
-import { Local } from 'boardgame.io/multiplayer';
-import { AirLandSea } from '.';
+import { createGame } from '../testUtil';
 import { GameState } from './gameTypes';
-
-const createGame = () => ({
-  game: AirLandSea,
-  multiplayer: Local(),
-});
 
 let p0: ReturnType<typeof Client<GameState>>;
 let p1: ReturnType<typeof Client<GameState>>;
