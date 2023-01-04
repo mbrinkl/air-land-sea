@@ -39,6 +39,7 @@ const Theater = ({ theater }: Props): JSX.Element => {
           <Card key={card.cardID} card={card} deployed="opponent" />
         ))}
         <Text
+          as="b"
           pos="absolute"
           color={getStrengthColor(opponentStrength, strength)}
           top={0}
@@ -65,6 +66,7 @@ const Theater = ({ theater }: Props): JSX.Element => {
           <Card key={card.cardID} card={card} deployed="self" />
         ))}
         <Text
+          as="b"
           pos="absolute"
           color={getStrengthColor(strength, opponentStrength)}
           bottom={0}
