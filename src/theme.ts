@@ -9,7 +9,6 @@ export const colors: Record<string, string> = {
   second: '#687daf',
 };
 
-// 1. Using a style object
 export const theme = extendTheme({
   styles: {
     global: {

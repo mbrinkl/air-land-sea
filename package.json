@@ -1,7 +1,4 @@
 {
-  "name": "air-land-sea",
-  "version": "0.1.0",
-  "private": true,
   "engines": {
     "node": ">=16 <19",
     "npm": ">=8"
@@ -57,7 +54,11 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md,yml}": [
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml}": [
       "prettier --write"
     ]
   }

@@ -22,11 +22,6 @@
     "incremental": true,
     "useDefineForClassFields": true
   },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["./dist"]
 }
