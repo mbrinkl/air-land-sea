@@ -1,12 +1,11 @@
 import type { Game } from 'boardgame.io';
 import { TurnOrder } from 'boardgame.io/core';
-import { GAME_ID } from '../config';
 import { battleCards, Card } from './cards';
 import { GameState, Theater } from './gameTypes';
 import { selectCard, withdraw, deploy, improvise } from './moves';
 
 export const AirLandSea: Game<GameState> = {
-  name: GAME_ID,
+  name: 'AirLandSea',
   minPlayers: 2,
   maxPlayers: 2,
 

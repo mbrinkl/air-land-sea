@@ -1,24 +1,18 @@
 import { Input, Button } from '@chakra-ui/react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createMatch } from '../../api';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { userSlice } from '../../store/user';
 
 const Home = (): JSX.Element => {
   const navigate = useNavigate();
-  const nickname = useAppSelector((state) => state.user.nickname);
-  const dispatch = useAppDispatch();
+  const [joinMatchID, setJoinMatchID] = useState('');
 
-  const onSetNicknameInputChanged = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const nickname = e.target.value;
-    dispatch(userSlice.actions.setNickname(nickname));
+  const onHostClicked = () => {
+    const matchID = (Math.random() + 1).toString(36).substring(7);
+    navigate(`/${matchID}?host`);
   };
 
-  const onOnlineClicked = async () => {
-    const matchID = await createMatch(2);
-    navigate(`/${matchID}`);
+  const onJoinClicked = () => {
+    navigate(`/${joinMatchID}`);
   };
 
   const onLocalClicked = () => {
@@ -28,11 +22,14 @@ const Home = (): JSX.Element => {
   return (
     <div>
       <Input
-        value={nickname || ''}
-        placeholder="nickname"
-        onChange={onSetNicknameInputChanged}
+        value={joinMatchID}
+        placeholder="Match ID to Join"
+        onChange={(e) => setJoinMatchID(e.target.value)}
       />
-      <Button onClick={onOnlineClicked}>Online</Button>
+      <Button onClick={onHostClicked}>Host</Button>
+      <Button onClick={onJoinClicked} disabled={joinMatchID.length === 0}>
+        Join
+      </Button>
       <Button onClick={onLocalClicked}>Local</Button>
     </div>
   );

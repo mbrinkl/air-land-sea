@@ -4,9 +4,9 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { store } from './store';
-import { theme } from './config/theme';
+import { theme } from './theme';
 import Home from './components/lobby/Home';
-import SocketGame from './components/lobby/SocketGame';
+import P2PGame from './components/lobby/P2PGame';
 import LocalGame from './components/lobby/LocalGame';
 
 const router = createBrowserRouter([
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/:matchID',
-    element: <SocketGame />,
+    element: <P2PGame />,
   },
 ]);
 

@@ -1,5 +1,5 @@
 import { Text, Flex } from '@chakra-ui/react';
-import { colors } from '../../config/theme';
+import { colors } from '../../theme';
 import { useBoardContext } from './Board';
 
 const PlayerInfo = ({ playerID }: { playerID: string }): JSX.Element => {
