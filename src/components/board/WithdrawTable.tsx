@@ -12,7 +12,7 @@ import {
   TabPanels,
   TabPanel,
 } from '@chakra-ui/react';
-import { useBoardContext } from './Board';
+import { useBoardContext } from '../../hooks/useBoardContext';
 
 interface ScoringChart {
   cardsRemaining: string;

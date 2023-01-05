@@ -1,5 +1,5 @@
 import { Text } from '@chakra-ui/react';
-import { useBoardContext } from './Board';
+import { useBoardContext } from '../../hooks/useBoardContext';
 
 const HelpText = (): JSX.Element => {
   const { isActive, ctx } = useBoardContext();

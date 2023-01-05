@@ -1,9 +1,9 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { colors } from '../../theme';
 import { Card as GameCard } from '../../game/cards';
-import { useBoardContext } from './Board';
 import { css } from '@emotion/react';
 import { useBoardStore } from '../../hooks/useBoardStore';
+import { useBoardContext } from '../../hooks/useBoardContext';
 
 interface Props {
   card: GameCard;

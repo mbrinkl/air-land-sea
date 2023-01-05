@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { getPointsScored } from '../../game/gameUtil';
 import { useRef } from 'react';
-import { useBoardContext } from './Board';
+import { useBoardContext } from '../../hooks/useBoardContext';
 import WithdrawTable from './WithdrawTable';
 
 const WithdrawDialog = ({
