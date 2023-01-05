@@ -1,6 +1,6 @@
 import { Text, Flex } from '@chakra-ui/react';
+import { useBoardContext } from '../../hooks/useBoardContext';
 import { colors } from '../../theme';
-import { useBoardContext } from './Board';
 
 const PlayerInfo = ({ playerID }: { playerID: string }): JSX.Element => {
   const { G, playerID: clientPlayerID } = useBoardContext();

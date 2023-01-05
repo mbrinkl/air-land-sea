@@ -1,16 +1,13 @@
-import { useContext, createContext } from 'react';
 import { BoardProps } from 'boardgame.io/react';
 import { Box, VStack, Flex, Text } from '@chakra-ui/react';
 import { GameState } from '../../game/gameTypes';
 import { useBoardStore } from '../../hooks/useBoardStore';
+import { BoardContext } from '../../hooks/useBoardContext';
 import Hand from './Hand';
 import TheaterRow from './TheaterRow';
 import Controls from './Controls';
 import HelpText from './HelpText';
 import PlayerInfo from './PlayerInfo';
-
-export const BoardContext = createContext({} as BoardProps<GameState>);
-export const useBoardContext = () => useContext(BoardContext);
 
 const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
   const hoveredCardInfo = useBoardStore((s) => s.hoveredCardInfo);
@@ -26,9 +23,7 @@ const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
           justifyContent="space-between"
         >
           <PlayerInfo playerID={(Number(boardProps.playerID) ^ 1).toString()} />
-          <Flex gap="3px">
-            <Hand type="opponent" />
-          </Flex>
+          <Hand type="opponent" />
         </Flex>
         <Box h="50%" w="100%">
           <TheaterRow />
@@ -49,9 +44,7 @@ const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
               {hoveredCardInfo.length > 0 ? hoveredCardInfo : '\u00A0'}
             </Text>
           </Box>
-          <Flex alignItems="center" justifyContent="center" gap="5px">
-            <Hand type="self" />
-          </Flex>
+          <Hand type="self" />
           <Flex alignItems="center" justifyContent="center" gap="3px">
             <Controls />
           </Flex>

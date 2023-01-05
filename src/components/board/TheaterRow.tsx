@@ -1,5 +1,5 @@
 import { Flex } from '@chakra-ui/react';
-import { useBoardContext } from './Board';
+import { useBoardContext } from '../../hooks/useBoardContext';
 import Theater from './Theater';
 
 const TheaterRow = () => {

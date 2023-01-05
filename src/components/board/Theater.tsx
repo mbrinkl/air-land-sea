@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { colors } from '../../theme';
 import { Theater as GameTheater } from '../../game/gameTypes';
-import { useBoardContext } from './Board';
+import { useBoardContext } from '../../hooks/useBoardContext';
 import Card from './Card';
 
 interface Props {
