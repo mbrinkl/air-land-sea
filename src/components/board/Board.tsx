@@ -2,7 +2,7 @@ import { useContext, createContext } from 'react';
 import { BoardProps } from 'boardgame.io/react';
 import { Box, VStack, Flex, Text } from '@chakra-ui/react';
 import { GameState } from '../../game/gameTypes';
-import { useAppSelector } from '../../store';
+import { useBoardStore } from '../../hooks/useBoardStore';
 import Hand from './Hand';
 import TheaterRow from './TheaterRow';
 import Controls from './Controls';
@@ -13,9 +13,7 @@ export const BoardContext = createContext({} as BoardProps<GameState>);
 export const useBoardContext = () => useContext(BoardContext);
 
 const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
-  const hoveredCardInfo = useAppSelector(
-    (state) => state.board.hoveredCardInfo,
-  );
+  const hoveredCardInfo = useBoardStore((s) => s.hoveredCardInfo);
 
   return (
     <BoardContext.Provider value={boardProps}>
