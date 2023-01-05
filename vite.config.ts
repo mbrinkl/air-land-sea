@@ -9,7 +9,4 @@ export default defineConfig({
   test: {
     globals: true,
   },
-  define: {
-    'process.env': process.env,
-  },
 });

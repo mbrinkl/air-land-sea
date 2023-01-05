@@ -1,7 +1,4 @@
 {
-  "name": "air-land-sea",
-  "version": "0.1.0",
-  "private": true,
   "engines": {
     "node": ">=16 <19",
     "npm": ">=8"
