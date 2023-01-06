@@ -18,6 +18,7 @@ const Home = (): JSX.Element => {
       justifyContent="center"
       direction="column"
       gap="15px"
+      px="10px"
     >
       <Input
         maxW="400px"

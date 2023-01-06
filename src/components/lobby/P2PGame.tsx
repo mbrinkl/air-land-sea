@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { P2P } from '@boardgame.io/p2p';
 import { Client } from 'boardgame.io/react';
@@ -21,13 +21,13 @@ const P2PGame = (): JSX.Element => {
   });
 
   return (
-    <Box w="100vw" h="100vh">
+    <Container h="100vh" maxW="container.lg">
       <P2PClient
         matchID={matchID}
         playerID={isHost ? '0' : '1'}
         credentials={credentials}
       />
-    </Box>
+    </Container>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Box, StackDivider, VStack } from '@chakra-ui/react';
+import { Container, StackDivider, VStack } from '@chakra-ui/react';
 import { Local } from 'boardgame.io/multiplayer';
 import { Client } from 'boardgame.io/react';
 import { AirLandSea } from '../../game';
@@ -17,12 +17,12 @@ const LocalGame = () => {
       spacing={4}
       align="stretch"
     >
-      <Box w="100vw" h="100vh">
+      <Container h="100vh" maxW="container.lg">
         <GameClient playerID="0" />
-      </Box>
-      <Box w="100vw" h="100vh">
+      </Container>
+      <Container h="100vh" maxW="container.lg">
         <GameClient playerID="1" />
-      </Box>
+      </Container>
     </VStack>
   );
 };

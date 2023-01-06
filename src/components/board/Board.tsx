@@ -18,11 +18,10 @@ const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
 
   return (
     <BoardContext.Provider value={boardProps}>
-      <VStack h="100vh" padding="10px">
+      <VStack h="100vh" py="10px">
         <Flex
           h="10%"
           w="100%"
-          px="10px"
           alignItems="center"
           justifyContent="space-between"
         >
