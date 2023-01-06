@@ -5,6 +5,7 @@ import { Client } from 'boardgame.io/react';
 import { useStoredCredentials } from '../../hooks/useStoredCredentials';
 import { AirLandSea } from '../../game';
 import Board from '../board/Board';
+import Loading from './Loading';
 
 const P2PGame = (): JSX.Element => {
   const { matchID } = useParams<{ matchID: string }>();
@@ -16,6 +17,7 @@ const P2PGame = (): JSX.Element => {
     game: AirLandSea,
     board: Board,
     multiplayer: P2P({ isHost }),
+    loading: Loading,
   });
 
   return (
