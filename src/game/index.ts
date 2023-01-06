@@ -1,4 +1,4 @@
-import type { Game } from 'boardgame.io';
+import type { AiEnumerate, Game } from 'boardgame.io';
 import { TurnOrder } from 'boardgame.io/core';
 import { battleCards, Card } from './cards';
 import { GameState, Theater } from './gameTypes';
@@ -76,6 +76,45 @@ export const AirLandSea: Game<GameState> = {
           //cardEffect: { moves: {} }, //guessing this'll be needed for instant effects
         },
       },
+    },
+  },
+
+  // Random Choice Bot (never withdraws, not a coward)
+  ai: {
+    enumerate: (G, ctx) => {
+      const choices: AiEnumerate = [];
+
+      const bot = G.players[1];
+      const stage = ctx.activePlayers?.[1];
+
+      const loadPossibleSelections = () => {
+        const numCards = bot.cards.length;
+        for (let i = 0; i < numCards; i++) {
+          choices.push({ move: 'selectCard', args: [i] });
+        }
+      };
+
+      const loadPossiblePlacements = () => {
+        G.playingField.forEach(({ isValid }, i) => {
+          choices.push({ move: 'improvise', args: [i] });
+          if (isValid) {
+            choices.push({ move: 'deploy', args: [i] });
+          }
+        });
+      };
+
+      switch (stage) {
+        case 'select':
+          loadPossibleSelections();
+          break;
+        case 'place':
+          loadPossiblePlacements();
+          break;
+        default:
+          break;
+      }
+
+      return choices;
     },
   },
 };

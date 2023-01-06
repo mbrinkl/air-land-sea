@@ -6,6 +6,7 @@ import { theme } from './theme';
 import Home from './components/lobby/Home';
 import P2PGame from './components/lobby/P2PGame';
 import LocalGame from './components/lobby/LocalGame';
+import BotGame from './components/lobby/BotGame';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: '/local',
     element: <LocalGame />,
+  },
+  {
+    path: '/bot',
+    element: <BotGame />,
   },
   {
     path: '/:matchID',
