@@ -19,6 +19,7 @@ import { getPointsScored } from '../../game/gameUtil';
 import { useRef } from 'react';
 import { useBoardContext } from '../../hooks/useBoardContext';
 import WithdrawTable from './WithdrawTable';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 const WithdrawDialog = ({
   isOpen,
@@ -114,7 +115,7 @@ const Controls = (): JSX.Element => {
         onClick={undo}
         disabled={!ctx.numMoves || !isActive}
       >
-        ⭮
+        <ArrowBackIcon />
       </Button>
 
       <Button

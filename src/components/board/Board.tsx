@@ -8,21 +8,28 @@ import TheaterRow from './TheaterRow';
 import Controls from './Controls';
 import HelpText from './HelpText';
 import PlayerInfo from './PlayerInfo';
+import InvitePlayerButton from './InvitePlayerButton';
 
 const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
   const hoveredCardInfo = useBoardStore((s) => s.hoveredCardInfo);
+  const opponentID = (Number(boardProps.playerID) ^ 1).toString();
+  const isLocalGame = boardProps.matchData![0].isConnected === undefined;
+  const has2ndPlayerJoined = boardProps.matchData![1].isConnected !== undefined;
 
   return (
     <BoardContext.Provider value={boardProps}>
-      <VStack h="100vh" padding="10px">
+      <VStack h="100vh" py="10px">
         <Flex
           h="10%"
           w="100%"
-          px="10px"
           alignItems="center"
           justifyContent="space-between"
         >
-          <PlayerInfo playerID={(Number(boardProps.playerID) ^ 1).toString()} />
+          {!isLocalGame && !has2ndPlayerJoined ? (
+            <InvitePlayerButton />
+          ) : (
+            <PlayerInfo playerID={opponentID} />
+          )}
           <Hand type="opponent" />
         </Flex>
         <Box h="50%" w="100%">
