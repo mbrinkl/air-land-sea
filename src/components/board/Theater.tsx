@@ -1,27 +1,57 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { colors } from '../../theme';
 import { Theater as GameTheater } from '../../game/gameTypes';
 import { useBoardContext } from '../../hooks/useBoardContext';
 import Card from './Card';
 
-interface Props {
-  theater: GameTheater;
-}
+const TheaterOverlayControls = ({
+  theaterID,
+  canPlayFaceUp,
+}: {
+  theaterID: number;
+  canPlayFaceUp: boolean;
+}): JSX.Element => {
+  const { moves } = useBoardContext();
 
-const Theater = ({ theater }: Props): JSX.Element => {
-  const { theater: theaterName, deployedCards, totalStrength } = theater;
-  const { G, moves, playerID } = useBoardContext();
+  const onUpClick = () => {
+    moves.deploy(theaterID);
+  };
 
-  function getTheaterId(): number {
-    return G.playingField.findIndex((t) => t.theater === theaterName);
-  }
+  const onDownClick = () => {
+    moves.improvise(theaterID);
+  };
 
-  // todo: better way to play card face down
-  function onRightClick(e: React.MouseEvent<HTMLDivElement>) {
-    e.preventDefault();
-    moves.improvise(getTheaterId());
-    return false;
-  }
+  return (
+    <Flex
+      position="absolute"
+      w="100%"
+      h="100%"
+      zIndex={50}
+      bg="rgba(128,128,128,0.75)"
+      alignItems="center"
+      justifyContent="center"
+      gap="10px"
+    >
+      {canPlayFaceUp && (
+        <Button w="30%" onClick={onUpClick}>
+          Up
+        </Button>
+      )}
+      <Button w="30%" onClick={onDownClick}>
+        Down
+      </Button>
+    </Flex>
+  );
+};
+
+const Theater = ({ theater }: { theater: GameTheater }): JSX.Element => {
+  const {
+    theater: theaterName,
+    deployedCards,
+    totalStrength,
+    isValid,
+  } = theater;
+  const { G, ctx, playerID, isActive } = useBoardContext();
 
   const getStrengthColor = (strength: number, opponentStrength: number) => {
     if (strength > opponentStrength) return 'green.500';
@@ -29,8 +59,10 @@ const Theater = ({ theater }: Props): JSX.Element => {
     return undefined;
   };
 
+  const theaterID = G.playingField.findIndex((t) => t.theater === theaterName);
   const strength = totalStrength[playerID!];
   const opponentStrength = totalStrength[Number(playerID) ^ 1];
+  const isControlsOpen = isActive && ctx.activePlayers?.[playerID!] === 'place';
 
   return (
     <Box w="33%">
@@ -53,15 +85,7 @@ const Theater = ({ theater }: Props): JSX.Element => {
       <Box color="white" bg={colors[theaterName]} textAlign="center">
         - {theaterName.toUpperCase()} -
       </Box>
-      <Flex
-        pos="relative"
-        h="150px"
-        bg="gainsboro"
-        _hover={{ bg: 'silver' }}
-        cursor="pointer"
-        onClick={() => moves.deploy(getTheaterId())}
-        onContextMenu={onRightClick}
-      >
+      <Flex pos="relative" h="150px" bg="gainsboro">
         {deployedCards[playerID!].map((card) => (
           <Card key={card.cardID} card={card} deployed="self" />
         ))}
@@ -76,6 +100,12 @@ const Theater = ({ theater }: Props): JSX.Element => {
         >
           {strength}
         </Text>
+        {isControlsOpen && (
+          <TheaterOverlayControls
+            theaterID={theaterID}
+            canPlayFaceUp={isValid}
+          />
+        )}
       </Flex>
     </Box>
   );
