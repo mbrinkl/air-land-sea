@@ -7,8 +7,17 @@ const HelpText = (): JSX.Element => {
   const stage: string | null =
     (ctx.activePlayers && ctx.activePlayers[ctx.currentPlayer]) || null;
 
-  // todo: make more descriptive
-  const text = isActive ? `${ctx.phase} : ${stage}` : 'Waiting for Opponent...';
+  let text = 'Waiting for Opponent...';
+
+  if (isActive) {
+    if (stage === 'select') {
+      text = 'Select a Card';
+    } else if (stage === 'place') {
+      text = 'Place Selected Card';
+    } else {
+      text = stage ?? 'null stage';
+    }
+  }
 
   return (
     <Text fontSize="lg" textAlign="center">
