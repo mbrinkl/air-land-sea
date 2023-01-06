@@ -2,6 +2,7 @@ import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { colors } from '../../theme';
 import { Theater as GameTheater } from '../../game/gameTypes';
 import { useBoardContext } from '../../hooks/useBoardContext';
+import { TriangleUpIcon, TriangleDownIcon } from '@chakra-ui/icons';
 import Card from './Card';
 
 const TheaterOverlayControls = ({
@@ -33,12 +34,12 @@ const TheaterOverlayControls = ({
       gap="10px"
     >
       {canPlayFaceUp && (
-        <Button w="30%" onClick={onUpClick}>
-          Up
+        <Button w="25%" onClick={onUpClick}>
+          <TriangleUpIcon />
         </Button>
       )}
-      <Button w="30%" onClick={onDownClick}>
-        Down
+      <Button w="25%" onClick={onDownClick}>
+        <TriangleDownIcon />
       </Button>
     </Flex>
   );
