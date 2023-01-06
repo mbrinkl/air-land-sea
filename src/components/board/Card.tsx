@@ -33,8 +33,8 @@ const Card = ({ card, deployed }: Props) => {
       bg={faceDown ? colors['faceDown'] : colors[theater]}
       border="2px solid black"
       color="white"
-      alignItems="center"
-      justifyContent="center"
+      align="center"
+      justify="center"
       borderRadius="10%"
       cursor="pointer"
       marginRight={deployed != null ? '-50px' : '0'}
@@ -43,9 +43,11 @@ const Card = ({ card, deployed }: Props) => {
       css={css`
         transition-duration: 0.3s;
         transition-property: transform;
-        &:hover {
+        ${G.selectedCardID === getCardId()
+          ? 'scale: 1.1'
+          : `&:hover {
           transform: scale(1.1);
-        }
+        }`}
       `}
       onMouseOver={() => setHoveredCardInfo(description)}
       onMouseOut={() => setHoveredCardInfo('')}
