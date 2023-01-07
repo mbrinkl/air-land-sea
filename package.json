@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@boardgame.io/p2p": "^0.4.4",
+    "@chakra-ui/icons": "^2.0.15",
     "@chakra-ui/react": "^2.4.3",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",

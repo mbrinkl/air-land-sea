@@ -1,4 +1,5 @@
-import { Input, Button, Flex } from '@chakra-ui/react';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { Input, Button, Flex, Link } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,6 +19,7 @@ const Home = (): JSX.Element => {
       justifyContent="center"
       direction="column"
       gap="15px"
+      px="10px"
     >
       <Input
         maxW="400px"
@@ -44,6 +46,9 @@ const Home = (): JSX.Element => {
           </Button>
         )}
       </Flex>
+      <Link href="https://github.com/mbrinkl/air-land-sea" isExternal>
+        Source Code <ExternalLinkIcon mx="2px" />
+      </Link>
     </Flex>
   );
 };
