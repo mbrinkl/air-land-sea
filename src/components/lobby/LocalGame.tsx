@@ -4,13 +4,13 @@ import { Client } from 'boardgame.io/react';
 import { AirLandSea } from '../../game';
 import Board from '../board/Board';
 
-const GameClient = Client({
-  game: AirLandSea,
-  board: Board,
-  multiplayer: Local(),
-});
-
 const LocalGame = () => {
+  const LocalClient = Client({
+    game: AirLandSea,
+    board: Board,
+    multiplayer: Local(),
+  });
+
   return (
     <VStack
       divider={<StackDivider borderColor="gray" />}
@@ -18,10 +18,10 @@ const LocalGame = () => {
       align="stretch"
     >
       <Container h="100vh" maxW="container.lg">
-        <GameClient playerID="0" />
+        <LocalClient playerID="0" />
       </Container>
       <Container h="100vh" maxW="container.lg">
-        <GameClient playerID="1" />
+        <LocalClient playerID="1" />
       </Container>
     </VStack>
   );

@@ -40,6 +40,9 @@ const Home = (): JSX.Element => {
         >
           Join
         </Button>
+        <Button onClick={() => navigate('bot')} size="lg" colorScheme="purple">
+          vs Bot
+        </Button>
         {import.meta.env.DEV && (
           <Button onClick={() => navigate('local')} size="lg">
             Local
