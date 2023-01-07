@@ -76,16 +76,11 @@ export function CardEffect(
   theaterID: number,
 ): void {
   //const theater = G.playingField[theaterID].theater;
-  if (
-    cardInfoRecords[cardID].type == 'ongoing' &&
-    cardInfoRecords[cardID].ongoingType == 'player'
-  ) {
+  const cardInfo = cardInfoRecords[cardID];
+  if (cardInfo.type == 'ongoing' && cardInfo.ongoingType == 'player') {
     G.players[playerID].ongoingEffects[cardID] =
       G.playingField[theaterID].theater;
-  } else if (
-    cardInfoRecords[cardID].type == 'ongoing' &&
-    cardInfoRecords[cardID].ongoingType == 'global'
-  ) {
+  } else if (cardInfo.type == 'ongoing' && cardInfo.ongoingType == 'global') {
     G.ongoingEffects[cardID] = G.playingField[theaterID].theater;
   }
 
@@ -198,7 +193,7 @@ export function RecalculateTotalStrength(G: GameState, playerID: string): void {
     );
   }
   for (const theater of G.playingField) {
-    if (adjacents && adjacents.includes(theater.theater))
+    if (adjacents?.includes(theater.theater))
       theater.totalStrength[playerID] = 3;
     else theater.totalStrength[playerID] = 0;
     for (const card of theater.deployedCards[playerID]) {
