@@ -15,4 +15,4 @@ jobs:
           email: ${{ secrets.RENDER_EMAIL }}
           password: ${{ secrets.RENDER_PASSWORD }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          service-id: srv-xxxxxxxxxxxxxxxxxxxx
+          service-id: ${{ secrets.RENDER_SERVICE_ID }}
