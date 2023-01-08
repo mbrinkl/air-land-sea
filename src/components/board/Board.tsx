@@ -17,12 +17,7 @@ const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
   return (
     <BoardContext.Provider value={boardProps}>
       <VStack h="100vh" py="10px">
-        <Flex
-          h="10%"
-          w="100%"
-          alignItems="center"
-          justifyContent="space-between"
-        >
+        <Flex h="10%" w="100%" align="center" justify="space-between">
           {!isLocalGame && !has2ndPlayerJoined ? (
             <InvitePlayerButton />
           ) : (
@@ -33,19 +28,13 @@ const Board = (boardProps: BoardProps<GameState>): JSX.Element => {
         <Box h="50%" w="100%">
           <TheaterRow />
         </Box>
-        <Flex
-          h="40%"
-          w="100%"
-          direction="column"
-          gap="10px"
-          justifyContent="flex-end"
-        >
+        <Flex h="40%" w="100%" direction="column" gap="10px" justify="flex-end">
           <Box px="10px">
             <PlayerInfo playerID={boardProps.playerID!} />
           </Box>
           <HelpText />
           <Hand type="self" />
-          <Flex alignItems="center" justifyContent="center" gap="3px">
+          <Flex align="center" justify="center" gap="3px">
             <Controls />
           </Flex>
         </Flex>

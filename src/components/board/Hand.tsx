@@ -12,7 +12,7 @@ const Hand = ({ type }: Props) => {
 
   if (type === 'self') {
     return (
-      <Flex alignItems="center" justifyContent="center" gap="5px">
+      <Flex align="center" justify="center" gap="5px">
         {G.players[playerID!].cards.map((card) => (
           <Card key={card.cardID} card={card} />
         ))}

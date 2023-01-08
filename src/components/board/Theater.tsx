@@ -24,13 +24,13 @@ const TheaterOverlayControls = ({
 
   return (
     <Flex
-      position="absolute"
+      pos="absolute"
       w="100%"
       h="100%"
       zIndex={50}
       bg="rgba(128,128,128,0.75)"
-      alignItems="center"
-      justifyContent="center"
+      align="center"
+      justify="center"
       gap="10px"
     >
       {canPlayFaceUp && (
@@ -67,7 +67,7 @@ const Theater = ({ theater }: { theater: GameTheater }): JSX.Element => {
 
   return (
     <Box w="33%">
-      <Flex pos="relative" h="150px" bg="gainsboro" alignItems="end">
+      <Flex pos="relative" h="150px" bg="gainsboro" align="end">
         {deployedCards[(Number(playerID) ^ 1).toString()].map((card) => (
           <Card key={card.cardID} card={card} deployed="opponent" />
         ))}

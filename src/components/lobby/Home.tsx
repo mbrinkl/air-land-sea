@@ -15,8 +15,8 @@ const Home = (): JSX.Element => {
   return (
     <Flex
       h="100vh"
-      alignItems="center"
-      justifyContent="center"
+      align="center"
+      justify="center"
       direction="column"
       gap="15px"
       px="10px"
