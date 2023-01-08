@@ -7,6 +7,13 @@ export default defineConfig({
     open: true,
   },
   test: {
+    environment: 'jsdom',
     globals: true,
+    setupFiles: './src/testUtil/setup.ts',
+    coverage: {
+      all: true,
+      include: ['src'],
+      exclude: ['src/testUtil'],
+    },
   },
 });

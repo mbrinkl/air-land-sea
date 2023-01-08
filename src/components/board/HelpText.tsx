@@ -1,28 +1,31 @@
-import { Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { useBoardContext } from '../../hooks/useBoardContext';
+import { useBoardStore } from '../../hooks/useBoardStore';
 
 const HelpText = (): JSX.Element => {
+  const hoveredCardInfo = useBoardStore((s) => s.hoveredCardInfo);
   const { isActive, ctx } = useBoardContext();
 
   const stage: string | null =
     (ctx.activePlayers && ctx.activePlayers[ctx.currentPlayer]) || null;
 
-  let text = 'Waiting for Opponent...';
+  let helpText = 'Waiting for Opponent...';
 
   if (isActive) {
     if (stage === 'select') {
-      text = 'Select a Card';
+      helpText = 'Select a Card';
     } else if (stage === 'place') {
-      text = 'Place Selected Card';
+      helpText = 'Place Selected Card';
     } else {
-      text = stage ?? 'null stage';
+      helpText = stage ?? 'null stage';
     }
   }
 
   return (
-    <Text fontSize="lg" textAlign="center">
-      {text}
-    </Text>
+    <Box textAlign="center">
+      <Text fontSize="lg">{helpText}</Text>
+      <Text>{hoveredCardInfo.length > 0 ? hoveredCardInfo : '\u00A0'}</Text>
+    </Box>
   );
 };
 
