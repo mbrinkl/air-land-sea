@@ -19,8 +19,8 @@ const Loading = (): JSX.Element => {
   return (
     <Flex
       h="100vh"
-      justifyContent="center"
-      alignItems="center"
+      justify="center"
+      align="center"
       direction="column"
       gap="10px"
     >

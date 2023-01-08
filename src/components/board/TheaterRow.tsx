@@ -6,7 +6,7 @@ const TheaterRow = () => {
   const { G } = useBoardContext();
 
   return (
-    <Flex alignItems="center" justifyContent="center">
+    <Flex align="center" justify="center">
       {G.playingField.map((theater) => (
         <Theater key={theater.theater} theater={theater} />
       ))}
