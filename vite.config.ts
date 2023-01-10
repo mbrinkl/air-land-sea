@@ -13,7 +13,12 @@ export default defineConfig({
     coverage: {
       all: true,
       include: ['src'],
-      exclude: ['src/testUtil'],
+      exclude: [
+        'src/main.tsx',
+        'src/theme.ts',
+        'src/testUtil',
+        'src/**/*.test.*',
+      ],
     },
   },
 });
