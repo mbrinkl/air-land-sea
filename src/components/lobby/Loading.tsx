@@ -29,7 +29,7 @@ const Loading = (): JSX.Element => {
       {notFound && (
         <>
           <Text color="red" fontSize="xl">
-            Connection is taking too long - Match is proabably unavailable
+            Connection is taking too long - Match is probably unavailable
           </Text>
           <Button
             size="lg"

@@ -42,7 +42,7 @@ it('should navigate to local url on local button clicked', async () => {
   expect(mockNavigate).toHaveBeenCalledWith('local');
 });
 
-it('should render with join button disbled', () => {
+it('should render with join button disabled', () => {
   const joinButton = screen.getByText('Join');
   expect(joinButton).toBeDisabled();
 });
